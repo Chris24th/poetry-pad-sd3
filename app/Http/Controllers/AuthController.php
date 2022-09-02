@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Notifications\Verification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\ChangePassword;
 use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
@@ -83,5 +84,5 @@ class AuthController extends Controller
         $user->updated_at = $date;
         $user->save();
     }
-    
+
 }
