@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Verification extends Notification
+class ChangePassword extends Notification
 {
     use Queueable;
 
@@ -41,10 +41,11 @@ class Verification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Good Day!')
-            ->line('Click the button/link below to verify your email address.')
-            ->action('Verify Email', url('https://poetrypad.herokuapp.com/verification'))
-            ->line('Thank you for using our application!');
+        ->greeting('Greetings!')
+        ->line("We heard that you lost your Postello password. Sorry about that.
+            But it's all good! You can use this link to reset your password:")
+        ->action('Reset your Password', url('https://poetrypad.herokuapp.com/resetpassword'))
+        ->line('Thank you for using our application!');
     }
 
     /**

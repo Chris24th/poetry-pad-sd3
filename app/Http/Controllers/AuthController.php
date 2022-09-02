@@ -65,4 +65,23 @@ class AuthController extends Controller
             return ['message' => 'Your email is already verified!'];
         }
     }
+    function forgotpassword(Request $req){
+        $user = User::where('email', $req->email)->first();
+        if (!$user || $req->email != $user->email) {
+            return ["error" => "Email not found"];
+        }
+        Notification::send($user, new ChangePassword());
+
+        return $user->email;
+    }
+
+    function resetpassword(Request $req)
+    {
+        $date = Carbon::now();
+        $user = User::where('email', $req->email)->first();
+        $user->password = Hash::make($req->input('password'));
+        $user->updated_at = $date;
+        $user->save();
+    }
+    
 }
