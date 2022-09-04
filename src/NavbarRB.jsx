@@ -15,6 +15,10 @@ const NavbarRB = () => {
     };
   }, []);
 
+  const onLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
   return (
     <div>
       <Navbar
@@ -47,7 +51,7 @@ const NavbarRB = () => {
                   <div>ABOUT US</div>
                 </Nav.Link>
                 {user ? (
-                  <Nav.Link>
+                  <Nav.Link onClick={onLogout}>
                     <div>LOGOUT</div>
                   </Nav.Link>
                 ) : (
@@ -82,7 +86,7 @@ const NavbarRB = () => {
                   </Nav.Link>
                 )}
                 {user ? (
-                  <Nav.Link className="myNav-btn">
+                  <Nav.Link className="myNav-btn" onClick={onLogout}>
                     <div className="myNav-btn-p">LOGOUT</div>
                   </Nav.Link>
                 ) : (
