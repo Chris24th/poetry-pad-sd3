@@ -1,0 +1,88 @@
+@import url("http://fonts.cdnfonts.com/css/berkshire-swash");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cousine");
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  background-color: #ffffff;
+  font-family: "Roboto";
+}
+
+.container-auth {
+  width: 90%;
+  height: auto;
+}
+
+.myNav {
+  justify-content: right;
+  align-items: center;
+}
+
+.myNav-btn {
+  background-color: #000000;
+  margin-left: 15px;
+  border-radius: 5px;
+  width: 100px;
+}
+.myNav-btn-p {
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+}
+
+.myNav-btn-a {
+  background-color: #ffffff;
+  margin-left: 15px;
+  border-radius: 5px;
+  width: 100px;
+  box-shadow: inset 0px 0px 3px 2px #000000;
+}
+.myNav-btn-p-a {
+  font-weight: 700;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+}
+
+.auth-title {
+  font-family: "Berkshire Swash";
+  font-style: normal;
+}
+
+.auth-btn-cont {
+  display: flex;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.auth-arrow {
+  margin-left: 15px;
+  background-color: inherit;
+}
+.about-hdr {
+  font-family: "Berkshire Swash";
+  font-style: normal;
+}
+.about-p {
+  font-size: 18px;
+}
+
+.about-icons {
+  text-decoration: none;
+  color: #000;
+}
+
+.landing-btn {
+  text-decoration: none;
+  color: #000;
+  text-align: right;
+  font-family: "Cousine";
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 600;
+}
