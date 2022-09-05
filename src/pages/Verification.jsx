@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Button, Row, Col, Container } from "react-bootstrap";
+import { Button, Row, Col, Container, Alert } from "react-bootstrap";
 
 const Verification = () => {
   const [token, setToken] = useState();
@@ -25,17 +25,37 @@ const Verification = () => {
 
     setToken(localStorage.getItem("verify-token"));
   }, [api()]);
+
   const onLogin = () => {
     navigate("/signin");
   };
+
   return (
-    <Container>
-      <Row>
-        <Col>Your Email is verified!</Col>
-      </Row>
-      <Row>
-        <Button onClick={onLogin}>Log In</Button>
-      </Row>
+    <Container className=" d-flex align-items-center justify-content-center">
+      <div className="container-auth mt-4">
+        <Row>
+          <Col style={{ textAlign: "center" }}>
+            <Alert variant="success">
+              Congratulations! Your Email is verified.
+            </Alert>
+            <Button
+              style={{
+                width: "150px",
+                backgroundColor: "#252527",
+                boxShadow: "0px 11px 20px rgba(0, 0, 0, 0.2)",
+                border: "none",
+                borderRadius: "10px",
+                fontSize: "20px",
+                height: "40px",
+                marginTop: "20px",
+              }}
+              onClick={onLogin}
+            >
+              Log In
+            </Button>
+          </Col>
+        </Row>
+      </div>
     </Container>
   );
 };
