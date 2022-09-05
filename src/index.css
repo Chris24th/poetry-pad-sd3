@@ -93,3 +93,35 @@ body {
   font-weight: bold;
   color: inherit;
 }
+
+/* -----------for sidebarr--------------- */
+.sidebar-container-s {
+  display: flex;
+  width: 250px;
+  height: 500px;
+  margin: 0;
+  background-color: #000;
+  color: #ffffff;
+  justify-content: center;
+}
+.sidebar-container-h {
+  display: flex;
+  width: 100px;
+  height: auto;
+  margin: 0;
+  background-color: #000;
+  color: #ffffff;
+}
+.sidebar-row-btn {
+  justify-content: right;
+  background-color: inherit;
+}
+.sidebar-btn {
+  margin: 20px;
+}
+.sidebar-nav {
+  background-color: inherit;
+}
+.sidebar-navlink {
+  background-color: inherit;
+}

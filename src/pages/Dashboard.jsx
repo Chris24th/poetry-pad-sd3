@@ -1,10 +1,22 @@
 import { useEffect } from "react";
-import { Button, Row, Col, Container } from "react-bootstrap";
+import {
+  Button,
+  Row,
+  Col,
+  Container,
+  Offcanvas,
+  Navbar,
+  Form,
+  NavDropdown,
+  Nav,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
+  const expand = "md";
   const onLogout = () => {
     localStorage.clear();
     navigate("/signin");
@@ -19,15 +31,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Container>
-        <Row>
-          <p>Logged In as: {user?.email}</p>
-        </Row>
-        <Row>
-          Home
-          <Col></Col>
-        </Row>
-      </Container>
+      <Sidebar />
     </div>
   );
 };
