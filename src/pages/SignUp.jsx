@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
-  Card,
   Container,
   InputGroup,
   Row,
   Col,
+  Alert,
 } from "react-bootstrap";
 import { MdOutlineEmail } from "react-icons/md";
 import { BsArrowRight, BsVectorPen, BsPerson } from "react-icons/bs";
@@ -24,16 +24,30 @@ const SignUp = () => {
   const navigate = useNavigate();
   const onRegister = async (e) => {
     e.preventDefault();
-    await axios
-      .post("https://poetry-pad.herokuapp.com/api/signup", {
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("verify-token", res.data);
-        navigate("/signin");
-      });
+    if (password === confirmPassword) {
+      if (password.length >= 6) {
+        await axios
+          .post("https://poetry-pad.herokuapp.com/api/signup", {
+            name: name,
+            penName: penName,
+            email: email,
+            password: password,
+          })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.error) {
+              return setError(res.data.error);
+            } else {
+              localStorage.setItem("verify-token", res.data);
+              navigate("/signin");
+            }
+          });
+      } else {
+        return setError("Password must have 6 or more characters");
+      }
+    } else {
+      return setError("Passwords do not match.");
+    }
   };
 
   useEffect(() => {
@@ -50,7 +64,14 @@ const SignUp = () => {
             <h1 className="auth-title">Sign Up</h1>
           </Row>
           <Row style={{ justifyContent: "space-between" }}>
-            <Form.Label className="text-danger">{error && error}</Form.Label>
+            <br />
+            <Form.Label>
+              {error && (
+                <Alert variant="danger" style={{ textAlign: "center" }}>
+                  {error}
+                </Alert>
+              )}
+            </Form.Label>
             {/* fullname------------------------------------------- */}
             <Col md={6}>
               <div>
@@ -102,9 +123,6 @@ const SignUp = () => {
               {/* email-------------------------------------------*/}
               <div>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className="text-danger">
-                    {error && error}
-                  </Form.Label>
                   <br />
                   <Form.Label className="text-muted">Your Email</Form.Label>
                   <InputGroup>

@@ -86,3 +86,10 @@ body {
   font-size: 20px;
   font-weight: 600;
 }
+
+.alert-link {
+  text-decoration: none;
+  background-color: inherit;
+  font-weight: bold;
+  color: inherit;
+}

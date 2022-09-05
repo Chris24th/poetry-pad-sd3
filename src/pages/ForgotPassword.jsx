@@ -1,11 +1,24 @@
 import { useState } from "react";
-import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import { MdOutlineEmail } from "react-icons/md";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import ToastRB from "./ToastRB";
 
 const ForgotPassword = () => {
   const [error, setError] = useState();
   const [email, setEmail] = useState();
+  const [success, setSuccess] = useState();
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +30,11 @@ const ForgotPassword = () => {
         localStorage.setItem("verify-email", JSON.stringify(res.data));
         if (res.data.error) {
           setError(res.data.error);
+        } else {
+          setShow(true);
+          setSuccess("Password reset link successfully sent to your email. ");
+          setError("");
+          // navigate("/signin");
         }
       });
   };
@@ -31,8 +49,19 @@ const ForgotPassword = () => {
                 <Form.Label className="my-4">
                   We will send you a link to your email for password reset.
                 </Form.Label>
-                <Form.Label className="text-danger">
-                  {error && error}
+                <br />
+                <Form.Label>
+                  {error && <Alert variant="danger">{error}</Alert>}
+                </Form.Label>
+                <Form.Label>
+                  {success && (
+                    <Alert variant="success">
+                      {success}
+                      <Link to="/signin" className="alert-link">
+                        Log In
+                      </Link>
+                    </Alert>
+                  )}
                 </Form.Label>
                 <br />
                 <Form.Label className="text-muted">Your Email</Form.Label>
@@ -45,30 +74,58 @@ const ForgotPassword = () => {
                   >
                     <MdOutlineEmail />
                   </InputGroup.Text>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{ borderLeft: "none" }}
-                    required
-                  />
+                  {success ? (
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={{ borderLeft: "none" }}
+                      disabled
+                    />
+                  ) : (
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={{ borderLeft: "none" }}
+                      required
+                    />
+                  )}
                 </InputGroup>
               </Form.Group>
               <div className="mt-5 auth-btn-cont">
-                <Button
-                  type="submit"
-                  style={{
-                    width: "150px",
-                    backgroundColor: "#252527",
-                    boxShadow: "0px 11px 20px rgba(0, 0, 0, 0.2)",
-                    border: "none",
-                    borderRadius: "10px",
-                    fontSize: "20px",
-                    height: "40px",
-                  }}
-                >
-                  Submit
-                </Button>
+                {success ? (
+                  <Button
+                    type="submit"
+                    style={{
+                      width: "150px",
+                      backgroundColor: "#252527",
+                      boxShadow: "0px 11px 20px rgba(0, 0, 0, 0.2)",
+                      border: "none",
+                      borderRadius: "10px",
+                      fontSize: "20px",
+                      height: "40px",
+                    }}
+                    disabled
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    style={{
+                      width: "150px",
+                      backgroundColor: "#252527",
+                      boxShadow: "0px 11px 20px rgba(0, 0, 0, 0.2)",
+                      border: "none",
+                      borderRadius: "10px",
+                      fontSize: "20px",
+                      height: "40px",
+                    }}
+                  >
+                    Submit
+                  </Button>
+                )}
               </div>
             </Form>
           </Col>

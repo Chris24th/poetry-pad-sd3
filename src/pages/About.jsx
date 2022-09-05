@@ -23,7 +23,7 @@ const About = () => {
         <Col xs={5}>
           <h1 className="about-hdr mb-4">Contact Us</h1>
           <div className="about-p">
-            <p>+1-415-555-0173</p>
+            <p>+63 927 987 6345</p>
             <p>poetrypad@gmail.com</p>
             <p>
               Cebu Institute of Technology-University, Cebu City, Cebu,

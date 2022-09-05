@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Figure,
+  Alert,
 } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
@@ -65,8 +66,13 @@ const SignIn = () => {
             <Form onSubmit={onLogin}>
               <h1 className="auth-title">Log In</h1>
               <Form.Group className="mb-4" controlId="formBasicEmail">
-                <Form.Label className="text-danger">
-                  {error && error}
+                <br />
+                <Form.Label>
+                  {error && (
+                    <Alert variant="danger" style={{ textAlign: "center" }}>
+                      {error}
+                    </Alert>
+                  )}
                 </Form.Label>
                 <br />
                 <Form.Label className="text-muted">Your Email</Form.Label>
