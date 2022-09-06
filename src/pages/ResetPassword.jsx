@@ -23,8 +23,8 @@ const ResetPassword = () => {
             password: password,
           })
           .then((res) => {
-            console.log(res.data);
             localStorage.clear();
+            navigate("/signin");
           });
       } else {
         setError("Password must have 6 or more characters");
