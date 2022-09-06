@@ -45,7 +45,6 @@ class Verification extends Notification
             ->line('Click the button/link below to verify your email address.')
             ->action('Verify Email', url('https://poetry-pad.vercel.app/verification'))
             ->line('Thank you for using our application!');
-            ->from('')
     }
 
     /**
