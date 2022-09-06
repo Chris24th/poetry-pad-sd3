@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('penName')->unique();
             $table->string('name');
-            $table->string('gender')->nullabe();
             $table->string('bio')->nullable();
             $table->string('token')->nullable();
             $table->rememberToken();
