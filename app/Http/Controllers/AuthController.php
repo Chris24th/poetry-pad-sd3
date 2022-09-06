@@ -30,8 +30,8 @@ class AuthController extends Controller
         }
         $user->token = $randomString;
         //
-        $checkEmail = User::where('email', $req->email);
-        $checkPN = User::where('penName', $req->penName);
+        $checkEmail = User::where('email', $req->email)->first();
+        $checkPN = User::where('penName', $req->penName)->first();
 
         if($checkEmail && $checkEmail->email == $req->email){
             return ["error" => "Email is already taken."];
