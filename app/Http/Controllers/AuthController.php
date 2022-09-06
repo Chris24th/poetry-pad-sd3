@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
 {
-
     function signup(Request $req)
     {
         $user = new User();
@@ -28,11 +27,25 @@ class AuthController extends Controller
         }
         $user->token = $randomString;
         //
-        Notification::send($user, new Verification());
-        $user->save();
+        $checkEmail = User::where('email', $req->email);
+        $checkPN = User::where('penName', $req->penName);
 
-        return $user->token;
+        if($user && $checkEmail){
+            return ["error" => "Email is already taken."];
+        }
+        else if($user && $checkPN){
+            return ["error" => "Pen Name is already taken."];
+        }
+        else if($user && $checkEmail && $checkPN){
+            return ["error" => "Email and Pen Name is already taken."];
+        }
+        else{
+            Notification::send($user, new Verification());
+            $user->save();
+            return $user->token;
+        }
     }
+
     function signin(Request $req)
     {
         $user = User::where('email', $req->email)->first();
