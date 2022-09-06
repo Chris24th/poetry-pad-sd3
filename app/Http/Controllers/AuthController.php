@@ -17,6 +17,9 @@ class AuthController extends Controller
     {
         $user = new User();
         $user->email = $req->email;
+        $user->name = $req->name;
+        $user->penName = $req->penName;
+        // $user->gender = $req->gender;
         $user->password = Hash::make($req->password);
         //make random string
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
