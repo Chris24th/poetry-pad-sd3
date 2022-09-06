@@ -44,7 +44,7 @@ class ChangePassword extends Notification
         ->greeting('Greetings!')
         ->line("We heard that you lost your Postello password. Sorry about that.
             But it's all good! You can use this link to reset your password:")
-        ->action('Reset your Password', url('https://poetrypad.herokuapp.com/resetpassword'))
+        ->action('Reset your Password', url('https://poetry-pad.vercel.app/resetpassword'))
         ->line('Thank you for using our application!');
     }
 
