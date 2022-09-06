@@ -33,14 +33,14 @@ class AuthController extends Controller
         $checkEmail = User::where('email', $req->email)->first();
         $checkPN = User::where('penName', $req->penName)->first();
 
-        if($checkEmail && $checkEmail->email == $req->email){
-            return ["error" => "Email is already taken."];
+        if($checkEmail && $checkPN && $checkEmail->email == $req->email && $checkPN->penName == $req->penName){
+            return ["error" => "Email and Pen Name is already taken."];
         }
         else if($checkPN && $checkPN->penName == $req->penName){
             return ["error" => "Pen Name is already taken."];
         }
-        else if($checkEmail && $checkPN){
-            return ["error" => "Email and Pen Name is already taken."];
+        else if($checkEmail && $checkEmail->email == $req->email){
+            return ["error" => "Email is already taken."];
         }
         else{
             Notification::send($user, new Verification());
