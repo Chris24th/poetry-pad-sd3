@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PoemController;
 use App\Http\Controllers\PostController;
 
 /*
@@ -25,4 +26,5 @@ Route::post('signup', [AuthController::class, 'signup']);
 Route::post('verification', [AuthController::class, 'verification']);
 Route::post('forgotpassword', [AuthController::class, 'forgotpassword']);
 Route::post('resetpassword', [AuthController::class, 'resetpassword']);
+Route::post('createpoem', [PoemController::class, 'createpoem']);
 
