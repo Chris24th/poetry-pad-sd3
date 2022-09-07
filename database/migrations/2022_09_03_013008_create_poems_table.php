@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('Stanza4Line2')->nullable();
             $table->string('Stanza4Line3')->nullable();
             $table->string('Stanza4Line4')->nullable();
-            $table->integer('idUser');
+            $table->string('penName');
             $table->string('privacy');
             $table->boolean('isDraft');
             $table->integer('likes')->nullable();
