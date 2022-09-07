@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poem;
 use Illuminate\Http\Request;
 
 class PoemController extends Controller
@@ -29,5 +30,9 @@ class PoemController extends Controller
         $poem->save();
         
         return $poem;
+    }
+
+    function displaypoem(Request $req){
+        
     }
 }
