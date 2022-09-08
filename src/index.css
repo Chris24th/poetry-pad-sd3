@@ -69,7 +69,9 @@ body {
   font-style: normal;
 }
 .about-p {
+  font-family: inherit;
   font-size: 18px;
+  font-weight: 600;
 }
 
 .about-icons {
@@ -98,30 +100,54 @@ body {
 .sidebar-container-s {
   display: flex;
   width: 250px;
-  height: 500px;
-  margin: 0;
-  background-color: #000;
-  color: #ffffff;
+  height: 400px;
+  margin-left: 50px;
+  padding: 5px;
+  background-image: linear-gradient(to bottom right, black, white);
   justify-content: center;
+  border: none;
+  border-radius: 10px;
+  position: absolute;
 }
 .sidebar-container-h {
   display: flex;
   width: 100px;
-  height: auto;
-  margin: 0;
-  background-color: #000;
-  color: #ffffff;
+  height: 400px;
+  margin-left: 50px;
+  padding: 5px;
+  background-image: linear-gradient(to bottom right, black, white);
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  position: absolute;
+}
+.nav-s {
+  background-color: inherit;
+  opacity: 0.2;
+  width: 220px;
+}
+.nav-h {
+  background-color: inherit;
+  width: 100px;
 }
 .sidebar-row-btn {
-  justify-content: right;
+  display: flex;
   background-color: inherit;
+  width: 90px;
+  margin-bottom: 20px;
+  justify-content: right;
 }
 .sidebar-btn {
-  margin: 20px;
-}
-.sidebar-nav {
   background-color: inherit;
+  text-align: right;
+  color: #ffffff;
+}
+.sidebar-navlink-cont {
+  background-color: inherit;
+  justify-content: center;
 }
 .sidebar-navlink {
   background-color: inherit;
+  color: #000;
+  text-align: center;
 }
