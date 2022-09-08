@@ -39,6 +39,7 @@ const SignUp = () => {
               return setError(res.data.error);
             } else {
               localStorage.setItem("verify-token", res.data);
+              window.location.reload();
               navigate("/signin");
             }
           });

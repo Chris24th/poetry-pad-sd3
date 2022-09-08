@@ -100,30 +100,42 @@ body {
 .sidebar-container-s {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 220px;
   height: 400px;
   margin-left: 50px;
   padding: 5px;
-  background-image: linear-gradient(to bottom right, black, white);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(150, 150, 150, 1) 100%
+  );
   border: none;
   border-radius: 10px;
+  box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.3);
 }
 .sidebar-container-h {
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 77px;
   height: 400px;
   margin-left: 50px;
   padding: 5px;
-  background-image: linear-gradient(to bottom right, black, white);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    105deg,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(150, 150, 150, 1) 100%
+  );
   border: none;
   border-radius: 10px;
+  box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.3);
 }
 .sb-cont-s {
   display: flex;
   flex-direction: column;
   background: none;
-  align-items: center;
+  align-items: left;
 }
 .sb-cont-h {
   display: flex;
@@ -136,11 +148,14 @@ body {
   justify-content: right;
   background: none;
   width: 95%;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .sb-btn {
   text-align: right;
   cursor: pointer;
   background: none;
+  color: #ffffff;
 }
 .sb-link-cont {
   margin-top: 40px;
@@ -152,13 +167,12 @@ body {
 .sb-link {
   display: inherit;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 15px;
   color: white;
-  width: fit-content;
+  width: max-content;
   padding-right: 20px;
   padding-left: 20px;
   margin-bottom: 10px;
-  font-weight: 600;
   height: 30px;
   background: none;
   align-items: center;

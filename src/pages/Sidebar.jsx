@@ -3,58 +3,115 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import Logo from "../images/logo.svg";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
-// import { HiBars3BottomRight } from "react-icons/hi";
+import { GoThreeBars } from "react-icons/go";
+import { ImBooks } from "react-icons/im";
+import { MdOutlineManageSearch, MdAccountBox } from "react-icons/md";
+import { GiArchiveResearch } from "react-icons/gi";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
-  const [size, setSize] = useState();
 
-  useEffect(() => {
-    setSize(window.innerWidth);
-    // return () => {
-    //   setSize(window.innerWidth);
-    // };
-  });
+  useEffect(() => {});
+
+  const allMenu = [
+    {
+      icon: <AiFillHome size={20} style={{ background: "none" }} />,
+      url: "/dashboard",
+      name: "POEMS FEED",
+    },
+    {
+      icon: <ImBooks size={20} style={{ background: "none" }} />,
+      url: "/dashboard",
+      name: "COLLECTION",
+    },
+    {
+      icon: <GiArchiveResearch size={20} style={{ background: "none" }} />,
+      url: "/dashboard",
+      name: "THESAURUS",
+    },
+    {
+      icon: <MdOutlineManageSearch size={20} style={{ background: "none" }} />,
+      url: "/dashboard",
+      name: "RHYME FINDER",
+    },
+    {
+      icon: <MdAccountBox size={20} style={{ background: "none" }} />,
+      url: "/profile",
+      name: "PROFILE",
+    },
+  ];
 
   return (
     <>
-      {size > 600 ? (
+      {window.innerWidth > 600 ? (
         <>
           {show ? (
-            <div className="sidebar-container-s">
+            <div
+              className="sidebar-container-s"
+              style={{
+                visibility: show ? "visible" : "hidden",
+                opacity: show ? 1 : 0,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
               <Container className="sb-cont-s">
-                <div className="sb-btn-cont">
-                  <span onClick={() => setShow(!show)} className="sb-btn">
-                    hide
+                <div className="sb-btn-cont" onClick={() => setShow(!show)}>
+                  <span className="sb-btn">
+                    <GoThreeBars
+                      size={20}
+                      style={{
+                        background: "none",
+                        color: "white",
+                      }}
+                    />
                   </span>
-                  {/* <HiBars3BottomRight /> */}
                 </div>
                 <div className="sb-link-cont">
-                  <Link to="/dashboard" className="sb-link">
-                    icon Active
-                  </Link>
-                  <Link to="/dashboard" className="sb-link">
-                    icon Link
-                  </Link>
+                  {allMenu.map((menu) => {
+                    return (
+                      <>
+                        <Link to={menu.url} className="sb-link">
+                          <div
+                            style={{ background: "none", marginRight: "10px" }}
+                          >
+                            {menu.icon}
+                          </div>
+                          {menu.name}
+                        </Link>
+                      </>
+                    );
+                  })}
                 </div>
               </Container>
             </div>
           ) : (
-            <div className="sidebar-container-h">
+            <div
+              className="sidebar-container-h"
+              style={{
+                visibility: !show ? "visible" : "hidden",
+                opacity: !show ? 1 : 0,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
               <Container className="sb-cont-h">
-                <div className="sb-btn-cont">
+                <div className="sb-btn-cont" onClick={() => setShow(!show)}>
                   <span onClick={() => setShow(!show)} className="sb-btn">
-                    show
+                    <GoThreeBars
+                      size={20}
+                      style={{ background: "none", color: "white" }}
+                    />
                   </span>
-                  {/* <HiBars3BottomRight /> */}
                 </div>
                 <div className="sb-link-cont">
-                  <Link to="/dashboard" className="sb-link">
-                    ic
-                  </Link>
-                  <Link to="/dashboard" className="sb-link">
-                    ic
-                  </Link>
+                  {allMenu.map((menu) => {
+                    return (
+                      <>
+                        <Link to={menu.url} className="sb-link p-2">
+                          {menu.icon}
+                        </Link>
+                      </>
+                    );
+                  })}
                 </div>
               </Container>
             </div>
