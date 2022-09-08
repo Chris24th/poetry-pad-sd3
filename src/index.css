@@ -99,55 +99,73 @@ body {
 /* -----------for sidebarr--------------- */
 .sidebar-container-s {
   display: flex;
+  flex-direction: column;
   width: 250px;
   height: 400px;
   margin-left: 50px;
   padding: 5px;
   background-image: linear-gradient(to bottom right, black, white);
-  justify-content: center;
   border: none;
   border-radius: 10px;
-  position: absolute;
 }
 .sidebar-container-h {
   display: flex;
+  flex-direction: column;
   width: 100px;
   height: 400px;
   margin-left: 50px;
   padding: 5px;
   background-image: linear-gradient(to bottom right, black, white);
-  justify-content: center;
   border: none;
   border-radius: 10px;
-  position: absolute;
 }
-.nav-s {
-  background-color: inherit;
-  opacity: 0.2;
-  width: 220px;
-}
-.nav-h {
-  background-color: inherit;
-  width: 100px;
-}
-.sidebar-row-btn {
+.sb-cont-s {
   display: flex;
-  background-color: inherit;
-  width: 90px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  background: none;
+  align-items: center;
+}
+.sb-cont-h {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  align-items: center;
+}
+.sb-btn-cont {
+  display: flex;
   justify-content: right;
+  background: none;
+  width: 95%;
 }
-.sidebar-btn {
-  background-color: inherit;
+.sb-btn {
   text-align: right;
-  color: #ffffff;
+  cursor: pointer;
+  background: none;
 }
-.sidebar-navlink-cont {
-  background-color: inherit;
-  justify-content: center;
+.sb-link-cont {
+  margin-top: 40px;
+  width: 80%;
+  display: inherit;
+  flex-direction: column;
+  background: none;
 }
-.sidebar-navlink {
-  background-color: inherit;
-  color: #000;
-  text-align: center;
+.sb-link {
+  display: inherit;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  width: fit-content;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  height: 30px;
+  background: none;
+  align-items: center;
+}
+.sb-link:hover {
+  color: black;
+  background: white;
+  border: none;
+  border-radius: 20px;
 }
