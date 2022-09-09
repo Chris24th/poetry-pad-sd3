@@ -35,8 +35,8 @@ const SignIn = () => {
           setError(res.data.error);
         } else {
           localStorage.setItem("user-data", JSON.stringify(res.data));
-          window.location.reload();
           navigate("/dashboard");
+          window.location.reload();
         }
       });
   };

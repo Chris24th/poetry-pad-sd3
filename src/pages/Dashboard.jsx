@@ -11,12 +11,12 @@ import {
   Nav,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
-  const expand = "md";
+
   const onLogout = () => {
     localStorage.clear();
     navigate("/signin");
