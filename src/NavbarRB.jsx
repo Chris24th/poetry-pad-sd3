@@ -191,7 +191,7 @@ const NavbarRB = () => {
               <Col xs={4}>
                 {allMenu.map((menu) => {
                   return (
-                    <h1 className="in-title">
+                    <h1 className="in-title" key={menu.name}>
                       {menu.url === active && menu.name}
                     </h1>
                   );

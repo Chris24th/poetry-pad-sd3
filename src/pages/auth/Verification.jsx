@@ -28,6 +28,7 @@ const Verification = () => {
 
   const onLogin = () => {
     navigate("/signin");
+    window.location.reload();
   };
 
   return (

@@ -58,7 +58,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <Container className=" d-flex align-items-center justify-content-center">
+    <Container className=" d-flex align-items-center justify-content-center ">
       <div className="container-auth">
         <Form onSubmit={onRegister}>
           <Row className="my-3">

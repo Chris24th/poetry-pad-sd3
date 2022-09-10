@@ -26,12 +26,17 @@ const Dashboard = () => {
     if (!user) {
       navigate("/signin");
     }
-    console.log(user);
   }, []);
 
   return (
     <div>
-      <Sidebar />
+      <Row>
+        <Col lg={3}>
+          <Sidebar />
+        </Col>
+        <Col lg={6}></Col>
+        <Col lg={3}></Col>
+      </Row>
     </div>
   );
 };

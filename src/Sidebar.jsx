@@ -51,12 +51,7 @@ const Sidebar = () => {
       {/* {window.innerWidth > 600 ? ( */}
       <>
         {show ? (
-          <div
-            className="sidebar-container-s"
-            style={{
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
+          <div className="sidebar-container-s">
             <Container className="sb-cont-s">
               <div className="sb-btn-cont" onClick={() => setShow(!show)}>
                 <span className="sb-btn">
@@ -88,15 +83,10 @@ const Sidebar = () => {
             </Container>
           </div>
         ) : (
-          <div
-            className="sidebar-container-h"
-            style={{
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
+          <div className="sidebar-container-h">
             <Container className="sb-cont-h">
               <div className="sb-btn-cont" onClick={() => setShow(!show)}>
-                <span onClick={() => setShow(!show)} className="sb-btn">
+                <span className="sb-btn">
                   <GoThreeBars
                     size={20}
                     style={{ background: "none", color: "white" }}
@@ -106,11 +96,18 @@ const Sidebar = () => {
               <div className="sb-link-cont">
                 {allMenu.map((menu) => {
                   return (
-                    <>
+                    <div
+                      key={menu.name}
+                      style={{
+                        background: "none",
+                        display: "inherit",
+                        alignItems: "center",
+                      }}
+                    >
                       <a href={menu.url} className="sb-link p-2">
                         {menu.icon}
                       </a>
-                    </>
+                    </div>
                   );
                 })}
               </div>
