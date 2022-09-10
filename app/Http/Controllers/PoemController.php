@@ -13,7 +13,7 @@ class PoemController extends Controller
         $poem->penName = $req->penName;
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
-        $poem->Stanza1Line1 = "req->Stanza1Line1";
+        $poem->Stanza1Line1 = strval($req->Stanza1Line1);
         $poem->Stanza1Line1 = $req->Stanza1Line2;
         if (!$poem->Stanza1Line1) {
             return ["error" => "Please add at least 2 lines"];
