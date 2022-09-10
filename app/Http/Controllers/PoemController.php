@@ -13,13 +13,12 @@ class PoemController extends Controller
         $poem->penName = $req->penName;
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
-        $poem->firstStanza = strval($req->firstStanza);
-        if (!$poem->firstStanza) {
-            return ["error" => "Please add at least 2 lines"];
-        } else {
-            $poem->save();
-            return $poem;
-        }
+        $poem->firstStanza = $req->firstStanza;
+        $poem->secondStanza = $req->secondStanza;
+        $poem->thirdStanza = $req->thirdStanza;
+        $poem->fourthStanza = $req->fourthStanza;
+        $poem->save();
+        return $poem;
     }
 
     function displaypoem(Request $req)
