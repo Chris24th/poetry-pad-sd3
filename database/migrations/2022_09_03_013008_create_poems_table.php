@@ -20,22 +20,7 @@ return new class extends Migration
             $table->boolean('isDraft');
             $table->integer('likes')->nullable();
             $table->integer('comments')->nullable();
-            $table->string('Stanza1Line1')->nullable();
-            $table->string('Stanza1Line2')->nullable();
-            $table->string('Stanza1Line3')->nullable();
-            $table->string('Stanza1Line4')->nullable();
-            $table->string('Stanza2Line1')->nullable();
-            $table->string('Stanza2Line2')->nullable();
-            $table->string('Stanza2Line3')->nullable();
-            $table->string('Stanza2Line4')->nullable();
-            $table->string('Stanza3Line1')->nullable();
-            $table->string('Stanza3Line2')->nullable();
-            $table->string('Stanza3Line3')->nullable();
-            $table->string('Stanza3Line4')->nullable();
-            $table->string('Stanza4Line1')->nullable();
-            $table->string('Stanza4Line2')->nullable();
-            $table->string('Stanza4Line3')->nullable();
-            $table->string('Stanza4Line4')->nullable();
+            $table->string('firstStanza')->nullable();
             $table->timestamps();
         });
     }
