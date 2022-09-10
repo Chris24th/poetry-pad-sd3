@@ -10,12 +10,12 @@ class PoemController extends Controller
     function createpoem(Request $req)
     {
         $poem = new Poem();
-        $poem->penName = '$req->penName';
+        $poem->penName = $req->penName;
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
         $poem->Stanza1Line1 = $req->Stanza1Line1;
         $poem->Stanza1Line1 = $req->Stanza1Line2;
-        if ($poem->Stanza1Line1) {
+        if (!$poem->Stanza1Line1) {
             return ["error" => "Please add at least 2 lines"];
         } else {
             $poem->save();
