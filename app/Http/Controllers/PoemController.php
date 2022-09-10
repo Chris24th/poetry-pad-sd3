@@ -13,6 +13,7 @@ class PoemController extends Controller
         $poem->penName = $req->penName;
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
+        $poem->title = $req->title;
         $poem->firstStanza = $req->firstStanza;
         $poem->secondStanza = $req->secondStanza;
         $poem->thirdStanza = $req->thirdStanza;

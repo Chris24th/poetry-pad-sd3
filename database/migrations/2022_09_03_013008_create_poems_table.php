@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('isDraft');
             $table->integer('likes')->nullable();
             $table->integer('comments')->nullable();
+            $table->string('title');
             $table->string('firstStanza');
             $table->string('secondStanza')->nullable();
             $table->string('thirdStanza')->nullable();
