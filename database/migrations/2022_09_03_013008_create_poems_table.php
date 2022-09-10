@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('isDraft');
             $table->integer('likes')->nullable();
             $table->integer('comments')->nullable();
-            $table->string('Stanza1Line1');
+            $table->string('Stanza1Line1')->nullable();
             $table->string('Stanza1Line2')->nullable();
             $table->string('Stanza1Line3')->nullable();
             $table->string('Stanza1Line4')->nullable();

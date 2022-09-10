@@ -16,8 +16,10 @@ class PoemController extends Controller
         $poem->Stanza1Line1 = $req->Stanza1Line1;
         $poem->Stanza1Line1 = $req->Stanza1Line2;
         $poem->save();
-
-        return $poem;
+        if ($poem->Stanza1Line1) {
+            return ['error' => 'Please add at least 2 lines'];
+        }
+        return $poem->id;
     }
 
     function displaypoem(Request $req)
