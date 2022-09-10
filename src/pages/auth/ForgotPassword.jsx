@@ -11,7 +11,6 @@ import {
 import { MdOutlineEmail } from "react-icons/md";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import ToastRB from "./ToastRB";
 
 const ForgotPassword = () => {
   const [error, setError] = useState();

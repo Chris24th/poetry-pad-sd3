@@ -1,15 +1,41 @@
-import { Navbar, Container, Nav, Col, Row, Figure } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Col,
+  Row,
+  Figure,
+  Dropdown,
+} from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Logo from "./images/logo.svg";
+import { MdAccountCircle } from "react-icons/md";
+import { BsThreeDots } from "react-icons/bs";
 
 const NavbarRB = () => {
   const [show, setShow] = useState(false);
   const [active, setActive] = useState("");
+  const [showSB, setShowSB] = useState(false);
+  const [show3D, setShow3D] = useState(false);
+  const [showDD, setShowDD] = useState(false);
   const user = JSON.parse(localStorage.getItem("user-data"));
 
   useEffect(() => {
     setActive(window.location.pathname);
-
+    if (
+      window.location.pathname === "/dashboard" ||
+      window.location.pathname === "/profile" ||
+      window.location.pathname === "/createpoem" ||
+      window.location.pathname === "/thesaurus" ||
+      window.location.pathname === "/rhymefinder" ||
+      window.location.pathname === "/collection" ||
+      window.location.pathname === "/collection/drafts"
+    ) {
+      setShowSB(true);
+    } else setShowSB(false);
+    if (window.location.pathname === "/createpoem") {
+      setShow3D(true);
+    } else setShow3D(false);
     return () => {
       console.log(active);
     };
@@ -25,8 +51,20 @@ const NavbarRB = () => {
       name: "Poems Feed",
     },
     {
+      url: "/profile",
+      name: "Poet Profile",
+    },
+    {
+      url: "/createpoem",
+      name: "New Poem",
+    },
+    {
       url: "/collection",
-      name: "collection",
+      name: "Collection",
+    },
+    {
+      url: "/collection/drafts",
+      name: "Drafts",
     },
     {
       url: "/thesaurus",
@@ -36,17 +74,11 @@ const NavbarRB = () => {
       url: "/rhymefinder",
       name: "Rhyme Finder",
     },
-    {
-      url: "/profile",
-      name: "Poet Profile",
-    },
   ];
 
   return (
     <div>
-      {active != "/dashboard" ||
-      active != "/profile" ||
-      active != "/thesaurus" ? (
+      {showSB === false ? (
         <Navbar
           bg="#FFFFFF"
           expand="md"
@@ -156,13 +188,28 @@ const NavbarRB = () => {
                   />
                 </Figure>
               </Col>
-              <Col xs={4} className="in-title">
+              <Col xs={4}>
                 {allMenu.map((menu) => {
-                  return <>{menu.url === active && menu.name}</>;
+                  return (
+                    <h1 className="in-title">
+                      {menu.url === active && menu.name}
+                    </h1>
+                  );
                 })}
               </Col>
               <Col xs={4} className="in-acc">
-                Account
+                <Dropdown>
+                  <Dropdown.Toggle variant="none" className="in-right">
+                    <MdAccountCircle size={35} />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="/profile">Account</Dropdown.Item>
+                    <Dropdown.Item href="/collection/drafts">
+                      Drafts
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={onLogout}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Col>
             </Row>
           </div>

@@ -186,12 +186,19 @@ body {
 .in-title {
   display: inherit;
   align-items: center;
-  justify-content: center;
+  text-align: center;
   font-family: "Berkshire Swash";
-  font-size: 25px;
 }
 .in-acc {
   display: inherit;
   align-items: center;
   justify-content: right;
+}
+.in-right {
+  margin-right: 20px;
+}
+
+/*---------------- new poem -----------------*/
+
+.newpoem-col3-btn {
 }

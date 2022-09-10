@@ -1,12 +1,13 @@
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
-import Home from "./pages/Home";
-import Verification from "./pages/Verification";
+import SignUp from "./pages/auth/SignUp";
+import SignIn from "./pages/auth/SignIn";
+import Home from "./pages/auth/Home";
+import Verification from "./pages/auth/Verification";
 import Profile from "./pages/Profile";
-import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
-import About from "./pages/About";
-import ResetPassword from "./pages/ResetPassword";
+import About from "./pages/auth/About";
+import ResetPassword from "./pages/auth/ResetPassword";
+import NewPoem from "./pages/NewPoem";
 
 const routes = [
   {
@@ -44,6 +45,10 @@ const routes = [
   {
     url: "/profile",
     page: <Profile />,
+  },
+  {
+    url: "/createpoem",
+    page: <NewPoem />,
   },
 ];
 

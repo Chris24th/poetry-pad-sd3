@@ -15,7 +15,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BsArrowRight } from "react-icons/bs";
 import { FiKey } from "react-icons/fi";
 import axios from "axios";
-import LoginFrame from "../images/loginframe.svg";
+import LoginFrame from "../../images/loginframe.svg";
 
 const SignIn = () => {
   const [email, setEmail] = useState();
