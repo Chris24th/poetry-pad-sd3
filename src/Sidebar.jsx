@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import Logo from "./images/logo.svg";
 import { Link } from "react-router-dom";
-import { AiFillHome } from "react-icons/ai";
+import { AiFillHome, AiOutlinePlusSquare } from "react-icons/ai";
 import { GoThreeBars } from "react-icons/go";
 import { ImBooks } from "react-icons/im";
 import { MdOutlineManageSearch, MdAccountBox } from "react-icons/md";
@@ -21,23 +21,28 @@ const Sidebar = () => {
     },
     {
       icon: <ImBooks size={20} style={{ background: "none" }} />,
-      url: "/dashboard",
+      url: "/collection",
       name: "COLLECTION",
     },
     {
       icon: <GiArchiveResearch size={20} style={{ background: "none" }} />,
-      url: "/dashboard",
+      url: "/thesaurus",
       name: "THESAURUS",
     },
     {
       icon: <MdOutlineManageSearch size={20} style={{ background: "none" }} />,
-      url: "/dashboard",
+      url: "/rhymefinder",
       name: "RHYME FINDER",
     },
     {
       icon: <MdAccountBox size={20} style={{ background: "none" }} />,
       url: "/profile",
       name: "PROFILE",
+    },
+    {
+      icon: <AiOutlinePlusSquare size={20} style={{ background: "none" }} />,
+      url: "/createpoem",
+      name: "NEW POEM",
     },
   ];
 
@@ -68,14 +73,14 @@ const Sidebar = () => {
                 {allMenu.map((menu) => {
                   return (
                     <>
-                      <Link to={menu.url} className="sb-link">
+                      <a href={menu.url} className="sb-link">
                         <div
                           style={{ background: "none", marginRight: "10px" }}
                         >
                           {menu.icon}
                         </div>
                         {menu.name}
-                      </Link>
+                      </a>
                     </>
                   );
                 })}
@@ -102,9 +107,9 @@ const Sidebar = () => {
                 {allMenu.map((menu) => {
                   return (
                     <>
-                      <Link to={menu.url} className="sb-link p-2">
+                      <a href={menu.url} className="sb-link p-2">
                         {menu.icon}
-                      </Link>
+                      </a>
                     </>
                   );
                 })}

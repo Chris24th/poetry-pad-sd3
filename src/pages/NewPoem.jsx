@@ -1,17 +1,17 @@
 import Sidebar from "../Sidebar";
 import React from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const NewPoem = () => {
   const onAdd = () => {};
   return (
     <div>
       <Row>
-        <Col md={3}>
+        <Col lg={3}>
           <Sidebar />
         </Col>
-        <Col md={6}>
-          <Row className="justify-content-center">
+        <Col lg={6}>
+          <Row className="justify-content-center p-3">
             <Form>
               <Form.Group className="mb-3">
                 <Form.Label>Poem Title</Form.Label>
@@ -28,14 +28,24 @@ const NewPoem = () => {
                   placeholder="1st Stanza"
                 ></Form.Control>
               </Form.Group>
-              <button onClick={onAdd}> Add Stanza + </button>
             </Form>
+            <button onClick={onAdd}> Add Stanza + </button>
           </Row>
         </Col>
-        <Col md={3}>
+        <Col lg={3}>
           <Row className="flex-column ">
             <Col style={{ textAlign: "end" }}>
-              x<br />x<br />x
+              <Button variant="dark" className="np-col3">
+                Publish
+              </Button>
+              <br />
+              <Button variant="light" className="np-col3">
+                Save as draft
+              </Button>
+              <br />
+              <Button variant="light" className="np-col3">
+                Cancel
+              </Button>
             </Col>
           </Row>
         </Col>
