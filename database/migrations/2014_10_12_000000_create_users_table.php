@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('bio')->nullable();
             $table->string('token')->nullable();
+            $table->string('url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE users ADD profilePic MEDIUMBLOB NULL");
     }
 
     /**

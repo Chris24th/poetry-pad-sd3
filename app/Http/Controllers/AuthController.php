@@ -100,7 +100,7 @@ class AuthController extends Controller
     function editprofile(Request $req)
     {
         $user = User::where('id', $req->id)->first();
-        $user->profilePic = $req->profilePic;
+        $user->url = $req->url;
         $user->name = $req->name;
         $user->bio = $req->bio;
         return $user;
