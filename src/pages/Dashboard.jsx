@@ -40,7 +40,7 @@ const Dashboard = () => {
                 </div>
               </Row>
               <Row className="mb-3">
-                <span>1st Stanza</span>
+                <span>First Stanza</span>
               </Row>
               <a>Read More</a>
               <Row className="mt-3 justify-content-between">
