@@ -24,5 +24,16 @@ class PoemController extends Controller
 
     function displaypoem(Request $req)
     {
+        $maxID = Poem::max('id');
+        $commentArr = array();
+
+        for ($i = $maxID; $i > 0; $i--) {
+            $data = Poem::where('id', $i)->first();
+            if ($data) {
+                array_push($commentArr, $data);
+            }
+        }
+        if ($commentArr)
+            return $commentArr;
     }
 }
