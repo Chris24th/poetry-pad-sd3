@@ -182,7 +182,7 @@ const NewPoem = () => {
             </Button>
           </Row>
         </Col>
-        <Col lg={3}>
+        <Col lg={3} className="d-flex justify-content-center">
           <Row className="flex-column ">
             <Col style={{ textAlign: "end" }}>
               <Button variant="dark" className="np-col3" onClick={handleShowP}>

@@ -49,20 +49,24 @@ const Profile = () => {
     e.preventDefault();
 
     {
-      url &&
-        axios
-          .post("https://poetry-pad.herokuapp.com/api/editprofile", {
-            id: user.id,
-            url: url,
-            name: name,
-            bio: bio,
-          })
-          .then((res) => {
-            console.log(res.data);
-            localStorage.setItem("user-data", JSON.stringify(res.data));
-            setShow(false);
-          });
+      url && api();
     }
+  };
+
+  const api = async () => {
+    axios
+      .post("https://poetry-pad.herokuapp.com/api/editprofile", {
+        id: user.id,
+        url: url,
+        name: name,
+        bio: bio,
+        penName: user.penName,
+      })
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("user-data", JSON.stringify(res.data));
+        setShow(false);
+      });
   };
 
   useEffect(() => {
@@ -115,9 +119,15 @@ const Profile = () => {
                 <span className="fs-5 bg-black text-light d-flex mb-2 p-1 ps-3">
                   {user.email}
                 </span>
-                <label>Poems</label>
-                <span className="fs-5 bg-black text-light d-flex p-1 ps-3">
-                  xx
+                <label>Published Poems</label>
+                <span
+                  className="fs-5 bg-black text-light d-flex p-1 ps-3"
+                  onClick={() => {
+                    api();
+                    window.location.reload();
+                  }}
+                >
+                  {user.publishedPoems ? user.publishedPoems : "none"}
                 </span>
               </div>
               <div>
