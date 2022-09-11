@@ -103,6 +103,7 @@ class AuthController extends Controller
         $user->url = $req->url;
         $user->name = $req->name;
         $user->bio = $req->bio;
+        $user->save();
         return $user;
     }
 }

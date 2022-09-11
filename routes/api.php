@@ -26,4 +26,5 @@ Route::post('signup', [AuthController::class, 'signup']);
 Route::post('verification', [AuthController::class, 'verification']);
 Route::post('forgotpassword', [AuthController::class, 'forgotpassword']);
 Route::post('resetpassword', [AuthController::class, 'resetpassword']);
+Route::post('editprofile', [AuthController::class, 'editprofile']);
 Route::post('createpoem', [PoemController::class, 'createpoem']);
