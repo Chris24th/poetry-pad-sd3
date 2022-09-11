@@ -11,6 +11,8 @@ import { useState, useEffect } from "react";
 import Logo from "./images/logo.svg";
 import { MdAccountCircle } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
+import { Image } from "cloudinary-react";
+import { useNavigate } from "react-router-dom";
 
 const NavbarRB = () => {
   const [show, setShow] = useState(false);
@@ -18,6 +20,7 @@ const NavbarRB = () => {
   const [showSB, setShowSB] = useState(false);
   const [show3D, setShow3D] = useState(false);
   const [showDD, setShowDD] = useState(false);
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
 
   useEffect(() => {
@@ -44,6 +47,7 @@ const NavbarRB = () => {
   const onLogout = () => {
     localStorage.clear();
     window.location.reload();
+    navigate("/signin");
   };
   const allMenu = [
     {
@@ -200,7 +204,18 @@ const NavbarRB = () => {
               <Col xs={4} className="in-acc">
                 <Dropdown>
                   <Dropdown.Toggle variant="none" className="in-right">
-                    <MdAccountCircle size={35} />
+                    {user.url ? (
+                      <Image
+                        width={35}
+                        height={35}
+                        alt="profile picture"
+                        cloudName="dabc77dwa"
+                        publicID={user.url}
+                        className="border border-1 border-dark rounded-3 shadow-sm"
+                      />
+                    ) : (
+                      <MdAccountCircle size={35} />
+                    )}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item href="/profile">Account</Dropdown.Item>

@@ -8,8 +8,8 @@ const App = () => {
 
   return (
     <div>
-      <NavbarRB />
       <Router>
+        <NavbarRB />
         <Routes>
           {routes &&
             routes.map((route) => (

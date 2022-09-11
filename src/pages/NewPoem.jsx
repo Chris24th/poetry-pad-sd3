@@ -97,9 +97,8 @@ const NewPoem = () => {
           fourthStanza: fourthStanza,
         })
         .then((res) => {
-          console.log(res.data);
-          // navigate("/collection");
-          // window.location.reload();
+          navigate("/collection");
+          window.location.reload();
         });
     }
   };
