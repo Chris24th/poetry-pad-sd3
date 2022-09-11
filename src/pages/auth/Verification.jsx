@@ -14,7 +14,6 @@ const Verification = () => {
           token: token,
         })
         .then((res) => {
-          console.log(res.data);
           localStorage.clear();
         }));
   };
@@ -22,7 +21,6 @@ const Verification = () => {
     if (localStorage.getItem("user-data")) {
       navigate("/");
     }
-
     setToken(localStorage.getItem("verify-token"));
   }, [api()]);
 

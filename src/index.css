@@ -222,5 +222,7 @@ body {
   text-align: right;
   cursor: pointer;
 }
-.prof-span {
+.prof-pp {
+  width: 90%;
+  height: 45%;
 }

@@ -13,32 +13,64 @@ import {
 import { useNavigate } from "react-router-dom";
 import quill from "../images/quill.svg";
 import { IoMdSettings } from "react-icons/io";
+import axios from "axios";
+import { Image } from "cloudinary-react";
 
 const Profile = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
-  const [profilePic, setProfilePic] = useState();
+  // const [profilePic, setProfilePic] = useState(quill);
+  const [pic, setPic] = useState();
   const [show, setShow] = useState(false);
+  const [url, setUrl] = useState(user.url);
+  const [name, setName] = useState(user.name);
+  const [bio, setBio] = useState(user.bio);
+  // const [displayP, setDisplayP] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+    let profilePic = e.target.files[0];
     const [file] = e.target.files;
-    setProfilePic(URL.createObjectURL(file));
+    setPic(URL.createObjectURL(file));
+    console.log(profilePic);
+    const formData = new FormData();
+    formData.append("file", profilePic);
+    formData.append("upload_preset", "jh34uvpf");
+    await axios
+      .post("https://api.cloudinary.com/v1_1/dabc77dwa/image/upload", formData)
+      .then((res) => {
+        setUrl(res.data.secure_url);
+      });
   };
 
-  const onSave = (e) => {
+  const onSave = async (e) => {
     e.preventDefault();
-    console.log(profilePic);
+
+    {
+      url &&
+        axios
+          .post("https://poetry-pad.herokuapp.com/api/editprofile", {
+            id: user.id,
+            url: url,
+            name: name,
+            bio: bio,
+          })
+          .then((res) => {
+            console.log(res.data);
+            localStorage.setItem("user-data", JSON.stringify(res.data));
+            setShow(false);
+          });
+    }
   };
 
   useEffect(() => {
-    // const []
+    // setDisplayP(user.url);
+    console.log(user.url);
     if (!user) {
       navigate("/signin");
     }
-    setProfilePic(quill);
   }, []);
 
   return (
@@ -53,14 +85,18 @@ const Profile = () => {
               xs={3}
               className="bg-black prof-cont-1 d-flex justify-content-center"
             >
-              <Figure style={{ background: "none" }}>
-                <Figure.Image
-                  width={220}
-                  height={150}
-                  alt="profile picture"
-                  src={profilePic && profilePic}
-                  className="border border-3 border-secondary rounded-3 mt-5"
-                />
+              <Figure
+                className="d-flex justify-content-center"
+                style={{ background: "none" }}
+              >
+                {user.url && (
+                  <Image
+                    alt="profile picture"
+                    cloudName="dabc77dwa"
+                    publicID={user.url}
+                    className="border border-3 border-secondary rounded-3 mt-4 prof-pp"
+                  />
+                )}
               </Figure>
             </Col>
             <Col xs={8}>
@@ -87,12 +123,7 @@ const Profile = () => {
               <div>
                 <label className="fw-bold mb-2">Bio</label>
                 <br />
-                <span>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Soluta rem assumenda, nobis odio similique pariatur
-                  consectetur at omnis, repellendus rerum quia? Omnis minus
-                  suscipit dicta id dolores itaque impedit possimus!
-                </span>
+                <span>{user.bio ? user.bio : "No bio"}</span>
               </div>
             </Col>
           </Row>
@@ -115,15 +146,17 @@ const Profile = () => {
             <Form.Group className="mb-3">
               <Form.Label>Profile Picture</Form.Label>
               <br />
-              <Figure>
-                <Figure.Image
-                  width={200}
-                  height={200}
-                  alt="profile picture"
-                  src={profilePic && profilePic}
-                  className="border border-3 border-secondary rounded-3"
-                />
-              </Figure>
+              {pic && (
+                <Figure>
+                  <Figure.Image
+                    width={200}
+                    height={200}
+                    alt="profile picture"
+                    src={pic}
+                    className="border border-3 border-secondary rounded-3"
+                  />
+                </Figure>
+              )}
               <Form.Control
                 type="file"
                 size="sm"
@@ -133,9 +166,27 @@ const Profile = () => {
                 }}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" placeholder="Full Name" />
+              <Form.Control
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Bio"
+                value={bio}
+                onChange={(e) => {
+                  setBio(e.target.value);
+                }}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
