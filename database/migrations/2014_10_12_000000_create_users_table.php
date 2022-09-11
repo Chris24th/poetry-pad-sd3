@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('token')->nullable();
             $table->string('url')->nullable();
+            $table->string('publishedPoems')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

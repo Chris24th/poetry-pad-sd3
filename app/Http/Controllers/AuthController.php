@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Poem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Notifications\Verification;
@@ -103,6 +104,10 @@ class AuthController extends Controller
         $user->url = $req->url;
         $user->name = $req->name;
         $user->bio = $req->bio;
+
+        // $ctr = 0;
+        $ctr = Poem::where('penName', $req->penName)->count();
+        $user->publishedPoems = $ctr;
         $user->save();
         return $user;
     }
