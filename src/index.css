@@ -1,6 +1,7 @@
 @import url("http://fonts.cdnfonts.com/css/berkshire-swash");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Cousine");
+@import url("https://fonts.googleapis.com/css?family=Poppins");
 
 body {
   margin: 0;
@@ -205,4 +206,21 @@ body {
   margin-right: 20px;
   width: 150px;
   margin-bottom: 5px;
+}
+
+/* --------------poet profile---------------- */
+
+.prof-cont {
+}
+.prof-cont-1 {
+  height: 350px;
+  clip-path: polygon(100% 0, 100% 75%, 75% 100%, 50% 75%, 25% 100%, 0 75%, 0 0);
+}
+.prof-cont-2 {
+}
+.prof-settings {
+  text-align: right;
+  cursor: pointer;
+}
+.prof-span {
 }
