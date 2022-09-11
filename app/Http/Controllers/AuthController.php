@@ -32,16 +32,13 @@ class AuthController extends Controller
         $checkEmail = User::where('email', $req->email)->first();
         $checkPN = User::where('penName', $req->penName)->first();
 
-        if($checkEmail && $checkPN && $checkEmail->email == $req->email && $checkPN->penName == $req->penName){
+        if ($checkEmail && $checkPN && $checkEmail->email == $req->email && $checkPN->penName == $req->penName) {
             return ["error" => "Email and Pen Name is already taken."];
-        }
-        else if($checkPN && $checkPN->penName == $req->penName){
+        } else if ($checkPN && $checkPN->penName == $req->penName) {
             return ["error" => "Pen Name is already taken."];
-        }
-        else if($checkEmail && $checkEmail->email == $req->email){
+        } else if ($checkEmail && $checkEmail->email == $req->email) {
             return ["error" => "Email is already taken."];
-        }
-        else{
+        } else {
             Notification::send($user, new Verification());
             $user->save();
             return $user->token;
@@ -81,7 +78,8 @@ class AuthController extends Controller
             return ['message' => 'Your email is already verified!'];
         }
     }
-    function forgotpassword(Request $req){
+    function forgotpassword(Request $req)
+    {
         $user = User::where('email', $req->email)->first();
         if (!$user || $req->email != $user->email) {
             return ["error" => "Email not found"];
@@ -99,5 +97,12 @@ class AuthController extends Controller
         $user->updated_at = $date;
         $user->save();
     }
-
+    function editprofile(Request $req)
+    {
+        $user = User::where('id', $req->id)->first();
+        $user->profilePic = $req->profilePic;
+        $user->name = $req->name;
+        $user->bio = $req->bio;
+        return $user;
+    }
 }
