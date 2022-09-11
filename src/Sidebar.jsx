@@ -10,8 +10,11 @@ import { GiArchiveResearch } from "react-icons/gi";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
+  const [active, setActive] = useState("");
 
-  useEffect(() => {});
+  useEffect(() => {
+    setActive(window.location.pathname);
+  });
 
   const allMenu = [
     {
@@ -68,14 +71,25 @@ const Sidebar = () => {
                 {allMenu.map((menu) => {
                   return (
                     <>
-                      <a href={menu.url} className="sb-link">
-                        <div
-                          style={{ background: "none", marginRight: "10px" }}
-                        >
-                          {menu.icon}
-                        </div>
-                        {menu.name}
-                      </a>
+                      {active == menu.url ? (
+                        <a href={menu.url} className="sb-link-active">
+                          <div
+                            style={{ background: "none", marginRight: "10px" }}
+                          >
+                            {menu.icon}
+                          </div>
+                          {menu.name}
+                        </a>
+                      ) : (
+                        <a href={menu.url} className="sb-link">
+                          <div
+                            style={{ background: "none", marginRight: "10px" }}
+                          >
+                            {menu.icon}
+                          </div>
+                          {menu.name}
+                        </a>
+                      )}
                     </>
                   );
                 })}
@@ -104,9 +118,15 @@ const Sidebar = () => {
                         alignItems: "center",
                       }}
                     >
-                      <a href={menu.url} className="sb-link p-2">
-                        {menu.icon}
-                      </a>
+                      {active == menu.url ? (
+                        <a href={menu.url} className="sb-link-active p-2">
+                          {menu.icon}
+                        </a>
+                      ) : (
+                        <a href={menu.url} className="sb-link p-2">
+                          {menu.icon}
+                        </a>
+                      )}
                     </div>
                   );
                 })}

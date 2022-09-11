@@ -80,10 +80,10 @@ const Profile = () => {
   return (
     <div>
       <Row>
-        <Col md={3} className="mb-4">
+        <Col lg={3} className="mb-4">
           <Sidebar />
         </Col>
-        <Col md={7} className="prof-cont">
+        <Col lg={7} className="prof-cont">
           <Row className="justify-content-between m-3">
             <Col
               xs={3}

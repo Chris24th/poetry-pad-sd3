@@ -179,6 +179,28 @@ body {
   background: none;
   align-items: center;
 }
+.sb-link-active {
+  display: inherit;
+  text-decoration: none;
+  font-size: 15px;
+  color: black;
+  background: white;
+  width: max-content;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  height: 30px;
+  width: 180px;
+  align-items: center;
+  border: none;
+  border-radius: 20px;
+}
+.sb-link-active:hover {
+  color: black;
+  background: white;
+  border: none;
+  border-radius: 20px;
+}
 .sb-link:hover {
   color: black;
   background: white;
