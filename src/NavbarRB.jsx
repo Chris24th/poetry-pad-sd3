@@ -46,8 +46,8 @@ const NavbarRB = () => {
 
   const onLogout = () => {
     localStorage.clear();
-    window.location.reload();
     navigate("/signin");
+    window.location.reload();
   };
   const allMenu = [
     {

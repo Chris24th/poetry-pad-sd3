@@ -25,7 +25,7 @@ const Dashboard = () => {
   return (
     <div>
       <Row>
-        <Col lg={3}>
+        <Col lg={3} className="mb-4">
           <Sidebar />
         </Col>
         <Col lg={6}>
