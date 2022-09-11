@@ -22,7 +22,7 @@ class PoemController extends Controller
         return $poem;
     }
 
-    function displaypoem(Request $req)
+    function displaypoem()
     {
         $maxID = Poem::max('id');
         $commentArr = array();

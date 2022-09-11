@@ -43,7 +43,7 @@ class Verification extends Notification
         return (new MailMessage)
             ->greeting('Good Day!')
             ->line('Click the button/link below to verify your email address.')
-            ->action('Verify Email', url('https://poetry-pad.vercel.app/verification'))
+            ->action('Verify Email', url('https://poetrypad.vercel.app/verification'))
             ->line('Thank you for using our application!');
     }
 
