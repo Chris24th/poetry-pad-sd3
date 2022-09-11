@@ -47,7 +47,7 @@ const Dashboard = () => {
                 <Col md={3}>
                   <Row>
                     <Col sm={6}>photo</Col>
-                    <Col sm={6}>Mr quill</Col>
+                    <Col sm={6}>name</Col>
                   </Row>
                 </Col>
                 <Col md={3} className="d-flex justify-content-end">

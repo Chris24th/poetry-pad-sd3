@@ -134,6 +134,7 @@ const Profile = () => {
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
+            style={{ background: "rgba(0,0,0,0.2)" }}
           >
             <Modal.Header closeButton>
               <Modal.Title className="in-title">Poet Profile</Modal.Title>

@@ -200,7 +200,11 @@ const NewPoem = () => {
         </Col>
       </Row>
       {/*------------------------------- modals ----------------------------- */}
-      <Modal show={showC} onHide={handleCloseC}>
+      <Modal
+        show={showC}
+        onHide={handleCloseC}
+        style={{ background: "rgba(0,0,0,0.2)" }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Cancel Confirmation</Modal.Title>
         </Modal.Header>
@@ -217,7 +221,11 @@ const NewPoem = () => {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showP} onHide={handleCloseP}>
+      <Modal
+        show={showP}
+        onHide={handleCloseP}
+        style={{ background: "rgba(0,0,0,0.2)" }}
+      >
         <Modal.Header closeButton>
           <Modal.Title className="in-title" style={{ textAlign: "left" }}>
             Publish Poem
