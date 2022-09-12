@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import About from "./pages/auth/About";
 import ResetPassword from "./pages/auth/ResetPassword";
 import NewPoem from "./pages/NewPoem";
+import Collection from "./pages/Collection";
+import Drafts from "./pages/Drafts";
 
 const routes = [
   {
@@ -49,6 +51,14 @@ const routes = [
   {
     url: "/createpoem",
     page: <NewPoem />,
+  },
+  {
+    url: "/collection",
+    page: <Collection />,
+  },
+  {
+    url: "/collection/drafts",
+    page: <Drafts />,
   },
 ];
 

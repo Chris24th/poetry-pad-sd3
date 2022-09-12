@@ -46,8 +46,7 @@ const ForgotPassword = () => {
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label className="my-4">
-                  We will send yonpm start u a link to your email for password
-                  reset.
+                  We will send you a link to your email for password reset.
                 </Form.Label>
                 <br />
                 <Form.Label>

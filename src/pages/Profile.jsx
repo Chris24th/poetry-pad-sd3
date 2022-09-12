@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
-import { Row, Col, Form, Figure, Modal, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Figure,
+  Modal,
+  Button,
+  Spinner,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
 import axios from "axios";
@@ -12,6 +20,7 @@ const Profile = () => {
   const [pic, setPic] = useState();
   const [show, setShow] = useState(false);
   const [url, setUrl] = useState(user?.url);
+  const [newUrl, setNewUrl] = useState();
   const [name, setName] = useState(user?.name);
   const [bio, setBio] = useState(user?.bio);
 
@@ -30,15 +39,18 @@ const Profile = () => {
       .post("https://api.cloudinary.com/v1_1/dabc77dwa/image/upload", formData)
       .then((res) => {
         setUrl(res.data.secure_url);
+        setNewUrl(res.data.secure_url);
+        console.log(res.data.secure_url);
       });
   };
 
   const onSave = async (e) => {
     e.preventDefault();
-
     {
       url && api();
     }
+    setShow(false);
+    window.location.reload();
   };
 
   const api = async () => {
@@ -52,8 +64,6 @@ const Profile = () => {
       })
       .then((res) => {
         localStorage.setItem("user-data", JSON.stringify(res.data));
-        window.location.reload();
-        setShow(false);
       });
   };
 
@@ -61,7 +71,7 @@ const Profile = () => {
     if (!user) {
       navigate("/signin");
     }
-  }, []);
+  }, [api()]);
 
   return (
     <>
@@ -108,12 +118,7 @@ const Profile = () => {
                       {user.email}
                     </span>
                     <label>Published Poems</label>
-                    <span
-                      className="fs-5 bg-black text-light d-flex p-1 ps-3"
-                      onClick={() => {
-                        api();
-                      }}
-                    >
+                    <span className="fs-5 bg-black text-light d-flex p-1 ps-3">
                       {user.publishedPoems ? user.publishedPoems : "none"}
                     </span>
                   </div>
@@ -192,9 +197,28 @@ const Profile = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Back
               </Button>
-              <Button variant="dark" onClick={onSave}>
-                Save Changes
-              </Button>
+              {pic ? (
+                newUrl ? (
+                  <Button variant="dark" onClick={onSave}>
+                    Save Changes
+                  </Button>
+                ) : (
+                  <Button variant="dark" onClick={onSave} disabled>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      style={{ background: "none" }}
+                    />{" "}
+                    Save Changes
+                  </Button>
+                )
+              ) : (
+                <Button variant="dark" onClick={onSave}>
+                  Save Changes
+                </Button>
+              )}
             </Modal.Footer>
           </Modal>
         </div>
