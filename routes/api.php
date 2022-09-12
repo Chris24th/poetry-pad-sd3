@@ -28,4 +28,4 @@ Route::post('forgotpassword', [AuthController::class, 'forgotpassword']);
 Route::post('resetpassword', [AuthController::class, 'resetpassword']);
 Route::post('editprofile', [AuthController::class, 'editprofile']);
 Route::post('createpoem', [PoemController::class, 'createpoem']);
-Route::post('displaypoem', [PoemController::class, 'displaypoem']);
+Route::get('displaypoem', [PoemController::class, 'displaypoem']);
