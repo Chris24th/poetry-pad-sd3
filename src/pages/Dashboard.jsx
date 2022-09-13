@@ -8,6 +8,8 @@ import {
   Button,
   Dropdown,
   DropdownButton,
+  Form,
+  Alert,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
@@ -26,13 +28,57 @@ const Dashboard = () => {
   const [showRM, setShowRM] = useState(false);
   const [clickedPoem, setClickedPoem] = useState();
   const [showDel, setShowDel] = useState(false);
+  const [showEd, setShowEd] = useState(false);
+  //----------------------------------------
+  const [title, setTitle] = useState();
+  const [firstStanza, setFirstStanza] = useState();
+  const [secondStanza, setSecondStanza] = useState();
+  const [thirdStanza, setThirdStanza] = useState();
+  const [fourthStanza, setFourthStanza] = useState();
+
+  const [error, setError] = useState("");
+  const [privacy, setPrivacy] = useState();
+  const [isDraft, setIsDraft] = useState();
+  const [stanza, setStanza] = useState(0);
+
+  // const onAdd = () => {
+  //   if (!title && !firstStanza) {
+  //     setError("Please add your poem title and your first stanza.");
+  //   } else if (!title) {
+  //     setError("Please add your poem title.");
+  //   } else if (!firstStanza) {
+  //     setError("Please add your first stanza.");
+  //     setStanza(0);
+  //   } else {
+  //     setStanza(stanza + 1);
+  //     setError("");
+  //   }
+  // };
+  //----------------------------------------
 
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
   };
   const handleCloseRM = () => {
+    setClickedPoem("");
     setShowRM(false);
+  };
+
+  const handleShowEd = (poem) => {
+    setShowEd(true);
+    setClickedPoem(poem);
+    setTitle(poem.title);
+    setFirstStanza(poem.firstStanza);
+    setSecondStanza(poem.secondStanza);
+    setThirdStanza(poem.thirdStanza);
+    setFourthStanza(poem.fourthStanza);
+    setPrivacy(poem.privacy);
+    setIsDraft(poem.isDraft);
+  };
+  const handleCloseEd = () => {
+    setClickedPoem("");
+    setShowEd(false);
   };
 
   const onDelete = () => {};
@@ -43,11 +89,6 @@ const Dashboard = () => {
       .then((res) => {
         setPoemData(res.data);
       });
-  };
-
-  const onLogout = () => {
-    localStorage.clear();
-    navigate("/signin");
   };
 
   useEffect(() => {
@@ -68,7 +109,7 @@ const Dashboard = () => {
             <>
               {poemData.map(
                 (poem) =>
-                  poem.isDraft == 0 && (
+                  poem.isDraft === 0 && (
                     <Container
                       key={poem.id}
                       className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5"
@@ -91,7 +132,7 @@ const Dashboard = () => {
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
                                     <Dropdown.Item
-                                    // onClick={onEdit}
+                                      onClick={() => handleShowEd(poem)}
                                     >
                                       Edit
                                     </Dropdown.Item>
@@ -119,26 +160,34 @@ const Dashboard = () => {
                           Read More
                         </span>
                         <Row className="mt-3 justify-content-between ">
-                          <Col md={3}>
+                          <Col md={4}>
                             <Row>
-                              <Col sm={6} className="d-flex align-items-center">
+                              <div className="d-flex align-items-center">
                                 {user.url ? (
                                   <Image
-                                    width={35}
-                                    height={35}
+                                    width={40}
+                                    height={40}
                                     alt="profile picture"
                                     cloudName="dabc77dwa"
                                     publicID={poem.url}
-                                    className="border border-1 border-dark rounded-3 shadow-sm"
+                                    className="border border-1 border-dark rounded-3 shadow-sm text-align-right"
                                   />
                                 ) : (
-                                  <MdAccountCircle size={35} />
+                                  <MdAccountCircle
+                                    size={40}
+                                    className="border border-1 border-dark rounded-3 shadow-sm text-align-right"
+                                  />
                                 )}
-                              </Col>
-                              <Col sm={6}>
-                                <Row>{poem.penName}</Row>
-                                <Row>{poem.created_at.slice(0, 10)}</Row>
-                              </Col>
+                                <Col className="ms-4">
+                                  <Row>{poem.penName}</Row>
+                                  <Row className="text-muted">
+                                    {poem.created_at
+                                      .slice(0, 10)
+                                      .replace(/-/g, "/")}
+                                  </Row>
+                                </Col>
+                              </div>
+                              <div></div>
                             </Row>
                           </Col>
                           <Col
@@ -200,7 +249,9 @@ const Dashboard = () => {
         <Modal.Header closeButton className="in-title fs-4">
           Confirm Delete
         </Modal.Header>
-        <Modal.Body>Are you sure? Your poem will be lost forever.</Modal.Body>
+        <Modal.Body>
+          Are you sure? Your poem data will be lost forever.
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDel(false)}>
             Back
@@ -210,6 +261,90 @@ const Dashboard = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* ------------------------------edit button----------------------------- */}
+      {clickedPoem && (
+        <Modal
+          show={showEd}
+          onHide={() => setShowEd(false)}
+          style={{
+            background: "none",
+          }}
+        >
+          <Modal.Header closeButton className="in-title fs-4">
+            Edit Published Poem
+          </Modal.Header>
+          <Modal.Body>
+            <Row className="justify-content-center p-3">
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    size="lg"
+                    placeholder="Poem Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="First Stanza"
+                    value={firstStanza}
+                    onChange={(e) => setFirstStanza(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="Second Stanza"
+                    value={secondStanza}
+                    onChange={(e) => setSecondStanza(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="Third Stanza"
+                    value={thirdStanza}
+                    onChange={(e) => setThirdStanza(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="Fourth Stanza"
+                    value={fourthStanza}
+                    onChange={(e) => setFourthStanza(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Text className="text-danger">
+                  {error && (
+                    <Alert variant="danger" style={{ textAlign: "center" }}>
+                      {error}
+                    </Alert>
+                  )}
+                </Form.Text>
+              </Form>
+            </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowEd(false)}>
+              Back
+            </Button>
+            <Button variant="secondary" onClick={() => setShowEd(false)}>
+              Save as Draft
+            </Button>
+            <Button variant="dark" onClick={() => setShowEd(false)}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
