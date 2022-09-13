@@ -9,7 +9,7 @@ import About from "./pages/auth/About";
 import ResetPassword from "./pages/auth/ResetPassword";
 import NewPoem from "./pages/NewPoem";
 import Collection from "./pages/Collection";
-import Drafts from "./pages/Drafts";
+import EditPoem from "./pages/EditPoem";
 
 const routes = [
   {
@@ -57,8 +57,8 @@ const routes = [
     page: <Collection />,
   },
   {
-    url: "/collection/drafts",
-    page: <Drafts />,
+    url: "/editpoem",
+    page: <EditPoem />,
   },
 ];
 

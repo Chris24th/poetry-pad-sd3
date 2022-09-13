@@ -1,17 +1,41 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Container, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Spinner,
+  Modal,
+  Button,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { IconContext } from "react-icons";
 import { BsThreeDots } from "react-icons/bs";
 import { TbHeartPlus } from "react-icons/tb";
 import { BiCommentDetail } from "react-icons/bi";
+import { MdAccountCircle } from "react-icons/md";
+import { Image } from "cloudinary-react";
 import axios from "axios";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
   const [poemData, setPoemData] = useState();
+  const [showRM, setShowRM] = useState(false);
+  const [clickedPoem, setClickedPoem] = useState();
+  const [showDel, setShowDel] = useState(false);
+
+  const handleShowRM = (poem) => {
+    setShowRM(true);
+    setClickedPoem(poem);
+  };
+  const handleCloseRM = () => {
+    setShowRM(false);
+  };
+
+  const onDelete = () => {};
 
   const api = async () => {
     await axios
@@ -42,36 +66,93 @@ const Dashboard = () => {
         <Col lg={6}>
           {poemData ? (
             <>
-              {poemData.map((poem) => (
-                <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                  <IconContext.Provider value={{ color: "gray" }}>
-                    <Row>
-                      <div className="d-flex justify-content-between mb-3">
-                        <span className="in-title fs-4">{poem.title}</span>
-                        <span>
-                          <BsThreeDots size={25} />
-                        </span>
-                      </div>
-                    </Row>
-                    <Row className="mb-3">
-                      <span>{poem.firstStanza}</span>
-                    </Row>
-                    <span>Read More</span>
-                    <Row className="mt-3 justify-content-between">
-                      <Col md={3}>
+              {poemData.map(
+                (poem) =>
+                  poem.isDraft == 0 && (
+                    <Container
+                      key={poem.id}
+                      className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5"
+                    >
+                      <IconContext.Provider value={{ color: "gray" }}>
                         <Row>
-                          <Col sm={6}>photo</Col>
-                          <Col sm={6}>{poem.penName}</Col>
+                          <div className="d-flex justify-content-between mb-3">
+                            <span className="in-title fs-4">{poem.title}</span>
+                            {poem.penName === user.penName && (
+                              <span>
+                                <Dropdown align="end">
+                                  <Dropdown.Toggle
+                                    className="btn"
+                                    variant="Light"
+                                    id="dropdown-menu-align-end"
+                                    bsPrefix="p-0"
+                                    size="lg"
+                                  >
+                                    <BsThreeDots size={25} />
+                                  </Dropdown.Toggle>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item
+                                    // onClick={onEdit}
+                                    >
+                                      Edit
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                      onClick={() => setShowDel(true)}
+                                    >
+                                      Delete
+                                    </Dropdown.Item>
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                              </span>
+                            )}
+                          </div>
                         </Row>
-                      </Col>
-                      <Col md={3} className="d-flex justify-content-end">
-                        <TbHeartPlus size={25} className="me-3" />
-                        <BiCommentDetail size={25} />
-                      </Col>
-                    </Row>
-                  </IconContext.Provider>
-                </Container>
-              ))}
+                        <Row
+                          className="mb-3 poem-p"
+                          style={{ textAlign: "left" }}
+                        >
+                          <span>{poem.firstStanza}</span>
+                        </Row>
+                        <span
+                          className="read-btn"
+                          onClick={() => handleShowRM(poem)}
+                        >
+                          Read More
+                        </span>
+                        <Row className="mt-3 justify-content-between ">
+                          <Col md={3}>
+                            <Row>
+                              <Col sm={6} className="d-flex align-items-center">
+                                {user.url ? (
+                                  <Image
+                                    width={35}
+                                    height={35}
+                                    alt="profile picture"
+                                    cloudName="dabc77dwa"
+                                    publicID={poem.url}
+                                    className="border border-1 border-dark rounded-3 shadow-sm"
+                                  />
+                                ) : (
+                                  <MdAccountCircle size={35} />
+                                )}
+                              </Col>
+                              <Col sm={6}>
+                                <Row>{poem.penName}</Row>
+                                <Row>{poem.created_at.slice(0, 10)}</Row>
+                              </Col>
+                            </Row>
+                          </Col>
+                          <Col
+                            md={3}
+                            className="d-flex justify-content-end align-items-center"
+                          >
+                            <TbHeartPlus size={25} className="me-3" />
+                            <BiCommentDetail size={25} />
+                          </Col>
+                        </Row>
+                      </IconContext.Provider>
+                    </Container>
+                  )
+              )}
             </>
           ) : (
             <div className="d-flex justify-content-center align-items-center">
@@ -81,6 +162,54 @@ const Dashboard = () => {
         </Col>
         <Col lg={3}></Col>
       </Row>
+      {/* -----------------------------modal----------------------------- */}
+      {clickedPoem && (
+        <Modal
+          key={clickedPoem.id}
+          show={showRM}
+          onHide={handleCloseRM}
+          style={{
+            background: "none",
+          }}
+        >
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <h5 className="in-title mb-3"> {clickedPoem.title}</h5>
+            <p className="poem-p"> {clickedPoem.firstStanza}</p>
+            <p className="poem-p"> {clickedPoem.secondStanza}</p>
+            <p className="poem-p"> {clickedPoem.thirdStanza}</p>
+            <p className="poem-p"> {clickedPoem.fourthStanza}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseRM}>
+              Back
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+
+      {/* ------------------------------delete button----------------------------- */}
+
+      <Modal
+        show={showDel}
+        onHide={() => setShowDel(false)}
+        style={{
+          background: "none",
+        }}
+      >
+        <Modal.Header closeButton className="in-title fs-4">
+          Confirm Delete
+        </Modal.Header>
+        <Modal.Body>Are you sure? Your poem will be lost forever.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDel(false)}>
+            Back
+          </Button>
+          <Button variant="danger" onClick={() => setShowDel(false)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -25,6 +25,7 @@ const NewPoem = () => {
   const [stanza, setStanza] = useState(0);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
+  let url = user.url;
 
   const handleCloseC = () => setShowC(false);
   const handleShowC = () => setShowC(true);
@@ -66,6 +67,7 @@ const NewPoem = () => {
         privacy: privacy,
         isDraft: false,
         title: title,
+        url: url,
         firstStanza: firstStanza,
         secondStanza: secondStanza,
         thirdStanza: thirdStanza,
@@ -90,6 +92,7 @@ const NewPoem = () => {
           penName: user.penName,
           privacy: "private",
           isDraft: true,
+          url: url,
           title: title,
           firstStanza: firstStanza,
           secondStanza: secondStanza,

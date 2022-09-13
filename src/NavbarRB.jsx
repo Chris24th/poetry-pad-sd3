@@ -32,16 +32,13 @@ const NavbarRB = () => {
       window.location.pathname === "/thesaurus" ||
       window.location.pathname === "/rhymefinder" ||
       window.location.pathname === "/collection" ||
-      window.location.pathname === "/collection/drafts"
+      window.location.pathname === "/editpoem"
     ) {
       setShowSB(true);
     } else setShowSB(false);
     if (window.location.pathname === "/createpoem") {
       setShow3D(true);
     } else setShow3D(false);
-    return () => {
-      console.log(active);
-    };
   }, []);
 
   const onLogout = () => {
