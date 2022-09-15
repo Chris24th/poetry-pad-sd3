@@ -52,6 +52,6 @@ class PoemController extends Controller
 
     function deletepoem(Request $req)
     {
-        $poem = Poem::where('id', $req->id)->delete();
+        Poem::where('id', $req->id)->delete();
     }
 }
