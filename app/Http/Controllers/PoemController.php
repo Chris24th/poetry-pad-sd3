@@ -40,7 +40,7 @@ class PoemController extends Controller
 
     function editpoem(Request $req)
     {
-        $poem = Poem::where('id', $req->id);
+        $poem = Poem::where('id', $req->id)->first();
         $poem->title = $req->title;
         $poem->firstStanza = $req->firstStanza;
         $poem->secondStanza = $req->secondStanza;
