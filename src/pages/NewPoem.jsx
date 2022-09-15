@@ -297,7 +297,7 @@ const NewPoem = () => {
           >
             {fourthStanza}
           </p>
-          <p>Author: {user?.penName}</p>
+          <p style={{ fontSize: "14px" }}>Author: {user?.penName}</p>
           <Form>
             <Form.Label>Set As:</Form.Label>
             <br />

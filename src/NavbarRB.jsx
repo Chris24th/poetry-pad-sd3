@@ -64,10 +64,6 @@ const NavbarRB = () => {
       name: "Collection",
     },
     {
-      url: "/collection/drafts",
-      name: "Drafts",
-    },
-    {
       url: "/thesaurus",
       name: "Thesaurus",
     },
@@ -180,7 +176,7 @@ const NavbarRB = () => {
           <div className="my-2 border-bottom border-4 mb-5">
             <Row>
               <Col xs={4}>
-                <Figure style={{ margin: "5px" }}>
+                <Figure style={{ margin: "5px" }} onClick={() => navigate("/")}>
                   <Figure.Image
                     width={80}
                     alt="logo"
@@ -216,9 +212,7 @@ const NavbarRB = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item href="/profile">Account</Dropdown.Item>
-                    <Dropdown.Item href="/collection/drafts">
-                      Drafts
-                    </Dropdown.Item>
+                    <Dropdown.Item href="/collection">Drafts</Dropdown.Item>
                     <Dropdown.Item onClick={onLogout}>Logout</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

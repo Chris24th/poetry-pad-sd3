@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
 import axios from "axios";
 import { Image } from "cloudinary-react";
+import { MdAccountCircle } from "react-icons/md";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -91,13 +92,15 @@ const Profile = () => {
                     className="d-flex justify-content-center"
                     style={{ background: "none" }}
                   >
-                    {user.url && (
+                    {user.url ? (
                       <Image
                         alt="profile picture"
                         cloudName="dabc77dwa"
                         publicID={user.url}
                         className="border border-3 border-secondary rounded-3 mt-4 prof-pp"
                       />
+                    ) : (
+                      <MdAccountCircle size={40} />
                     )}
                   </Figure>
                 </Col>
