@@ -37,4 +37,22 @@ class PoemController extends Controller
         if ($commentArr)
             return $commentArr;
     }
+
+    function editpoem(Request $req)
+    {
+        $poem = Poem::where('id', $req->id);
+        $poem->title = $req->title;
+        $poem->firstStanza = $req->firstStanza;
+        $poem->secondStanza = $req->secondStanza;
+        $poem->thirdStanza = $req->thirdStanza;
+        $poem->fourthStanza = $req->fourthStanza;
+        $poem->save();
+        return $poem;
+    }
+
+    function deletepoem(Request $req)
+    {
+        $poem = Poem::where('id', $req->id);
+        $poem->delete();
+    }
 }

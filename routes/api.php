@@ -29,3 +29,5 @@ Route::post('resetpassword', [AuthController::class, 'resetpassword']);
 Route::post('editprofile', [AuthController::class, 'editprofile']);
 Route::post('createpoem', [PoemController::class, 'createpoem']);
 Route::get('displaypoem', [PoemController::class, 'displaypoem']);
+Route::post('editpoem', [PoemController::class, 'editpoem']);
+Route::post('deletepoem', [PoemController::class, 'deletepoem']);
