@@ -20,6 +20,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
 import axios from "axios";
+import EditPoem from "./EditPoem";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Dashboard = () => {
   const [showRM, setShowRM] = useState(false);
   const [clickedPoem, setClickedPoem] = useState();
   const [showDel, setShowDel] = useState(false);
-  const [showEd, setShowEd] = useState(false);
+  const [deleteId, setDeleteId] = useState();
   //----------------------------------------
   const [title, setTitle] = useState();
   const [firstStanza, setFirstStanza] = useState();
@@ -41,21 +42,6 @@ const Dashboard = () => {
   const [isDraft, setIsDraft] = useState();
   const [stanza, setStanza] = useState(0);
 
-  // const onAdd = () => {
-  //   if (!title && !firstStanza) {
-  //     setError("Please add your poem title and your first stanza.");
-  //   } else if (!title) {
-  //     setError("Please add your poem title.");
-  //   } else if (!firstStanza) {
-  //     setError("Please add your first stanza.");
-  //     setStanza(0);
-  //   } else {
-  //     setStanza(stanza + 1);
-  //     setError("");
-  //   }
-  // };
-  //----------------------------------------
-
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
@@ -66,22 +52,17 @@ const Dashboard = () => {
   };
 
   const handleShowEd = (poem) => {
-    setShowEd(true);
-    setClickedPoem(poem);
-    setTitle(poem.title);
-    setFirstStanza(poem.firstStanza);
-    setSecondStanza(poem.secondStanza);
-    setThirdStanza(poem.thirdStanza);
-    setFourthStanza(poem.fourthStanza);
-    setPrivacy(poem.privacy);
-    setIsDraft(poem.isDraft);
-  };
-  const handleCloseEd = () => {
-    setClickedPoem("");
-    setShowEd(false);
+    localStorage.setItem("edit-poem", JSON.stringify(poem));
+    navigate("/editpoem");
   };
 
-  const onDelete = () => {};
+  const onDelete = async () => {
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
+      .then(() => {
+        window.location.reload();
+      });
+  };
 
   const api = async () => {
     await axios
@@ -137,7 +118,10 @@ const Dashboard = () => {
                                       Edit
                                     </Dropdown.Item>
                                     <Dropdown.Item
-                                      onClick={() => setShowDel(true)}
+                                      onClick={() => {
+                                        setShowDel(true);
+                                        setDeleteId(poem.id);
+                                      }}
                                     >
                                       Delete
                                     </Dropdown.Item>
@@ -256,95 +240,11 @@ const Dashboard = () => {
           <Button variant="secondary" onClick={() => setShowDel(false)}>
             Back
           </Button>
-          <Button variant="danger" onClick={() => setShowDel(false)}>
+          <Button variant="danger" onClick={onDelete}>
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
-
-      {/* ------------------------------edit button----------------------------- */}
-      {clickedPoem && (
-        <Modal
-          show={showEd}
-          onHide={() => setShowEd(false)}
-          style={{
-            background: "none",
-          }}
-        >
-          <Modal.Header closeButton className="in-title fs-4">
-            Edit Published Poem
-          </Modal.Header>
-          <Modal.Body>
-            <Row className="justify-content-center p-3">
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="text"
-                    size="lg"
-                    placeholder="Poem Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="First Stanza"
-                    value={firstStanza}
-                    onChange={(e) => setFirstStanza(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="Second Stanza"
-                    value={secondStanza}
-                    onChange={(e) => setSecondStanza(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="Third Stanza"
-                    value={thirdStanza}
-                    onChange={(e) => setThirdStanza(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="Fourth Stanza"
-                    value={fourthStanza}
-                    onChange={(e) => setFourthStanza(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-                <Form.Text className="text-danger">
-                  {error && (
-                    <Alert variant="danger" style={{ textAlign: "center" }}>
-                      {error}
-                    </Alert>
-                  )}
-                </Form.Text>
-              </Form>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowEd(false)}>
-              Back
-            </Button>
-            <Button variant="secondary" onClick={() => setShowEd(false)}>
-              Save as Draft
-            </Button>
-            <Button variant="dark" onClick={() => setShowEd(false)}>
-              Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
     </div>
   );
 };

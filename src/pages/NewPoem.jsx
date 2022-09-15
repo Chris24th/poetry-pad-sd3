@@ -41,6 +41,10 @@ const NewPoem = () => {
       setError("Please add your poem title.");
     } else if (!firstStanza) {
       setError("Please add your first stanza.");
+    } else if (!secondStanza && (thirdStanza || fourthStanza)) {
+      setError("Please add your second stanza.");
+    } else if (!thirdStanza && fourthStanza) {
+      setError("Please add your third stanza.");
     } else {
       setError("");
       setShowP(true);
@@ -55,6 +59,12 @@ const NewPoem = () => {
     } else if (!firstStanza) {
       setError("Please add your first stanza.");
       setStanza(0);
+    } else if (stanza === 1 && !secondStanza) {
+      setError("Please add your second stanza.");
+      setStanza(1);
+    } else if (stanza === 2 && !thirdStanza) {
+      setError("Please add your third stanza.");
+      setStanza(2);
     } else {
       setStanza(stanza + 1);
       setError("");
@@ -85,6 +95,10 @@ const NewPoem = () => {
       setError("Please add your poem title.");
     } else if (!firstStanza) {
       setError("Please add your first stanza.");
+    } else if (!secondStanza && (thirdStanza || fourthStanza)) {
+      setError("Please add your second stanza.");
+    } else if (!thirdStanza && fourthStanza) {
+      setError("Please add your third stanza.");
     } else {
       setError("");
       await axios
@@ -130,6 +144,7 @@ const NewPoem = () => {
                   type="text"
                   size="lg"
                   placeholder="Poem Title"
+                  value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 ></Form.Control>
               </Form.Group>
@@ -138,7 +153,11 @@ const NewPoem = () => {
                   as="textarea"
                   rows={4}
                   placeholder="First Stanza"
-                  onChange={(e) => setFirstStanza(e.target.value)}
+                  value={firstStanza}
+                  onChange={(e) => {
+                    setFirstStanza(e.target.value);
+                    !e.target.value && setStanza(0);
+                  }}
                 ></Form.Control>
               </Form.Group>
               {stanza >= 1 && (
@@ -147,7 +166,11 @@ const NewPoem = () => {
                     as="textarea"
                     rows={4}
                     placeholder="Second Stanza"
-                    onChange={(e) => setSecondStanza(e.target.value)}
+                    value={secondStanza}
+                    onChange={(e) => {
+                      setSecondStanza(e.target.value);
+                      !e.target.value && setStanza(1);
+                    }}
                   ></Form.Control>
                 </Form.Group>
               )}
@@ -157,7 +180,11 @@ const NewPoem = () => {
                     as="textarea"
                     rows={4}
                     placeholder="Third Stanza"
-                    onChange={(e) => setThirdStanza(e.target.value)}
+                    value={thirdStanza}
+                    onChange={(e) => {
+                      setThirdStanza(e.target.value);
+                      !e.target.value && setStanza(2);
+                    }}
                   ></Form.Control>
                 </Form.Group>
               )}
@@ -167,7 +194,11 @@ const NewPoem = () => {
                     as="textarea"
                     rows={4}
                     placeholder="Fourth Stanza"
-                    onChange={(e) => setFourthStanza(e.target.value)}
+                    value={fourthStanza}
+                    onChange={(e) => {
+                      setFourthStanza(e.target.value);
+                      !e.target.value && setStanza(3);
+                    }}
                   ></Form.Control>
                 </Form.Group>
               )}
@@ -179,9 +210,11 @@ const NewPoem = () => {
                 )}
               </Form.Text>
             </Form>
-            <Button variant="light" onClick={onAdd} style={{ width: "95%" }}>
-              + Add Stanza
-            </Button>
+            {stanza < 3 && (
+              <Button variant="light" onClick={onAdd} style={{ width: "95%" }}>
+                + Add Stanza
+              </Button>
+            )}
           </Row>
         </Col>
         <Col lg={3} className="d-flex justify-content-center">

@@ -13,18 +13,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditPoem = () => {
-  const [title, setTitle] = useState();
-  const [firstStanza, setFirstStanza] = useState("");
-  const [secondStanza, setSecondStanza] = useState("");
-  const [thirdStanza, setThirdStanza] = useState("");
-  const [fourthStanza, setFourthStanza] = useState("");
+  const user = JSON.parse(localStorage.getItem("user-data"));
+  const poem = JSON.parse(localStorage.getItem("edit-poem"));
+  const [title, setTitle] = useState(poem?.title);
+  const [firstStanza, setFirstStanza] = useState(poem?.firstStanza);
+  const [secondStanza, setSecondStanza] = useState(poem?.secondStanza);
+  const [thirdStanza, setThirdStanza] = useState(poem?.thridStanza);
+  const [fourthStanza, setFourthStanza] = useState(poem?.fourthStanza);
   const [showP, setShowP] = useState(false);
   const [showC, setShowC] = useState(false);
   const [error, setError] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user-data"));
 
   const handleCloseC = () => setShowC(false);
   const handleShowC = () => setShowC(true);
@@ -40,6 +41,10 @@ const EditPoem = () => {
       setError("Please add your poem title.");
     } else if (!firstStanza) {
       setError("Please add your first stanza.");
+    } else if (!secondStanza && (thirdStanza || fourthStanza)) {
+      setError("Please add your second stanza.");
+    } else if (!thirdStanza && fourthStanza) {
+      setError("Please add your third stanza.");
     } else {
       setError("");
       setShowP(true);
@@ -54,17 +59,21 @@ const EditPoem = () => {
     } else if (!firstStanza) {
       setError("Please add your first stanza.");
       setStanza(0);
+    } else if (stanza === 1 && !secondStanza) {
+      setError("Please add your second stanza.");
+      setStanza(1);
+    } else if (stanza === 2 && !thirdStanza) {
+      setError("Please add your third stanza.");
+      setStanza(2);
     } else {
       setStanza(stanza + 1);
       setError("");
     }
   };
-  const onPublish = async () => {
+  const onRepub = async () => {
     await axios
-      .post("https://poetry-pad.herokuapp.com/api/createpoem", {
-        penName: user.penName,
-        privacy: privacy,
-        isDraft: false,
+      .post("https://poetry-pad.herokuapp.com/api/editpoem", {
+        id: poem.id,
         title: title,
         firstStanza: firstStanza,
         secondStanza: secondStanza,
@@ -73,35 +82,11 @@ const EditPoem = () => {
       })
       .then((res) => {
         navigate("/dashboard");
+        localStorage.removeItem("edit-poem");
         window.location.reload();
       });
   };
-  const onSave = async () => {
-    if (!title && !firstStanza) {
-      setError("Please add your poem title and your first stanza.");
-    } else if (!title) {
-      setError("Please add your poem title.");
-    } else if (!firstStanza) {
-      setError("Please add your first stanza.");
-    } else {
-      setError("");
-      await axios
-        .post("https://poetry-pad.herokuapp.com/api/createpoem", {
-          penName: user.penName,
-          privacy: "private",
-          isDraft: true,
-          title: title,
-          firstStanza: firstStanza,
-          secondStanza: secondStanza,
-          thirdStanza: thirdStanza,
-          fourthStanza: fourthStanza,
-        })
-        .then((res) => {
-          navigate("/collection");
-          window.location.reload();
-        });
-    }
-  };
+
   const onCancel = () => {
     navigate("/dashboard");
     window.location.reload();
@@ -110,6 +95,15 @@ const EditPoem = () => {
   useEffect(() => {
     if (!user) {
       navigate("/signin");
+    }
+    if (poem.firstStanza) {
+      setStanza(1);
+      if (poem.secondStanza) {
+        setStanza(2);
+        if (poem.thirdStanza) {
+          setStanza(3);
+        }
+      }
     }
   }, []);
   // ---------------------------------------------------------------------------------------------------
@@ -122,6 +116,7 @@ const EditPoem = () => {
             <Sidebar />
           </Col>
           <Col lg={6}>
+            {/* {clickedPoem && ( */}
             <Row className="justify-content-center p-3">
               <Form>
                 <Form.Group className="mb-3">
@@ -129,6 +124,7 @@ const EditPoem = () => {
                     type="text"
                     size="lg"
                     placeholder="Poem Title"
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
@@ -137,6 +133,7 @@ const EditPoem = () => {
                     as="textarea"
                     rows={4}
                     placeholder="First Stanza"
+                    value={firstStanza}
                     onChange={(e) => setFirstStanza(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
@@ -146,6 +143,7 @@ const EditPoem = () => {
                       as="textarea"
                       rows={4}
                       placeholder="Second Stanza"
+                      value={secondStanza}
                       onChange={(e) => setSecondStanza(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
@@ -156,6 +154,7 @@ const EditPoem = () => {
                       as="textarea"
                       rows={4}
                       placeholder="Third Stanza"
+                      value={thirdStanza}
                       onChange={(e) => setThirdStanza(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
@@ -166,6 +165,7 @@ const EditPoem = () => {
                       as="textarea"
                       rows={4}
                       placeholder="Fourth Stanza"
+                      value={fourthStanza}
                       onChange={(e) => setFourthStanza(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
@@ -178,10 +178,17 @@ const EditPoem = () => {
                   )}
                 </Form.Text>
               </Form>
-              <Button variant="light" onClick={onAdd} style={{ width: "95%" }}>
-                + Add Stanza
-              </Button>
+              {stanza <= 3 && (
+                <Button
+                  variant="light"
+                  onClick={onAdd}
+                  style={{ width: "95%" }}
+                >
+                  + Add Stanza
+                </Button>
+              )}
             </Row>
+            {/* )} */}
           </Col>
           <Col lg={3} className="d-flex justify-content-center">
             <Row className="flex-column ">
@@ -191,11 +198,7 @@ const EditPoem = () => {
                   className="np-col3"
                   onClick={handleShowP}
                 >
-                  Publish
-                </Button>
-                <br />
-                <Button variant="light" className="np-col3" onClick={onSave}>
-                  Save as draft
+                  Save
                 </Button>
                 <br />
                 <Button
@@ -219,7 +222,8 @@ const EditPoem = () => {
             <Modal.Title>Cancel Confirmation</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Are you sure? Your work will be lost after clicking 'Cancel'
+            Are you sure? Your modifications will be lost and no changes will be
+            made after clicking 'Cancel'
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseC}>
@@ -238,7 +242,7 @@ const EditPoem = () => {
         >
           <Modal.Header closeButton>
             <Modal.Title className="in-title" style={{ textAlign: "left" }}>
-              Publish Poem
+              Modify Poem
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -272,38 +276,14 @@ const EditPoem = () => {
               {fourthStanza}
             </p>
             <p>Author: {user?.penName}</p>
-            <Form>
-              <Form.Label>Set As:</Form.Label>
-              <br />
-              <Form.Check
-                inline
-                label="Private"
-                type="radio"
-                name="radios"
-                onClick={() => setPrivacy("private")}
-              />
-              <Form.Check
-                inline
-                label="Public"
-                type="radio"
-                name="radios"
-                onClick={() => setPrivacy("public")}
-              />
-            </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseP}>
               Back
             </Button>
-            {privacy ? (
-              <Button variant="dark" onClick={onPublish}>
-                Publish
-              </Button>
-            ) : (
-              <Button variant="dark" onClick={onPublish} disabled>
-                Publish
-              </Button>
-            )}
+            <Button variant="dark" onClick={onRepub}>
+              Republish
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
