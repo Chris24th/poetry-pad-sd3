@@ -8,8 +8,12 @@ import {
   Modal,
   Button,
   Nav,
+  Dropdown,
 } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
+import { TbHeartPlus } from "react-icons/tb";
+import { IconContext } from "react-icons";
+import { BiCommentDetail } from "react-icons/bi";
 import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
@@ -21,6 +25,8 @@ const Collection = () => {
   const [active, setActive] = useState("public");
   const [privacy, setPrivacy] = useState("public");
   const [isDraft, setIsDraft] = useState(0);
+  const [showDel, setShowDel] = useState();
+  const [deleteId, setDeleteId] = useState();
 
   const handleShowRM = (poem) => {
     setShowRM(true);
@@ -28,6 +34,14 @@ const Collection = () => {
   };
   const handleCloseRM = () => {
     setShowRM(false);
+  };
+
+  const onDelete = async () => {
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
+      .then(() => {
+        window.location.reload();
+      });
   };
 
   const api = async () => {
@@ -112,7 +126,38 @@ const Collection = () => {
                         <div className="d-flex justify-content-between mb-3">
                           <span className="in-title fs-4">{poem.title}</span>
                           <span>
-                            <BsThreeDots size={25} />
+                            <Dropdown align="end">
+                              <Dropdown.Toggle
+                                className="btn"
+                                variant="Light"
+                                id="dropdown-menu-align-end"
+                                bsPrefix="p-0"
+                                size="lg"
+                              >
+                                <BsThreeDots size={25} />
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    localStorage.setItem(
+                                      "edit-poem",
+                                      JSON.stringify(poem)
+                                    );
+                                  }}
+                                  href="/editpoem"
+                                >
+                                  Edit
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    setShowDel(true);
+                                    setDeleteId(poem.id);
+                                  }}
+                                >
+                                  Delete
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
                           </span>
                         </div>
                       </Row>
@@ -127,7 +172,21 @@ const Collection = () => {
                       >
                         Vew
                       </span>
-                      {poem.privacy == "public" && <Row>like and comment</Row>}
+                      {poem.privacy == "public" && (
+                        <Row className="justify-content-end">
+                          <Col
+                            md={3}
+                            className="d-flex justify-content-end align-items-center"
+                          >
+                            <TbHeartPlus
+                              size={25}
+                              color="#FF5A5F"
+                              className="me-3"
+                            />
+                            <BiCommentDetail size={25} color="#767676" />
+                          </Col>
+                        </Row>
+                      )}
                     </Container>
                   )
               )}
@@ -228,6 +287,30 @@ const Collection = () => {
           </Modal.Footer>
         </Modal>
       )}
+      {/* ------------------------------delete button----------------------------- */}
+
+      <Modal
+        show={showDel}
+        onHide={() => setShowDel(false)}
+        style={{
+          background: "none",
+        }}
+      >
+        <Modal.Header closeButton className="in-title fs-4">
+          Confirm Delete
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure? Your poem data will be lost forever.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDel(false)}>
+            Back
+          </Button>
+          <Button variant="danger" onClick={onDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

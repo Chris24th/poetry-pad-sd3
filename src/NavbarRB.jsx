@@ -217,7 +217,7 @@ const NavbarRB = () => {
                         alt="profile picture"
                         cloudName="dabc77dwa"
                         publicID={user.url}
-                        className="border border-1 border-dark rounded-3 shadow-sm"
+                        className="border border-2 border-gray rounded-3 shadow-sm"
                       />
                     ) : (
                       <MdAccountCircle size={35} />

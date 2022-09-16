@@ -82,11 +82,11 @@ const Profile = () => {
             <Col lg={3} className="mb-4">
               <Sidebar />
             </Col>
-            <Col lg={7} className="prof-cont">
+            <Col lg={7}>
               <Row className="justify-content-between m-3">
                 <Col
                   xs={3}
-                  className="bg-black prof-cont-1 d-flex justify-content-center"
+                  className=" bg-black bg-gradient prof-cont-1 d-flex justify-content-center"
                 >
                   <Figure
                     className="d-flex justify-content-center"
@@ -97,7 +97,7 @@ const Profile = () => {
                         alt="profile picture"
                         cloudName="dabc77dwa"
                         publicID={user.url}
-                        className="border border-3 border-secondary rounded-3 mt-4 prof-pp"
+                        className="border border-3 border-secondary rounded-4 mt-4 prof-pp"
                       />
                     ) : (
                       <MdAccountCircle size={40} />
@@ -107,21 +107,23 @@ const Profile = () => {
                 <Col xs={8}>
                   <div className="mb-5">
                     <div className="d-flex justify-content-between mb-2">
-                      <span className="fs-3 fw-bold">{user.penName}</span>
+                      <span className="fs-3 fw-bold fst-italic ">
+                        {user.penName}
+                      </span>
                       <span className="prof-settings">
                         <IoMdSettings size={25} onClick={handleShow} />
                       </span>
                     </div>
                     <label>Full Name</label>
-                    <span className="fs-5 bg-black text-light d-flex mb-2 p-1 ps-3">
+                    <span className="fs-5 bg-dark bg-gradient text-light rounded-2 d-flex mb-2 p-1 ps-3">
                       {user.name}
                     </span>
                     <label>Email</label>
-                    <span className="fs-5 bg-black text-light d-flex mb-2 p-1 ps-3">
+                    <span className="fs-5 bg-dark text-light rounded-2 d-flex mb-2 p-1 ps-3">
                       {user.email}
                     </span>
                     <label>Published Poems</label>
-                    <span className="fs-5 bg-black text-light d-flex p-1 ps-3">
+                    <span className="fs-5 bg-dark text-light rounded-2 d-flex p-1 ps-3">
                       {user.publishedPoems ? user.publishedPoems : "none"}
                     </span>
                   </div>
@@ -145,7 +147,7 @@ const Profile = () => {
             style={{ background: "rgba(0,0,0,0.2)" }}
           >
             <Modal.Header closeButton>
-              <Modal.Title className="in-title">Poet Profile</Modal.Title>
+              <Modal.Title className="in-title">Edit Profile</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>

@@ -125,7 +125,7 @@ body {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     105deg,
-    rgba(0, 0, 0, 1) 50%,
+    rgb(14, 14, 14) 50%,
     rgba(150, 150, 150, 1) 100%
   );
   border: none;
@@ -165,6 +165,7 @@ body {
   display: inherit;
   flex-direction: column;
   background: none;
+  transition: all 0.4s ease;
 }
 .sb-link {
   display: inherit;
@@ -233,8 +234,6 @@ body {
 
 /* --------------poet profile---------------- */
 
-.prof-cont {
-}
 .prof-cont-1 {
   height: 350px;
   clip-path: polygon(100% 0, 100% 75%, 75% 100%, 50% 75%, 25% 100%, 0 75%, 0 0);

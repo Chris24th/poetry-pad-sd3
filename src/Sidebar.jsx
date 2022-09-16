@@ -71,25 +71,19 @@ const Sidebar = () => {
                 {allMenu.map((menu) => {
                   return (
                     <>
-                      {active == menu.url ? (
-                        <a href={menu.url} className="sb-link-active">
-                          <div
-                            style={{ background: "none", marginRight: "10px" }}
-                          >
-                            {menu.icon}
-                          </div>
-                          {menu.name}
-                        </a>
-                      ) : (
-                        <a href={menu.url} className="sb-link">
-                          <div
-                            style={{ background: "none", marginRight: "10px" }}
-                          >
-                            {menu.icon}
-                          </div>
-                          {menu.name}
-                        </a>
-                      )}
+                      <a
+                        href={menu.url}
+                        className={
+                          active === menu.url ? "sb-link-active" : "sb-link"
+                        }
+                      >
+                        <div
+                          style={{ background: "none", marginRight: "10px" }}
+                        >
+                          {menu.icon}
+                        </div>
+                        {menu.name}
+                      </a>
                     </>
                   );
                 })}
@@ -118,15 +112,16 @@ const Sidebar = () => {
                         alignItems: "center",
                       }}
                     >
-                      {active == menu.url ? (
-                        <a href={menu.url} className="sb-link-active p-2">
-                          {menu.icon}
-                        </a>
-                      ) : (
-                        <a href={menu.url} className="sb-link p-2">
-                          {menu.icon}
-                        </a>
-                      )}
+                      <a
+                        href={menu.url}
+                        className={
+                          active === menu.url
+                            ? "sb-link-active p-2"
+                            : "sb-link p-2"
+                        }
+                      >
+                        {menu.icon}
+                      </a>
                     </div>
                   );
                 })}
