@@ -6,6 +6,8 @@ import {
   Row,
   Figure,
   Dropdown,
+  Modal,
+  Button,
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Logo from "./images/logo.svg";
@@ -20,6 +22,9 @@ const NavbarRB = () => {
   const [showSB, setShowSB] = useState(false);
   const [show3D, setShow3D] = useState(false);
   const [showDD, setShowDD] = useState(false);
+  const [showMod, setShowMod] = useState(false);
+  const [navUrl, setNavUrl] = useState("");
+  const [logout, setLogout] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
 
@@ -176,7 +181,15 @@ const NavbarRB = () => {
           <div className="my-2 border-bottom border-4 mb-5">
             <Row>
               <Col xs={4}>
-                <Figure style={{ margin: "5px" }} onClick={() => navigate("/")}>
+                <Figure
+                  style={{ margin: "5px" }}
+                  onClick={() => {
+                    if (active === "/createpoem" || active === "/editpoem") {
+                      setNavUrl("/");
+                      setShowMod(true);
+                    } else navigate("/");
+                  }}
+                >
                   <Figure.Image
                     width={80}
                     alt="logo"
@@ -211,9 +224,45 @@ const NavbarRB = () => {
                     )}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="/profile">Account</Dropdown.Item>
-                    <Dropdown.Item href="/collection">Drafts</Dropdown.Item>
-                    <Dropdown.Item onClick={onLogout}>Logout</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        if (
+                          active === "/createpoem" ||
+                          active === "/editpoem"
+                        ) {
+                          setNavUrl("/profile");
+                          setShowMod(true);
+                        } else navigate("/profile");
+                      }}
+                    >
+                      Account
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        if (
+                          active === "/createpoem" ||
+                          active === "/editpoem"
+                        ) {
+                          setNavUrl("/collection");
+                          setShowMod(true);
+                        } else navigate("/collection");
+                      }}
+                    >
+                      Drafts
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        if (
+                          active === "/createpoem" ||
+                          active === "/editpoem"
+                        ) {
+                          setLogout(true);
+                          setShowMod(true);
+                        } else onLogout();
+                      }}
+                    >
+                      Logout
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
@@ -221,6 +270,45 @@ const NavbarRB = () => {
           </div>
         </>
       )}
+
+      {/*------------------------------- modals ----------------------------- */}
+      <Modal
+        show={showMod}
+        onHide={() => {
+          setShowMod(false);
+          setLogout(false);
+          setNavUrl("");
+        }}
+        style={{ background: "rgba(0,0,0,0.2)" }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Cancel Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure? Your work will be lost after clicking 'Yes'
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowMod(false);
+              setLogout(false);
+              setNavUrl("");
+            }}
+          >
+            No
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              logout ? onLogout() : navigate(navUrl);
+              setShowMod(false);
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

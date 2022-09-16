@@ -52,11 +52,6 @@ const Dashboard = () => {
     setShowRM(false);
   };
 
-  const handleShowEd = (poem) => {
-    localStorage.setItem("edit-poem", JSON.stringify(poem));
-    navigate("/editpoem");
-  };
-
   const onDelete = async () => {
     await axios
       .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
@@ -114,7 +109,13 @@ const Dashboard = () => {
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
                                     <Dropdown.Item
-                                      onClick={() => handleShowEd(poem)}
+                                      onClick={() => {
+                                        localStorage.setItem(
+                                          "edit-poem",
+                                          JSON.stringify(poem)
+                                        );
+                                      }}
+                                      href="/editpoem"
                                     >
                                       Edit
                                     </Dropdown.Item>
@@ -191,7 +192,7 @@ const Dashboard = () => {
           ) : (
             <>
               <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="wave">
+                <Placeholder as="p" animation="glow">
                   <Placeholder xs={6} /> <br />
                   <br />
                   <Placeholder xs={5} /> <Placeholder xs={4} />
@@ -217,7 +218,7 @@ const Dashboard = () => {
               </Container>
 
               <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="wave">
+                <Placeholder as="p" animation="glow">
                   <Placeholder xs={5} /> <br />
                   <br />
                   <Placeholder xs={4} /> <Placeholder xs={4} />

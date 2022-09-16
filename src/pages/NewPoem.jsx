@@ -1,4 +1,3 @@
-import Sidebar from "../Sidebar";
 import { useState, useEffect } from "react";
 import {
   Container,
@@ -133,9 +132,7 @@ const NewPoem = () => {
   return (
     <div>
       <Row>
-        <Col lg={3}>
-          <Sidebar />
-        </Col>
+        <Col lg={3}></Col>
         <Col lg={6}>
           <Row className="justify-content-center p-3">
             <Form>

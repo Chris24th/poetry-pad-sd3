@@ -1,4 +1,3 @@
-import Sidebar from "../Sidebar";
 import { useState, useEffect } from "react";
 import {
   Container,
@@ -83,7 +82,6 @@ const EditPoem = () => {
       .then((res) => {
         navigate("/dashboard");
         localStorage.removeItem("edit-poem");
-        window.location.reload();
       });
   };
 
@@ -112,9 +110,7 @@ const EditPoem = () => {
     <>
       <div>
         <Row>
-          <Col lg={3}>
-            <Sidebar />
-          </Col>
+          <Col lg={3}></Col>
           <Col lg={6}>
             {/* {clickedPoem && ( */}
             <Row className="justify-content-center p-3">

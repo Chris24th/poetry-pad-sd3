@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import { MdOutlineEmail } from "react-icons/md";
 import { BsArrowRight, BsVectorPen, BsPerson } from "react-icons/bs";
@@ -21,9 +22,11 @@ const SignUp = () => {
   const [name, setName] = useState();
   const [penName, setPenName] = useState();
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const onRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (password === confirmPassword) {
       if (password.length >= 6) {
         await axios
@@ -34,6 +37,7 @@ const SignUp = () => {
             password: password,
           })
           .then((res) => {
+            setLoading(false);
             console.log(res.data);
             if (res.data.error) {
               return setError(res.data.error);
@@ -205,12 +209,22 @@ const SignUp = () => {
                     fontSize: "24px",
                     height: "55px",
                   }}
+                  disabled={loading ? true : false}
                 >
                   Sign Up
-                  <BsArrowRight className="auth-arrow" />
+                  {loading ? (
+                    <Spinner
+                      className="ms-3"
+                      animation="border"
+                      variant="light"
+                      size="sm"
+                      style={{ background: "none", marginBottom: "2px" }}
+                    />
+                  ) : (
+                    <BsArrowRight className="auth-arrow" />
+                  )}
                 </Button>
               </div>
-              {/* alreadyhaveacc---------------------------------------*/}
               <div style={{ textAlign: "center" }}>
                 <div>
                   Already Have Account?{" "}
