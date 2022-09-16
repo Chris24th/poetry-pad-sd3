@@ -156,12 +156,12 @@ const Dashboard = () => {
                                     alt="profile picture"
                                     cloudName="dabc77dwa"
                                     publicID={poem.url}
-                                    className="border border-1 border-dark rounded-3 shadow-sm text-align-right"
+                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
                                   />
                                 ) : (
                                   <MdAccountCircle
                                     size={40}
-                                    className="border border-1 border-dark rounded-3 shadow-sm text-align-right"
+                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
                                   />
                                 )}
                                 <Col className="ms-4">
