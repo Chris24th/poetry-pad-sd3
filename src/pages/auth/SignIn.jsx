@@ -9,6 +9,7 @@ import {
   Col,
   Figure,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
@@ -22,21 +23,22 @@ const SignIn = () => {
   const [password, setPassword] = useState();
   const [error, setError] = useState();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const onLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     await axios
       .post("https://poetry-pad.herokuapp.com/api/signin", {
         email: email,
         password: password,
       })
       .then((res) => {
-        console.log(res.data);
+        setLoading(false);
         if (res.data.error) {
           setError(res.data.error);
         } else {
           localStorage.setItem("user-data", JSON.stringify(res.data));
           navigate("/dashboard");
-          window.location.reload();
         }
       });
   };
@@ -124,7 +126,7 @@ const SignIn = () => {
                   Forgot Password?
                 </Link>
               </Row>
-              <Row className="m-5 auth-btn-cont">
+              <Row className="m-4 auth-btn-cont">
                 <Button
                   type="submit"
                   style={{
@@ -136,12 +138,23 @@ const SignIn = () => {
                     fontSize: "24px",
                     height: "55px",
                   }}
+                  disabled={loading ? true : false}
                 >
                   Log In
-                  <BsArrowRight className="auth-arrow" />
+                  {loading ? (
+                    <Spinner
+                      className="ms-3"
+                      animation="border"
+                      variant="light"
+                      size="sm"
+                      style={{ background: "none", marginBottom: "2px" }}
+                    />
+                  ) : (
+                    <BsArrowRight className="auth-arrow" />
+                  )}
                 </Button>
               </Row>
-              <Row style={{ textAlign: "center" }}>
+              <Row className="mb-4" style={{ textAlign: "center" }}>
                 <div>
                   Don't Have Account?{" "}
                   <a
