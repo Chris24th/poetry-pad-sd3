@@ -100,7 +100,7 @@ const Profile = () => {
                         className="border border-3 border-secondary rounded-4 mt-4 prof-pp"
                       />
                     ) : (
-                      <MdAccountCircle size={40} />
+                      <MdAccountCircle className="border border-3 border-secondary rounded-4 mt-4 prof-pp" />
                     )}
                   </Figure>
                 </Col>
