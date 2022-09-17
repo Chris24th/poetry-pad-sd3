@@ -146,7 +146,7 @@ const Dashboard = () => {
                         <span>{poem.firstStanza}</span>
                       </Row>
                       <span
-                        className="read-btn"
+                        className="text-muted read-btn"
                         onClick={() => handleShowRM(poem)}
                       >
                         Read More
@@ -172,7 +172,12 @@ const Dashboard = () => {
                               )}
                               <Col className="ms-4">
                                 <Row>{poem.penName}</Row>
-                                <Row className="text-muted">
+                                <Row
+                                  className="text-muted"
+                                  style={{
+                                    fontSize: "12px",
+                                  }}
+                                >
                                   {poem.created_at
                                     .slice(0, 10)
                                     .replace(/-/g, "/")}

@@ -174,10 +174,10 @@ const Collection = () => {
                         </span>
                       </Row>
                       <span
-                        className="read-btn"
+                        className="text-muted read-btn "
                         onClick={() => handleShowRM(poem)}
                       >
-                        Vew
+                        Read More
                       </span>
                       {poem.privacy == "public" && (
                         <Row className="justify-content-end">
