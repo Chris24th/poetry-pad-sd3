@@ -113,7 +113,7 @@ const EditPoem = () => {
       .post("https://poetry-pad.herokuapp.com/api/editpoem", {
         id: poem.id,
         title: title,
-        privacy: "public",
+        privacy: privacy,
         isDraft: 0,
         firstStanza: firstStanza,
         secondStanza: secondStanza,

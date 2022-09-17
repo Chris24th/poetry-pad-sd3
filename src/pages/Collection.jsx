@@ -179,39 +179,36 @@ const Collection = () => {
                       >
                         Read More
                       </span>
-                      {poem.privacy == "public" && (
-                        <Row className="justify-content-end">
-                          <Col
-                            md={3}
-                            className="d-flex justify-content-end align-items-center"
-                          >
-                            <TbHeartPlus
-                              role="button"
-                              size={25}
-                              color="#FF5A5F"
-                              className="me-3"
-                            />
-                            <BiCommentDetail
-                              role="button"
-                              size={25}
-                              color="#767676"
-                              onClick={() => {
-                                selectedCom === poem.id ? (
-                                  <>
-                                    {setShowComment(false)};{setSelectedCom("")}
-                                    ;
-                                  </>
-                                ) : (
-                                  <>
-                                    {setShowComment(true)};
-                                    {setSelectedCom(poem.id)};
-                                  </>
-                                );
-                              }}
-                            />
-                          </Col>
-                        </Row>
-                      )}
+                      <Row className="justify-content-end">
+                        <Col
+                          md={3}
+                          className="d-flex justify-content-end align-items-center"
+                        >
+                          <TbHeartPlus
+                            role="button"
+                            size={25}
+                            color="#FF5A5F"
+                            className="me-3"
+                          />
+                          <BiCommentDetail
+                            role="button"
+                            size={25}
+                            color="#767676"
+                            onClick={() => {
+                              selectedCom === poem.id ? (
+                                <>
+                                  {setShowComment(false)};{setSelectedCom("")};
+                                </>
+                              ) : (
+                                <>
+                                  {setShowComment(true)};
+                                  {setSelectedCom(poem.id)};
+                                </>
+                              );
+                            }}
+                          />
+                        </Col>
+                      </Row>
                       {selectedCom === poem.id && showComment && (
                         <Row>
                           <Comment />
