@@ -155,7 +155,7 @@ const Dashboard = () => {
                         <Col md={4}>
                           <Row>
                             <div className="d-flex align-items-center">
-                              {user.url ? (
+                              {poem.url ? (
                                 <Image
                                   width={40}
                                   height={40}
