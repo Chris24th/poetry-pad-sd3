@@ -371,24 +371,6 @@ const NewPoem = () => {
               </Col>
             </Row>
           )}
-          <Form className="mb-3">
-            <Form.Label>Set As:</Form.Label>
-            <br />
-            <Form.Check
-              inline
-              label="Private"
-              type="radio"
-              name="radios"
-              onClick={() => setPrivacy("private")}
-            />
-            <Form.Check
-              inline
-              label="Public"
-              type="radio"
-              name="radios"
-              onClick={() => setPrivacy("public")}
-            />
-          </Form>
           <p>
             Author:
             <br />
