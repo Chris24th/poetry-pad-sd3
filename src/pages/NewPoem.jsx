@@ -8,11 +8,11 @@ import {
   Modal,
   Alert,
   Spinner,
-  Image,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import axios from "axios";
+import { Image } from "cloudinary-react";
 
 const NewPoem = () => {
   const [title, setTitle] = useState();
@@ -28,7 +28,6 @@ const NewPoem = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
-  let url = user.url;
 
   const handleCloseC = () => setShowC(false);
   const handleShowC = () => setShowC(true);
@@ -81,7 +80,7 @@ const NewPoem = () => {
         privacy: privacy,
         isDraft: 0,
         title: title,
-        url: url,
+        url: user.url,
         firstStanza: firstStanza,
         secondStanza: secondStanza,
         thirdStanza: thirdStanza,
@@ -112,7 +111,7 @@ const NewPoem = () => {
           penName: user.penName,
           privacy: "private",
           isDraft: 1,
-          url: url,
+          url: user.url,
           title: title,
           firstStanza: firstStanza,
           secondStanza: secondStanza,
@@ -400,12 +399,12 @@ const NewPoem = () => {
                 alt="profile picture"
                 cloudName="dabc77dwa"
                 publicID={user.url}
-                className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+                className="border border-2 border-gray rounded-3 shadow-sm mx-1"
               />
             ) : (
               <MdAccountCircle
                 size={40}
-                className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+                className="border border-2 border-gray rounded-3 shadow-sm mx-1"
               />
             )}{" "}
             {user?.penName}
