@@ -195,12 +195,24 @@ const Collection = () => {
                               role="button"
                               size={25}
                               color="#767676"
-                              onClick={() => setSelectedCom(poem.id)}
+                              onClick={() => {
+                                selectedCom === poem.id ? (
+                                  <>
+                                    {setShowComment(false)};{setSelectedCom("")}
+                                    ;
+                                  </>
+                                ) : (
+                                  <>
+                                    {setShowComment(true)};
+                                    {setSelectedCom(poem.id)};
+                                  </>
+                                );
+                              }}
                             />
                           </Col>
                         </Row>
                       )}
-                      {selectedCom === poem.id && (
+                      {selectedCom === poem.id && showComment && (
                         <Row>
                           <Comment />
                         </Row>
