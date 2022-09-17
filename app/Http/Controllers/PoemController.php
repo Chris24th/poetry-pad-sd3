@@ -42,6 +42,8 @@ class PoemController extends Controller
     {
         $poem = Poem::where('id', $req->id)->first();
         $poem->title = $req->title;
+        $poem->isDraft = $req->isDraft;
+        $poem->privacy = $req->privacy;
         $poem->firstStanza = $req->firstStanza;
         $poem->secondStanza = $req->secondStanza;
         $poem->thirdStanza = $req->thirdStanza;
