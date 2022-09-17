@@ -7,13 +7,17 @@ import {
   Button,
   Modal,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { MdAccountCircle } from "react-icons/md";
+import { Image } from "cloudinary-react";
 import axios from "axios";
 
 const EditPoem = () => {
   const user = JSON.parse(localStorage.getItem("user-data"));
   const poem = JSON.parse(localStorage.getItem("edit-poem"));
+  let url = user.url;
   const [title, setTitle] = useState(poem?.title);
   const [firstStanza, setFirstStanza] = useState(poem?.firstStanza);
   const [secondStanza, setSecondStanza] = useState(poem?.secondStanza);
@@ -24,6 +28,7 @@ const EditPoem = () => {
   const [error, setError] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCloseC = () => setShowC(false);
@@ -69,17 +74,54 @@ const EditPoem = () => {
       setError("");
     }
   };
+  const onSave = async () => {
+    setLoading(true);
+    if (!title && !firstStanza) {
+      setError("Please add your poem title and your first stanza.");
+    } else if (!title) {
+      setError("Please add your poem title.");
+    } else if (!firstStanza) {
+      setError("Please add your first stanza.");
+    } else if (!secondStanza && (thirdStanza || fourthStanza)) {
+      setError("Please add your second stanza.");
+    } else if (!thirdStanza && fourthStanza) {
+      setError("Please add your third stanza.");
+    } else {
+      setError("");
+      await axios
+        .post("https://poetry-pad.herokuapp.com/api/editpoem", {
+          id: poem.id,
+          privacy: "private",
+          isDraft: 1,
+          title: title,
+          firstStanza: firstStanza,
+          secondStanza: secondStanza,
+          thirdStanza: thirdStanza,
+          fourthStanza: fourthStanza,
+        })
+        .then((res) => {
+          setLoading(false);
+          navigate("/collection");
+          window.location.reload();
+        });
+    }
+  };
+
   const onRepub = async () => {
+    setLoading(true);
     await axios
       .post("https://poetry-pad.herokuapp.com/api/editpoem", {
         id: poem.id,
         title: title,
+        privacy: "public",
+        isDraft: 0,
         firstStanza: firstStanza,
         secondStanza: secondStanza,
         thirdStanza: thirdStanza,
         fourthStanza: fourthStanza,
       })
       .then((res) => {
+        setLoading(false);
         navigate("/dashboard");
         localStorage.removeItem("edit-poem");
       });
@@ -193,8 +235,36 @@ const EditPoem = () => {
                   variant="dark"
                   className="np-col3"
                   onClick={handleShowP}
+                  disabled={loading ? true : false}
                 >
-                  Save
+                  {loading && (
+                    <Spinner
+                      className="me-1"
+                      animation="border"
+                      variant="light"
+                      size="sm"
+                      style={{ background: "none" }}
+                    />
+                  )}
+                  Republish
+                </Button>
+                <br />
+                <Button
+                  variant="light"
+                  className="np-col3"
+                  onClick={onSave}
+                  disabled={loading ? true : false}
+                >
+                  {loading && (
+                    <Spinner
+                      className="me-1"
+                      animation="border"
+                      variant="dark"
+                      size="sm"
+                      style={{ background: "none" }}
+                    />
+                  )}
+                  Save as draft
                 </Button>
                 <br />
                 <Button
@@ -242,43 +312,138 @@ const EditPoem = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>{title}</h4>
-            <p
-              style={{
-                whiteSpace: "pre-line",
-              }}
-            >
-              {firstStanza}
+            <Row>
+              <Col md={3}>
+                <p>Title: </p>
+              </Col>
+              <Col>
+                <h4>{title}</h4>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={3}>
+                {" "}
+                <p>1st Stanza: </p>
+              </Col>
+              <Col>
+                <p
+                  style={{
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {firstStanza}
+                </p>
+              </Col>
+            </Row>
+            {secondStanza && (
+              <Row>
+                <Col md={3}>
+                  <p>2nd Stanza: </p>
+                </Col>
+                <Col>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {secondStanza}
+                  </p>
+                </Col>
+              </Row>
+            )}
+            {thirdStanza && (
+              <Row>
+                <Col md={3}>
+                  <p>3rd Stanza: </p>
+                </Col>
+                <Col>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {thirdStanza}
+                  </p>
+                </Col>
+              </Row>
+            )}
+            {fourthStanza && (
+              <Row>
+                <Col md={3}>
+                  <p>4th Stanza: </p>
+                </Col>
+                <Col>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {fourthStanza}
+                  </p>
+                </Col>
+              </Row>
+            )}
+
+            <Form className="mb-3">
+              <Form.Label>Set As:</Form.Label>
+              <br />
+              <Form.Check
+                inline
+                custom
+                label="Private"
+                type="radio"
+                name="radios"
+                onClick={() => setPrivacy("private")}
+              />
+              <Form.Check
+                inline
+                label="Public"
+                type="radio"
+                name="radios"
+                onClick={() => setPrivacy("public")}
+                style={{}}
+              />
+            </Form>
+            <p>
+              Author:
+              <br />
+              {user.url ? (
+                <Image
+                  width={40}
+                  height={40}
+                  alt="profile picture"
+                  cloudName="dabc77dwa"
+                  publicID={user.url}
+                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+                />
+              ) : (
+                <MdAccountCircle
+                  size={40}
+                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+                />
+              )}
+              {user?.penName}
             </p>
-            <p
-              style={{
-                whiteSpace: "pre-line",
-              }}
-            >
-              {secondStanza}
-            </p>
-            <p
-              style={{
-                whiteSpace: "pre-line",
-              }}
-            >
-              {thirdStanza}
-            </p>
-            <p
-              style={{
-                whiteSpace: "pre-line",
-              }}
-            >
-              {fourthStanza}
-            </p>
-            <p>Author: {user?.penName}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseP}>
               Back
             </Button>
-            <Button variant="dark" onClick={onRepub}>
-              Republish
+            <Button
+              variant="dark"
+              onClick={onRepub}
+              disabled={loading ? true : false}
+            >
+              {loading && (
+                <Spinner
+                  className="me-1"
+                  animation="border"
+                  variant="light"
+                  size="sm"
+                  style={{ background: "none" }}
+                />
+              )}
+              {loading ? "Republishing" : "Republish"}
             </Button>
           </Modal.Footer>
         </Modal>

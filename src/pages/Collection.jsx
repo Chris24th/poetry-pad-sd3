@@ -9,12 +9,14 @@ import {
   Button,
   Nav,
   Dropdown,
+  Spinner,
 } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
 import { TbHeartPlus } from "react-icons/tb";
 import { IconContext } from "react-icons";
 import { BiCommentDetail } from "react-icons/bi";
 import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Comment from "./Comment";
 import axios from "axios";
 
 const Collection = () => {
@@ -27,6 +29,9 @@ const Collection = () => {
   const [isDraft, setIsDraft] = useState(0);
   const [showDel, setShowDel] = useState();
   const [deleteId, setDeleteId] = useState();
+  const [loading, setLoading] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [selectedCom, setSelectedCom] = useState(false);
 
   const handleShowRM = (poem) => {
     setShowRM(true);
@@ -37,9 +42,11 @@ const Collection = () => {
   };
 
   const onDelete = async () => {
+    setLoading(true);
     await axios
       .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
       .then(() => {
+        setLoading(false);
         window.location.reload();
       });
   };
@@ -134,7 +141,7 @@ const Collection = () => {
                                 bsPrefix="p-0"
                                 size="lg"
                               >
-                                <BsThreeDots size={25} />
+                                <BsThreeDots size={25} color="#767676" />
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
                                 <Dropdown.Item
@@ -179,12 +186,23 @@ const Collection = () => {
                             className="d-flex justify-content-end align-items-center"
                           >
                             <TbHeartPlus
+                              role="button"
                               size={25}
                               color="#FF5A5F"
                               className="me-3"
                             />
-                            <BiCommentDetail size={25} color="#767676" />
+                            <BiCommentDetail
+                              role="button"
+                              size={25}
+                              color="#767676"
+                              onClick={() => setSelectedCom(poem.id)}
+                            />
                           </Col>
+                        </Row>
+                      )}
+                      {selectedCom === poem.id && (
+                        <Row>
+                          <Comment />
                         </Row>
                       )}
                     </Container>
@@ -206,14 +224,10 @@ const Collection = () => {
                   <br />
                   <Placeholder xs={3} size="xs" />
                   <br />
-                  <Row className="justify-content-between">
-                    <Col>
-                      <Placeholder xs={2} size="lg" />{" "}
-                      <Placeholder xs={3} size="lg" />
-                    </Col>
+                  <Row className="justify-content-end">
                     <Col className="d-flex justify-content-end">
-                      <Placeholder xs={2} size="lg" className="me-3" />
-                      <Placeholder xs={2} size="lg" />
+                      <Placeholder xs={1} size="lg" className="me-3" />
+                      <Placeholder xs={1} size="lg" />
                     </Col>
                   </Row>
                 </Placeholder>
@@ -232,14 +246,10 @@ const Collection = () => {
                   <br />
                   <Placeholder xs={3} size="xs" />
                   <br />
-                  <Row className="justify-content-between">
-                    <Col>
-                      <Placeholder xs={2} size="lg" />{" "}
-                      <Placeholder xs={3} size="lg" />
-                    </Col>
+                  <Row className="justify-content-end">
                     <Col className="d-flex justify-content-end">
-                      <Placeholder xs={2} size="lg" className="me-3" />
-                      <Placeholder xs={2} size="lg" />
+                      <Placeholder xs={1} size="lg" className="me-3" />
+                      <Placeholder xs={1} size="lg" />
                     </Col>
                   </Row>
                 </Placeholder>
@@ -306,8 +316,21 @@ const Collection = () => {
           <Button variant="secondary" onClick={() => setShowDel(false)}>
             Back
           </Button>
-          <Button variant="danger" onClick={onDelete}>
-            Delete
+          <Button
+            variant="danger"
+            onClick={onDelete}
+            disabled={loading ? true : false}
+          >
+            {loading && (
+              <Spinner
+                className="me-1"
+                animation="border"
+                variant="light"
+                size="sm"
+                style={{ background: "none" }}
+              />
+            )}
+            {loading ? "Deleting" : "Delete"}
           </Button>
         </Modal.Footer>
       </Modal>

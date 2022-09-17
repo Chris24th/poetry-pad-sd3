@@ -7,8 +7,11 @@ import {
   Button,
   Modal,
   Alert,
+  Spinner,
+  Image,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { MdAccountCircle } from "react-icons/md";
 import axios from "axios";
 
 const NewPoem = () => {
@@ -22,6 +25,7 @@ const NewPoem = () => {
   const [error, setError] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user-data"));
   let url = user.url;
@@ -70,11 +74,12 @@ const NewPoem = () => {
     }
   };
   const onPublish = async () => {
+    setLoading(true);
     await axios
       .post("https://poetry-pad.herokuapp.com/api/createpoem", {
         penName: user.penName,
         privacy: privacy,
-        isDraft: false,
+        isDraft: 0,
         title: title,
         url: url,
         firstStanza: firstStanza,
@@ -83,11 +88,13 @@ const NewPoem = () => {
         fourthStanza: fourthStanza,
       })
       .then((res) => {
+        setLoading(false);
         navigate("/dashboard");
         window.location.reload();
       });
   };
   const onSave = async () => {
+    setLoading(true);
     if (!title && !firstStanza) {
       setError("Please add your poem title and your first stanza.");
     } else if (!title) {
@@ -104,7 +111,7 @@ const NewPoem = () => {
         .post("https://poetry-pad.herokuapp.com/api/createpoem", {
           penName: user.penName,
           privacy: "private",
-          isDraft: true,
+          isDraft: 1,
           url: url,
           title: title,
           firstStanza: firstStanza,
@@ -113,6 +120,7 @@ const NewPoem = () => {
           fourthStanza: fourthStanza,
         })
         .then((res) => {
+          setLoading(false);
           navigate("/collection");
           window.location.reload();
         });
@@ -217,11 +225,39 @@ const NewPoem = () => {
         <Col lg={3} className="d-flex justify-content-center">
           <Row className="flex-column ">
             <Col style={{ textAlign: "end" }}>
-              <Button variant="dark" className="np-col3" onClick={handleShowP}>
+              <Button
+                variant="dark"
+                className="np-col3"
+                onClick={handleShowP}
+                disabled={loading ? true : false}
+              >
+                {loading && (
+                  <Spinner
+                    className="me-1"
+                    animation="border"
+                    variant="light"
+                    size="sm"
+                    style={{ background: "none" }}
+                  />
+                )}
                 Publish
               </Button>
               <br />
-              <Button variant="light" className="np-col3" onClick={onSave}>
+              <Button
+                variant="light"
+                className="np-col3"
+                onClick={onSave}
+                disabled={loading ? true : false}
+              >
+                {loading && (
+                  <Spinner
+                    className="me-1"
+                    animation="border"
+                    variant="dark"
+                    size="sm"
+                    style={{ background: "none" }}
+                  />
+                )}
                 Save as draft
               </Button>
               <br />
@@ -265,36 +301,115 @@ const NewPoem = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>{title}</h4>
-          <p
-            style={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {firstStanza}
+          <Row>
+            <Col md={3}>
+              <p>Title: </p>
+            </Col>
+            <Col>
+              <h4>{title}</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={3}>
+              {" "}
+              <p>1st Stanza: </p>
+            </Col>
+            <Col>
+              <p
+                style={{
+                  whiteSpace: "pre-line",
+                }}
+              >
+                {firstStanza}
+              </p>
+            </Col>
+          </Row>
+          {secondStanza && (
+            <Row>
+              <Col md={3}>
+                <p>2nd Stanza: </p>
+              </Col>
+              <Col>
+                <p
+                  style={{
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {secondStanza}
+                </p>
+              </Col>
+            </Row>
+          )}
+          {thirdStanza && (
+            <Row>
+              <Col md={3}>
+                <p>3rd Stanza: </p>
+              </Col>
+              <Col>
+                <p
+                  style={{
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {thirdStanza}
+                </p>
+              </Col>
+            </Row>
+          )}
+          {fourthStanza && (
+            <Row>
+              <Col md={3}>
+                <p>4th Stanza: </p>
+              </Col>
+              <Col>
+                <p
+                  style={{
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {fourthStanza}
+                </p>
+              </Col>
+            </Row>
+          )}
+          <Form className="mb-3">
+            <Form.Label>Set As:</Form.Label>
+            <br />
+            <Form.Check
+              inline
+              label="Private"
+              type="radio"
+              name="radios"
+              onClick={() => setPrivacy("private")}
+            />
+            <Form.Check
+              inline
+              label="Public"
+              type="radio"
+              name="radios"
+              onClick={() => setPrivacy("public")}
+            />
+          </Form>
+          <p>
+            Author:
+            <br />
+            {user.url ? (
+              <Image
+                width={40}
+                height={40}
+                alt="profile picture"
+                cloudName="dabc77dwa"
+                publicID={user.url}
+                className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+              />
+            ) : (
+              <MdAccountCircle
+                size={40}
+                className="border border-2 border-gray rounded-3 shadow-sm text-align-right mx-1"
+              />
+            )}{" "}
+            {user?.penName}
           </p>
-          <p
-            style={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {secondStanza}
-          </p>
-          <p
-            style={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {thirdStanza}
-          </p>
-          <p
-            style={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {fourthStanza}
-          </p>
-          <p style={{ fontSize: "14px" }}>Author: {user?.penName}</p>
           <Form>
             <Form.Label>Set As:</Form.Label>
             <br />
@@ -318,15 +433,22 @@ const NewPoem = () => {
           <Button variant="secondary" onClick={handleCloseP}>
             Back
           </Button>
-          {privacy ? (
-            <Button variant="dark" onClick={onPublish}>
-              Publish
-            </Button>
-          ) : (
-            <Button variant="dark" onClick={onPublish} disabled>
-              Publish
-            </Button>
-          )}
+          <Button
+            variant="dark"
+            onClick={onPublish}
+            disabled={loading ? true : false}
+          >
+            {loading && (
+              <Spinner
+                className="me-1"
+                animation="border"
+                variant="light"
+                size="sm"
+                style={{ background: "none" }}
+              />
+            )}
+            {loading ? "Publishing" : "Publish"}
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

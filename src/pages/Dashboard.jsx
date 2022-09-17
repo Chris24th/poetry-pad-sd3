@@ -21,6 +21,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
 import axios from "axios";
+import Comment from "./Comment";
 import EditPoem from "./EditPoem";
 
 const Dashboard = () => {
@@ -31,6 +32,9 @@ const Dashboard = () => {
   const [clickedPoem, setClickedPoem] = useState();
   const [showDel, setShowDel] = useState(false);
   const [deleteId, setDeleteId] = useState();
+  const [loading, setLoading] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [selectedCom, setSelectedCom] = useState(false);
   //----------------------------------------
   const [title, setTitle] = useState();
   const [firstStanza, setFirstStanza] = useState();
@@ -53,9 +57,11 @@ const Dashboard = () => {
   };
 
   const onDelete = async () => {
+    setLoading(true);
     await axios
       .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
       .then(() => {
+        setLoading(false);
         window.location.reload();
       });
   };
@@ -86,105 +92,119 @@ const Dashboard = () => {
             <>
               {poemData.map(
                 (poem) =>
-                  poem.isDraft === 0 && (
+                  poem.isDraft === 0 &&
+                  poem.privacy === "public" && (
                     <Container
                       key={poem.id}
                       className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5"
                     >
-                      <IconContext.Provider value={{ color: "gray" }}>
-                        <Row>
-                          <div className="d-flex justify-content-between mb-3">
-                            <span className="in-title fs-4">{poem.title}</span>
-                            {poem.penName === user.penName && (
-                              <span>
-                                <Dropdown align="end">
-                                  <Dropdown.Toggle
-                                    className="btn"
-                                    variant="Light"
-                                    id="dropdown-menu-align-end"
-                                    bsPrefix="p-0"
-                                    size="lg"
+                      <Row>
+                        <div className="d-flex justify-content-between mb-3">
+                          <span className="in-title fs-4">{poem.title}</span>
+                          {poem.penName === user.penName && (
+                            <span>
+                              <Dropdown align="end">
+                                <Dropdown.Toggle
+                                  className="btn"
+                                  variant="Light"
+                                  id="dropdown-menu-align-end"
+                                  bsPrefix="p-0"
+                                  size="lg"
+                                >
+                                  <BsThreeDots color="#767676" size={25} />
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item
+                                    onClick={() => {
+                                      localStorage.setItem(
+                                        "edit-poem",
+                                        JSON.stringify(poem)
+                                      );
+                                    }}
+                                    href="/editpoem"
                                   >
-                                    <BsThreeDots size={25} />
-                                  </Dropdown.Toggle>
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item
-                                      onClick={() => {
-                                        localStorage.setItem(
-                                          "edit-poem",
-                                          JSON.stringify(poem)
-                                        );
-                                      }}
-                                      href="/editpoem"
-                                    >
-                                      Edit
-                                    </Dropdown.Item>
-                                    <Dropdown.Item
-                                      onClick={() => {
-                                        setShowDel(true);
-                                        setDeleteId(poem.id);
-                                      }}
-                                    >
-                                      Delete
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </span>
-                            )}
-                          </div>
-                        </Row>
-                        <Row
-                          className="mb-3 poem-p"
-                          style={{ textAlign: "left" }}
+                                    Edit
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    onClick={() => {
+                                      setShowDel(true);
+                                      setDeleteId(poem.id);
+                                    }}
+                                  >
+                                    Delete
+                                  </Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </span>
+                          )}
+                        </div>
+                      </Row>
+                      <Row
+                        className="mb-3 poem-p"
+                        style={{ textAlign: "left" }}
+                      >
+                        <span>{poem.firstStanza}</span>
+                      </Row>
+                      <span
+                        className="read-btn"
+                        onClick={() => handleShowRM(poem)}
+                      >
+                        Read More
+                      </span>
+                      <Row className="mt-3 justify-content-between ">
+                        <Col md={4}>
+                          <Row>
+                            <div className="d-flex align-items-center">
+                              {user.url ? (
+                                <Image
+                                  width={40}
+                                  height={40}
+                                  alt="profile picture"
+                                  cloudName="dabc77dwa"
+                                  publicID={poem.url}
+                                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
+                                />
+                              ) : (
+                                <MdAccountCircle
+                                  size={40}
+                                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
+                                />
+                              )}
+                              <Col className="ms-4">
+                                <Row>{poem.penName}</Row>
+                                <Row className="text-muted">
+                                  {poem.created_at
+                                    .slice(0, 10)
+                                    .replace(/-/g, "/")}
+                                </Row>
+                              </Col>
+                            </div>
+                            <div></div>
+                          </Row>
+                        </Col>
+                        <Col
+                          md={3}
+                          className="d-flex justify-content-end align-items-center"
                         >
-                          <span>{poem.firstStanza}</span>
+                          <TbHeartPlus
+                            role="button"
+                            size={25}
+                            color="#FF5A5F"
+                            className="me-3"
+                          />
+                          <BiCommentDetail
+                            role="button"
+                            size={25}
+                            color="#767676"
+                            onClick={() => setSelectedCom(poem.id)}
+                          />
+                        </Col>
+                      </Row>
+                      {selectedCom === poem.id && (
+                        <Row>
+                          <Comment />
                         </Row>
-                        <span
-                          className="read-btn"
-                          onClick={() => handleShowRM(poem)}
-                        >
-                          Read More
-                        </span>
-                        <Row className="mt-3 justify-content-between ">
-                          <Col md={4}>
-                            <Row>
-                              <div className="d-flex align-items-center">
-                                {user.url ? (
-                                  <Image
-                                    width={40}
-                                    height={40}
-                                    alt="profile picture"
-                                    cloudName="dabc77dwa"
-                                    publicID={poem.url}
-                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
-                                  />
-                                ) : (
-                                  <MdAccountCircle
-                                    size={40}
-                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
-                                  />
-                                )}
-                                <Col className="ms-4">
-                                  <Row>{poem.penName}</Row>
-                                  <Row className="text-muted">
-                                    {poem.created_at
-                                      .slice(0, 10)
-                                      .replace(/-/g, "/")}
-                                  </Row>
-                                </Col>
-                              </div>
-                              <div></div>
-                            </Row>
-                          </Col>
-                          <Col
-                            md={3}
-                            className="d-flex justify-content-end align-items-center"
-                          >
-                            <TbHeartPlus size={25} className="me-3" />
-                            <BiCommentDetail size={25} />
-                          </Col>
-                        </Row>
-                      </IconContext.Provider>
+                      )}
                     </Container>
                   )
               )}
@@ -292,8 +312,21 @@ const Dashboard = () => {
           <Button variant="secondary" onClick={() => setShowDel(false)}>
             Back
           </Button>
-          <Button variant="danger" onClick={onDelete}>
-            Delete
+          <Button
+            variant="danger"
+            onClick={onDelete}
+            disabled={loading ? true : false}
+          >
+            {loading && (
+              <Spinner
+                className="me-1"
+                animation="border"
+                variant="light"
+                size="sm"
+                style={{ background: "none" }}
+              />
+            )}
+            {loading ? "Deleting" : "Delete"}
           </Button>
         </Modal.Footer>
       </Modal>
