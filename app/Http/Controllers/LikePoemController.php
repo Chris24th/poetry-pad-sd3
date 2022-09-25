@@ -12,7 +12,7 @@ class LikePoemController extends Controller
     {
         $checker = likePoem::where('idPoem', $req->idPoem)->first();
         if ($checker && $checker->penName == $req->penName) {
-            likePoem::where('penName', $req->penName)->delete();
+            likePoem::where('id', $checker->id)->delete();
             return ['message' => 'Unliked'];
         } else {
             $likePoem = new likePoem;
