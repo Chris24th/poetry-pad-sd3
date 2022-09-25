@@ -25,13 +25,13 @@ class LikePoemController extends Controller
     }
     function displaylikePoem()
     {
-        $minID = likePoem::min('id');
+        $minID = User::min('id');
         $userArr = array();
 
         for ($i = $minID; $i > 0; $i--) {
             $data = User::where('id', $i)->first();
-            if ($data) {
-                array_push($userArr, $data);
+            if ($data && likePoem::where('idUser', $data->id)->first) {
+                array_push($userArr, $data->penName);
             }
         }
         if ($userArr)
