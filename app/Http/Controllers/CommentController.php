@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     function createcomment(Request $req){
         $comment = new Comment();
-        $comment->idComment = $req->idComment;
+        $comment->idPoem = $req->idPoem;
         $comment->idUser = $req->idUser;
         $comment->textContent = $req->textContent;
         $comment->likes = likeComment::where('idComment', $req->idComment)->count();

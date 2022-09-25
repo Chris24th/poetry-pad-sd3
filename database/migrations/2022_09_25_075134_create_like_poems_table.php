@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('like_posts', function (Blueprint $table) {
+        Schema::create('like_poems', function (Blueprint $table) {
             $table->id();
-            $table->integer('idPost');
+            $table->integer('idPoem');
             $table->integer('idUser');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('like_posts');
+        Schema::dropIfExists('like_poems');
     }
 };
