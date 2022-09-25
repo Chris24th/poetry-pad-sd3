@@ -35,6 +35,7 @@ Route::post('createpoem', [PoemController::class, 'createpoem']);
 Route::get('displaypoem', [PoemController::class, 'displaypoem']);
 Route::post('editpoem', [PoemController::class, 'editpoem']);
 Route::post('deletepoem', [PoemController::class, 'deletepoem']);
+Route::post('likepoem', [PoemController::class, 'likepoem']);
 
 Route::post('createcomment', [CommentController::class, 'createcomment']);
 Route::post('editcomment', [CommentController::class, 'editcomment']);

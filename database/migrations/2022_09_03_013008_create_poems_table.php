@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('privacy');
             $table->boolean('isDraft');
             $table->integer('comments')->nullable();
+            $table->integer('likes')->nullable();
             $table->string('title');
             $table->string('url')->nullable();
             $table->string('firstStanza');
