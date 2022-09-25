@@ -62,6 +62,9 @@ class PoemController extends Controller
         $poem = Poem::where('id', $req->idPoem)->first();
         if($req->unlike == true){
             $poem->likes = $poem->likes-1;
+            if($poem->likes <= 0){
+                $poem->likes=null;
+            }
             $poem->save();
             return ['message'=>'Unliked.'];
         }
