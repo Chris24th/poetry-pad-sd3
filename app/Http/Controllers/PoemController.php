@@ -61,12 +61,12 @@ class PoemController extends Controller
     function likepoem(Request $req){
         $poem = Poem::where('id', $req->idPoem);
         if($req->unlike == true){
-            $poem->likes--;
+            $poem->likes = $poem->likes-1;
             $poem->save();
             return ['message'=>'Unliked.'];
         }
         else{
-            $poem->likes++;
+            $poem->likes = $poem->likes+1;
             $poem->save();
             return ['message'=>'Liked.'];
         }
