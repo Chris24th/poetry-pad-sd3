@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('idComment');
             $table->string('penName');
+            $table->string('name');
             $table->timestamps();
         });
     }

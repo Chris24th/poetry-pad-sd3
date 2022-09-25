@@ -18,6 +18,7 @@ class LikePoemController extends Controller
             $likePoem = new likePoem;
             $likePoem->idPoem = $req->idPoem;
             $likePoem->penName = $req->penName;
+            $likePoem->name = $req->name;
             $likePoem->save();
             return $likePoem;
         }
