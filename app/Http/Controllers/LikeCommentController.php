@@ -10,7 +10,7 @@ class LikeCommentController extends Controller
     function createlikeComment(Request $req){
         $checker = likeComment::where('idUser', $req->idUser)->first();
         if($checker){
-            $checker->delete();
+            likeComment::where('idUser', $req->idUser)->delete();
             return ['message'=>'Unliked']; 
         }
         else{
