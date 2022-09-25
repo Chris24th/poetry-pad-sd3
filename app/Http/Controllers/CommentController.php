@@ -30,5 +30,6 @@ class CommentController extends Controller
     }
     function displaycomment(){
         $comment = DB::table('comments')->get();
+        return $comment;
     }
 }
