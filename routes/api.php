@@ -30,13 +30,17 @@ Route::post('verification', [AuthController::class, 'verification']);
 Route::post('forgotpassword', [AuthController::class, 'forgotpassword']);
 Route::post('resetpassword', [AuthController::class, 'resetpassword']);
 Route::post('editprofile', [AuthController::class, 'editprofile']);
+
 Route::post('createpoem', [PoemController::class, 'createpoem']);
 Route::get('displaypoem', [PoemController::class, 'displaypoem']);
 Route::post('editpoem', [PoemController::class, 'editpoem']);
 Route::post('deletepoem', [PoemController::class, 'deletepoem']);
+
 Route::post('createcomment', [CommentController::class, 'createcomment']);
 Route::post('editcomment', [CommentController::class, 'editcomment']);
 Route::post('deletecomment', [CommentController::class, 'deletecomment']);
+Route::get('displaycomment', [CommentController::class, 'displaycomment']);
+
 Route::post('createlikePoem', [LikePoemController::class, 'createlikePoem']);
 Route::post('deletelikePoem', [LikePoemController::class, 'deletelikePoem']);
 Route::post('createlikeComment', [LikeCommentController::class, 'createlikeComment']);

@@ -25,6 +25,9 @@ class CommentController extends Controller
         return $comment;
     }
     function deletecomment(Request $req){
-        
+        $comment = Comment::where('id', $req->idComment)->delete();
+    }
+    function displaycomment(){
+        $comment = DB::table('comments')->get();
     }
 }
