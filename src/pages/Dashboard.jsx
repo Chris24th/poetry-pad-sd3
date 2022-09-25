@@ -47,6 +47,8 @@ const Dashboard = () => {
   const [isDraft, setIsDraft] = useState();
   const [stanza, setStanza] = useState(0);
 
+  const [likesP, setLikesP] = useState();
+
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
@@ -66,6 +68,31 @@ const Dashboard = () => {
       });
   };
 
+  const onLike = async (idPoem) => {
+    let unlike = false;
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+        idPoem: idPoem,
+        penName: user.penName,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message == "Unliked") {
+          unlike = true;
+        }
+        axios
+          .post("https://poetry-pad.herokuapp.com/api/likepoem", {
+            idPoem: idPoem,
+            unlike: unlike,
+          })
+          .then((res) => {
+            unlike = false;
+            console.log(res.data);
+          });
+      });
+    unlike = false;
+  };
+
   const api = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaypoem")
@@ -74,11 +101,20 @@ const Dashboard = () => {
       });
   };
 
+  const displayLikeP = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaylikePoem")
+      .then((res) => {
+        setLikesP(res.data);
+      });
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/signin");
     }
     api();
+    displayLikeP();
   }, [api()]);
 
   return (
@@ -195,8 +231,16 @@ const Dashboard = () => {
                             role="button"
                             size={25}
                             color="#FF5A5F"
-                            className="me-3"
+                            onClick={() => onLike(poem.id)}
                           />
+                          <label
+                            className="likAndComLabel"
+                            onClick={() => {
+                              alert(likesP.map((likeP) => likeP.penName));
+                            }}
+                          >
+                            {poem.likes}
+                          </label>
                           <BiCommentDetail
                             role="button"
                             size={25}

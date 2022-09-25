@@ -48,9 +48,11 @@ const SignUp = () => {
             }
           });
       } else {
+        setLoading(false);
         return setError("Password must have 6 or more characters");
       }
     } else {
+      setLoading(false);
       return setError("Passwords do not match.");
     }
   };
