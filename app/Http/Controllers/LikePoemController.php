@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\likePoem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LikePoemController extends Controller
 {
@@ -21,8 +22,8 @@ class LikePoemController extends Controller
             return $likePoem;  
         }
     }
-    function displaylikePoem(Request $req){
-        $likePoemCount = likePoem::where('idPoem', $req->idPoem)->count();
-        return $likePoemCount;
+    function displaylikePoem(){
+        $likePoem = DB::table('like_poems')->get();
+        return $likePoem;
     }
 }

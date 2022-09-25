@@ -21,8 +21,8 @@ class LikeCommentController extends Controller
             return $likeComment;      
         }
     }
-    function displaylikeComment(Request $req){
-        $likeCommentCount = likeComment::where('idComment', $req->idComment)->count();
-        return $likeCommentCount;
+    function displaylikeComment(){
+        $likeComment = DB::table('like_comments')->get();
+        return $likeComment;
     }
 }
