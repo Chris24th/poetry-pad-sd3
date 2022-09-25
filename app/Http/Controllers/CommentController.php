@@ -14,8 +14,6 @@ class CommentController extends Controller
         $comment->idPoem = $req->idPoem;
         $comment->idUser = $req->idUser;
         $comment->textContent = $req->textContent;
-        $comment->likes = likeComment::where('idComment', $req->idComment)->count();
-
         $comment->save();
         return $comment;
     }

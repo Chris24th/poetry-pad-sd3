@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('idUser');
             $table->integer('idPoem');
-            $table->integer('likes')->nullable();
             $table->string('textContent');
             $table->timestamps();
         });

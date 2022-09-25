@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('penName');
             $table->string('privacy');
             $table->boolean('isDraft');
-            $table->integer('likes')->nullable();
             $table->integer('comments')->nullable();
             $table->string('title');
             $table->string('url')->nullable();

@@ -18,4 +18,8 @@ class LikeCommentController extends Controller
         $likeComment = likeComment::where('id', $req->idLikeComment)->delete();
         return ['message'=>'Unliked'];
     }
+    function displaylikeComment(Request $req){
+        $likeCommentCount = likeComment::where('idComment', $req->idComment)->count();
+        return $likeCommentCount;
+    }
 }
