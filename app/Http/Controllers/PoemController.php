@@ -59,7 +59,7 @@ class PoemController extends Controller
         return ['message'=>'Comment deleted successfully.'];
     }
     function likepoem(Request $req){
-        $poem = Poem::where('id', $req->idPoem);
+        $poem = Poem::where('id', $req->idPoem)->first();
         if($req->unlike == true){
             $poem->likes = $poem->likes-1;
             $poem->save();
