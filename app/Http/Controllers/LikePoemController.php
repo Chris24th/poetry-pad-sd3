@@ -30,7 +30,7 @@ class LikePoemController extends Controller
 
         for ($i = $minID; $i > 0; $i--) {
             $data = User::where('id', $i)->first();
-            if ($data && likePoem::where('idUser', $data->id)->first) {
+            if ($data && likePoem::where('idUser', $data->id)->first()) {
                 array_push($userArr, $data->penName);
             }
         }
