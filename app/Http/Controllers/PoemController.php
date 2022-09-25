@@ -56,5 +56,6 @@ class PoemController extends Controller
     {
         $poem = Poem::find($req->id);
         $poem->delete();
+        return ['message'=>'Comment deleted successfully.'];
     }
 }

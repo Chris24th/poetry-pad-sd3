@@ -42,10 +42,8 @@ Route::post('deletecomment', [CommentController::class, 'deletecomment']);
 Route::get('displaycomment', [CommentController::class, 'displaycomment']);
 
 Route::post('createlikePoem', [LikePoemController::class, 'createlikePoem']);
-Route::post('deletelikePoem', [LikePoemController::class, 'deletelikePoem']);
 Route::post('displaylikePoem', [LikePoemController::class, 'displaylikePoem']);
 Route::post('createlikeComment', [LikeCommentController::class, 'createlikeComment']);
-Route::post('deletelikeComment', [LikeCommentController::class, 'deletelikeComment']);
 Route::post('displaylikeComment', [LikeCommentController::class, 'displaylikeComment']);
 
 
