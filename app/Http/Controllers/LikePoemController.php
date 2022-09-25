@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\likePoem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,8 @@ class LikePoemController extends Controller
             $likePoem->idPoem = $req->idPoem;
             $likePoem->idUser = $req->idUser;
             $likePoem->save();
-            return $likePoem;  
+            $user = User::where('id', $req->idUser)->first();
+            return $user->penName;  
         }
     }
     function displaylikePoem(){
