@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('like_comments', function (Blueprint $table) {
             $table->id();
             $table->integer('idComment');
-            $table->integer('idUser');
+            $table->string('penName');
             $table->timestamps();
         });
     }

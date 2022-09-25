@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('like_poems', function (Blueprint $table) {
             $table->id();
             $table->integer('idPoem');
-            $table->integer('idUser');
+            $table->string('penName');
             $table->timestamps();
         });
     }

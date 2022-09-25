@@ -7,22 +7,10 @@ use Illuminate\Http\Request;
 
 class LikeCommentController extends Controller
 {
-    function createlikeComment(Request $req){
-        $checker = likeComment::where('idUser', $req->idUser)->first();
-        if($checker){
-            likeComment::where('idUser', $req->idUser)->delete();
-            return ['message'=>'Unliked']; 
-        }
-        else{
-            $likeComment = new likeComment;
-            $likeComment->idComment = $req->idComment;
-            $likeComment->idUser = $req->idUser;
-            $likeComment->save();
-            return $likeComment;      
-        }
+    function createlikeComment(Request $req)
+    {
     }
-    function displaylikeComment(){
-        $likeComment = DB::table('like_comments')->get();
-        return $likeComment;
+    function displaylikeComment()
+    {
     }
 }
