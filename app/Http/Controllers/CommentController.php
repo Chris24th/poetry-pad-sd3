@@ -19,7 +19,10 @@ class CommentController extends Controller
         return $comment;
     }
     function editcomment(Request $req){
-        
+        $comment = Comment::where('id', $req->idComment)->first();
+        $comment->textContent = $req->textContent;
+        $comment->save();
+        return $comment;
     }
     function deletecomment(Request $req){
         

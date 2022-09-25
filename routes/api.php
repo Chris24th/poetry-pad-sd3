@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PoemController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikePoemController;
+use App\Http\Controllers\LikeCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +37,9 @@ Route::post('deletepoem', [PoemController::class, 'deletepoem']);
 Route::post('createcomment', [CommentController::class, 'createcomment']);
 Route::post('editcomment', [CommentController::class, 'editcomment']);
 Route::post('deletecomment', [CommentController::class, 'deletecomment']);
+Route::post('createlikePoem', [LikePoemController::class, 'createlikePoem']);
+Route::post('deletelikePoem', [LikePoemController::class, 'deletelikePoem']);
+Route::post('createlikeComment', [LikeCommentController::class, 'createlikeComment']);
+Route::post('deletelikeComment', [LikeCommentController::class, 'deletelikeComment']);
+
 
