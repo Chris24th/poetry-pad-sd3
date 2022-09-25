@@ -11,7 +11,7 @@ class LikePoemController extends Controller
     function createlikePoem(Request $req)
     {
         $checker = likePoem::where('idPoem', $req->idPoem)->first();
-        if ($checker->penName == $req->penName) {
+        if ($checker && $checker->penName == $req->penName) {
             likePoem::where('penName', $req->penName)->delete();
             return ['message' => 'Unliked'];
         } else {
