@@ -15,7 +15,7 @@ class LikePoemController extends Controller
         }
         else{
             $likePoem = new likePoem;
-            $likePoem->idComment = $req->idComment;
+            $likePoem->idPoem = $req->idPoem;
             $likePoem->idUser = $req->idUser;
             $likePoem->save();
             return $likePoem;  
