@@ -48,6 +48,7 @@ const Dashboard = () => {
   const [stanza, setStanza] = useState(0);
 
   const [likesP, setLikesP] = useState();
+  let ctr = 0;
 
   const handleShowRM = (poem) => {
     setShowRM(true);
@@ -69,35 +70,22 @@ const Dashboard = () => {
   };
 
   const onLike = async (idPoem) => {
-    let unlike = false;
     await axios
       .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
         idPoem: idPoem,
         penName: user.penName,
+        name: user.name,
       })
       .then((res) => {
         console.log(res.data);
-        if (res.data.message == "Unliked") {
-          unlike = true;
-        }
-        axios
-          .post("https://poetry-pad.herokuapp.com/api/likepoem", {
-            idPoem: idPoem,
-            unlike: unlike,
-          })
-          .then((res) => {
-            unlike = false;
-            console.log(res.data);
-          });
       });
-    unlike = false;
   };
 
   const api = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaypoem")
       .then((res) => {
-        setPoemData(res.data);
+        res.data && setPoemData(res.data);
       });
   };
 
@@ -105,7 +93,7 @@ const Dashboard = () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikePoem")
       .then((res) => {
-        setLikesP(res.data);
+        res.data && setLikesP(res.data);
       });
   };
 
@@ -115,7 +103,7 @@ const Dashboard = () => {
     }
     api();
     displayLikeP();
-  }, [api()]);
+  });
 
   return (
     <div>
@@ -236,10 +224,18 @@ const Dashboard = () => {
                           <label
                             className="likAndComLabel"
                             onClick={() => {
-                              alert(likesP.map((likeP) => likeP.penName));
+                              alert(likesP.map((likeP) => likeP.name));
                             }}
                           >
-                            {poem.likes}
+                            <script>{(ctr = 0)}</script>
+                            {likesP &&
+                              likesP.map(
+                                (likeP) =>
+                                  likeP.idPoem == poem.id && (
+                                    <script key={likeP.id}>{ctr++}</script>
+                                  )
+                              )}
+                            {ctr}
                           </label>
                           <BiCommentDetail
                             role="button"
@@ -390,6 +386,7 @@ const Dashboard = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* ------------------------liked modal---------------------------- */}
     </div>
   );
 };
