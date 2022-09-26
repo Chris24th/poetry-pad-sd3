@@ -10,18 +10,24 @@ class LikePoemController extends Controller
 {
     function createlikePoem(Request $req)
     {
-        $checker = likePoem::where('idPoem', $req->idPoem)->first();
-        if ($checker && $checker->penName == $req->penName) {
-            likePoem::where('id', $checker->id)->delete();
-            return ['message' => 'Unliked'];
-        } else {
-            $likePoem = new likePoem;
-            $likePoem->idPoem = $req->idPoem;
-            $likePoem->penName = $req->penName;
-            $likePoem->name = $req->name;
-            $likePoem->save();
-            return $likePoem;
+        //finding the likePoem with the same idPoem
+
+        $minID = likePoem::min('id');
+        $maxID = likePoem::max('id');
+        $userArr = array();
+        for ($i = $minID; $i < $maxID; $i++) {
+            $checker = likePoem::where('id', $i)->first();
+            if ($checker && $checker->penName == $req->penName) {
+                likePoem::where('id', $checker->id)->delete();
+                return ['message' => 'Unliked'];
+            }
         }
+        $likePoem = new likePoem;
+        $likePoem->idPoem = $req->idPoem;
+        $likePoem->penName = $req->penName;
+        $likePoem->name = $req->name;
+        $likePoem->save();
+        return $likePoem;
     }
     function displaylikePoem()
     {
