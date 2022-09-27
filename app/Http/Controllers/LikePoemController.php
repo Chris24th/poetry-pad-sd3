@@ -14,10 +14,10 @@ class LikePoemController extends Controller
 
         $minID = likePoem::min('id');
         $maxID = likePoem::max('id');
-        for ($i = $minID; $i < $maxID; $i++) {
+        for ($i = $minID; $i <= $maxID; $i++) {
             $checker = likePoem::where('id', $i)->first();
             if ($checker && $checker->idPoem == $req->idPoem && $checker->penName == $req->penName) {
-                likePoem::where('id', $checker->id)->delete();
+                $checker->delete();
                 return ['message' => 'Unliked'];
             }
         }
