@@ -15,7 +15,7 @@ class CommentController extends Controller
         $comment = new Comment();
         $comment->idPoem = $req->idPoem;
         $comment->idUser = $req->idUser;
-        $user = User::where('id', $req->idUser);
+        $user = User::where('id', $req->idUser)->first();
         $comment->textContent = $req->textContent;
         $comment->save();
         $data = [$comment, $user];
