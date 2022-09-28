@@ -17,6 +17,7 @@ import { IconContext } from "react-icons";
 import { BiCommentDetail } from "react-icons/bi";
 import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Comment from "./Comment";
+import MyPlaceHolder from "./MyPlaceHolder";
 import axios from "axios";
 
 const Collection = () => {
@@ -219,51 +220,7 @@ const Collection = () => {
               )}
             </>
           ) : (
-            <>
-              <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="wave">
-                  <Placeholder xs={6} /> <br />
-                  <br />
-                  <Placeholder xs={5} /> <Placeholder xs={4} />
-                  <br />
-                  <Placeholder xs={8} />
-                  <br />
-                  <Placeholder xs={4} /> <Placeholder xs={5} />
-                  <br />
-                  <br />
-                  <Placeholder xs={3} size="xs" />
-                  <br />
-                  <Row className="justify-content-end">
-                    <Col className="d-flex justify-content-end">
-                      <Placeholder xs={1} size="lg" className="me-3" />
-                      <Placeholder xs={1} size="lg" />
-                    </Col>
-                  </Row>
-                </Placeholder>
-              </Container>
-
-              <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="wave">
-                  <Placeholder xs={5} /> <br />
-                  <br />
-                  <Placeholder xs={4} /> <Placeholder xs={4} />
-                  <br />
-                  <Placeholder xs={9} />
-                  <br />
-                  <Placeholder xs={3} /> <Placeholder xs={5} />
-                  <br />
-                  <br />
-                  <Placeholder xs={3} size="xs" />
-                  <br />
-                  <Row className="justify-content-end">
-                    <Col className="d-flex justify-content-end">
-                      <Placeholder xs={1} size="lg" className="me-3" />
-                      <Placeholder xs={1} size="lg" />
-                    </Col>
-                  </Row>
-                </Placeholder>
-              </Container>
-            </>
+            <MyPlaceHolder />
           )}
         </Col>
         <Col lg={3}></Col>

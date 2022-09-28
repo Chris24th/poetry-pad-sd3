@@ -10,7 +10,8 @@ import {
   DropdownButton,
   Form,
   Alert,
-  Placeholder,
+  Tooltip,
+  OverlayTrigger,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
@@ -22,6 +23,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
 import axios from "axios";
 import Comment from "./Comment";
+import MyPlaceHolder from "./MyPlaceHolder";
 import EditPoem from "./EditPoem";
 
 const Dashboard = () => {
@@ -49,7 +51,6 @@ const Dashboard = () => {
 
   const [likesP, setLikesP] = useState();
   let ctr = 0;
-
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
@@ -58,6 +59,14 @@ const Dashboard = () => {
     setClickedPoem("");
     setShowRM(false);
   };
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {likesP.map((likeP) => {
+        <>Simple tooltip</>;
+      })}
+    </Tooltip>
+  );
 
   const onDelete = async () => {
     setLoading(true);
@@ -70,18 +79,17 @@ const Dashboard = () => {
   };
 
   const onLike = async (idPoem) => {
-    await axios
-      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
-        idPoem: idPoem,
-        penName: user.penName,
-        name: user.name,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+    await axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+      idPoem: idPoem,
+      penName: user.penName,
+      name: user.name,
+    });
+    // .then((res) => {
+    //   console.log(res.data);
+    // });
   };
 
-  const api = async () => {
+  const displayPoem = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaypoem")
       .then((res) => {
@@ -101,7 +109,7 @@ const Dashboard = () => {
     if (!user) {
       navigate("/signin");
     }
-    api();
+    displayPoem();
     displayLikeP();
   });
 
@@ -221,22 +229,35 @@ const Dashboard = () => {
                             color="#FF5A5F"
                             onClick={() => onLike(poem.id)}
                           />
-                          <label
-                            className="likAndComLabel"
-                            onClick={() => {
-                              alert(likesP.map((likeP) => likeP.name));
-                            }}
+                          <OverlayTrigger
+                            placement="right"
+                            delay={{ show: 150, hide: 300 }}
+                            overlay={
+                              <Tooltip id="button-tooltip-2">
+                                {/* Check out this avatar */}
+                                {likesP.map(
+                                  (likeP) =>
+                                    likeP.idPoem === poem.id && (
+                                      <>
+                                        {likeP.name} - {likeP.penName} <br />
+                                      </>
+                                    )
+                                )}
+                              </Tooltip>
+                            }
                           >
-                            <script>{(ctr = 0)}</script>
-                            {likesP &&
-                              likesP.map(
-                                (likeP) =>
-                                  likeP.idPoem == poem.id && (
-                                    <script key={likeP.id}>{ctr++}</script>
-                                  )
-                              )}
-                            {ctr}
-                          </label>
+                            <label className="likAndComLabel">
+                              <script>{(ctr = 0)}</script>
+                              {likesP &&
+                                likesP.map(
+                                  (likeP) =>
+                                    likeP.idPoem == poem.id && (
+                                      <script key={likeP.id}>{ctr++}</script>
+                                    )
+                                )}
+                              {ctr !== 0 && ctr}
+                            </label>
+                          </OverlayTrigger>
                           <BiCommentDetail
                             role="button"
                             size={25}
@@ -267,57 +288,7 @@ const Dashboard = () => {
             </>
           ) : (
             <>
-              <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="glow">
-                  <Placeholder xs={6} /> <br />
-                  <br />
-                  <Placeholder xs={5} /> <Placeholder xs={4} />
-                  <br />
-                  <Placeholder xs={8} />
-                  <br />
-                  <Placeholder xs={4} /> <Placeholder xs={5} />
-                  <br />
-                  <br />
-                  <Placeholder xs={3} size="xs" />
-                  <br />
-                  <Row className="justify-content-between">
-                    <Col>
-                      <Placeholder xs={2} size="lg" />{" "}
-                      <Placeholder xs={3} size="lg" />
-                    </Col>
-                    <Col className="d-flex justify-content-end">
-                      <Placeholder xs={2} size="lg" className="me-3" />
-                      <Placeholder xs={2} size="lg" />
-                    </Col>
-                  </Row>
-                </Placeholder>
-              </Container>
-
-              <Container className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5">
-                <Placeholder as="p" animation="glow">
-                  <Placeholder xs={5} /> <br />
-                  <br />
-                  <Placeholder xs={4} /> <Placeholder xs={4} />
-                  <br />
-                  <Placeholder xs={9} />
-                  <br />
-                  <Placeholder xs={3} /> <Placeholder xs={5} />
-                  <br />
-                  <br />
-                  <Placeholder xs={3} size="xs" />
-                  <br />
-                  <Row className="justify-content-between">
-                    <Col>
-                      <Placeholder xs={2} size="lg" />{" "}
-                      <Placeholder xs={3} size="lg" />
-                    </Col>
-                    <Col className="d-flex justify-content-end">
-                      <Placeholder xs={2} size="lg" className="me-3" />
-                      <Placeholder xs={2} size="lg" />
-                    </Col>
-                  </Row>
-                </Placeholder>
-              </Container>
+              <MyPlaceHolder />
             </>
           )}
         </Col>
@@ -386,7 +357,6 @@ const Dashboard = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* ------------------------liked modal---------------------------- */}
     </div>
   );
 };
