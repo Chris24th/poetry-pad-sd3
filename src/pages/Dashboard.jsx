@@ -238,9 +238,12 @@ const Dashboard = () => {
                                 {likesP.map(
                                   (likeP) =>
                                     likeP.idPoem === poem.id && (
-                                      <>
+                                      <span
+                                        key={likeP.id}
+                                        style={{ background: "none" }}
+                                      >
                                         {likeP.name} - {likeP.penName} <br />
-                                      </>
+                                      </span>
                                     )
                                 )}
                               </Tooltip>
@@ -279,7 +282,7 @@ const Dashboard = () => {
                       </Row>
                       {selectedCom === poem.id && showComment && (
                         <Row>
-                          <Comment />
+                          <Comment selectedCom={selectedCom} />
                         </Row>
                       )}
                     </Container>
