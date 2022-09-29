@@ -15,11 +15,9 @@ class CommentController extends Controller
         $comment = new Comment();
         $comment->idPoem = $req->idPoem;
         $comment->idUser = $req->idUser;
-        $user = User::where('id', $req->idUser)->first();
         $comment->textContent = $req->textContent;
         $comment->save();
-        $data = [$comment, $user];
-        return $data;
+        return $comment;
     }
     function editcomment(Request $req)
     {
@@ -35,7 +33,14 @@ class CommentController extends Controller
     }
     function displaycomment()
     {
-        $comment = DB::table('comments')->get();
-        return $comment;
+        $minID = Comment::min('id');
+        $maxID = Comment::max('id');
+        $data = array();
+        for ($i = $minID; $i <= $maxID; $i++) {
+            $comment = Comment::where('id', $i)->first();
+            $user = User::where('id', $comment->idUser)->first();
+            array_push($data, $comment, $user);
+        }
+        return $data;
     }
 }
