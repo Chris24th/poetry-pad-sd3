@@ -35,12 +35,14 @@ class CommentController extends Controller
     {
         $minID = Comment::min('id');
         $maxID = Comment::max('id');
-        $data = array();
+        $result = array();
         for ($i = $minID; $i <= $maxID; $i++) {
+            $data = array();
             $comment = Comment::where('id', $i)->first();
             $user = User::where('id', $comment->idUser)->first();
             array_push($data, $comment, $user);
+            array_push($result, $data);
         }
-        return $data;
+        return $result;
     }
 }
