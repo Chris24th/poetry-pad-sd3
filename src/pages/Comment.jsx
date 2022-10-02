@@ -10,9 +10,11 @@ import {
   Spinner,
   OverlayTrigger,
   Tooltip,
+  Dropdown,
 } from "react-bootstrap";
-import { TbHeartPlus } from "react-icons/tb";
+import { RiHeartLine, RiHeartFill } from "react-icons/ri";
 import { MdAccountCircle } from "react-icons/md";
+import { BsThreeDots } from "react-icons/bs";
 import { Image } from "cloudinary-react";
 
 const Comment = ({ selectedCom }) => {
@@ -61,13 +63,13 @@ const Comment = ({ selectedCom }) => {
   });
 
   return (
-    <Container className="mt-4">
+    <Container className="mt-4 border-top">
       <Container>
         {comments ? (
           comments.map(
             (comm) =>
               comm[0].idPoem === selectedCom && (
-                <Row className="mb-2">
+                <Row className="my-3">
                   <Col sm={9}>
                     <Row>
                       <div className="d-flex align-items-center">
@@ -101,9 +103,9 @@ const Comment = ({ selectedCom }) => {
                     </Row>
                   </Col>
                   <Col className="d-flex justify-content-end align-items-center">
-                    <TbHeartPlus
+                    <RiHeartLine
                       role="button"
-                      size={25}
+                      size={20}
                       color="#FF5A5F"
                       onClick={() => onLike(comm[0].id)}
                     />
@@ -138,19 +140,54 @@ const Comment = ({ selectedCom }) => {
                         {ctr !== 0 && ctr} */}
                       </label>
                     </OverlayTrigger>
+                    {comm[1].penName === user.penName && (
+                      <span>
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            className="btn"
+                            variant="Light"
+                            id="dropdown-menu-align-end"
+                            bsPrefix="p-0"
+                            size="lg"
+                          >
+                            <BsThreeDots color="#767676" size={18} />
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => {}}>
+                              Edit
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => {}}>
+                              Delete
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </span>
+                    )}
                   </Col>
 
-                  <div className="border border-1 rounded-2 p-2 my-1 w-80">
-                    {comm[0].textContent}
+                  <div className="border-bottom p-2 mt-1">
+                    <span className="comment-text">{comm[0].textContent}</span>
                   </div>
                 </Row>
               )
           )
         ) : (
           <>
-            <Placeholder as="p" animation="glow">
-              <Placeholder xs={3} /> <br />
-              <Placeholder xs={3} />
+            <Placeholder as="p" animation="glow" className="mt-3">
+              <Row className="mb-3">
+                <Col className="p-0 d-flex">
+                  <Placeholder xs={2} size="lg" className="me-2" />
+                  <Placeholder xs={5} />
+                </Col>
+                <Col className="d-flex justify-content-end">
+                  <Placeholder xs={2} className="me-3" />
+                  <Placeholder xs={2} />
+                </Col>
+              </Row>
+              <Row>
+                <Placeholder xs={11} className="mb-1" />
+                <Placeholder xs={9} />
+              </Row>
             </Placeholder>
           </>
         )}

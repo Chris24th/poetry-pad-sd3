@@ -12,12 +12,13 @@ import {
   Alert,
   Tooltip,
   OverlayTrigger,
+  Popover,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { IconContext } from "react-icons";
 import { BsThreeDots } from "react-icons/bs";
-import { TbHeartPlus } from "react-icons/tb";
+import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
@@ -59,6 +60,16 @@ const Dashboard = () => {
     setClickedPoem("");
     setShowRM(false);
   };
+
+  const popover = (poem) => (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Profile</Popover.Header>
+      <Popover.Body>
+        And here's some <strong>amazing</strong> content. It's very engaging.
+        right?
+      </Popover.Body>
+    </Popover>
+  );
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -186,36 +197,45 @@ const Dashboard = () => {
                       <Row className="mt-3 justify-content-between ">
                         <Col md={4}>
                           <Row>
-                            <div className="d-flex align-items-center">
-                              {poem.url ? (
-                                <Image
-                                  width={40}
-                                  height={40}
-                                  alt="profile picture"
-                                  cloudName="dabc77dwa"
-                                  publicID={poem.url}
-                                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
-                                />
-                              ) : (
-                                <MdAccountCircle
-                                  size={40}
-                                  className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
-                                />
-                              )}
-                              <Col className="ms-4">
-                                <Row>{poem.penName}</Row>
-                                <Row
-                                  className="text-muted"
-                                  style={{
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  {poem.created_at
-                                    .slice(0, 10)
-                                    .replace(/-/g, "/")}
-                                </Row>
-                              </Col>
-                            </div>
+                            <OverlayTrigger
+                              trigger="click"
+                              placement="right"
+                              overlay={popover(poem)}
+                            >
+                              <div
+                                className="d-flex align-items-center"
+                                style={{ cursor: "pointer" }}
+                              >
+                                {poem.url ? (
+                                  <Image
+                                    width={40}
+                                    height={40}
+                                    alt="profile picture"
+                                    cloudName="dabc77dwa"
+                                    publicID={poem.url}
+                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
+                                  />
+                                ) : (
+                                  <MdAccountCircle
+                                    size={40}
+                                    className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
+                                  />
+                                )}
+                                <Col className="ms-4">
+                                  <Row>{poem.penName}</Row>
+                                  <Row
+                                    className="text-muted"
+                                    style={{
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    {poem.created_at
+                                      .slice(0, 10)
+                                      .replace(/-/g, "/")}
+                                  </Row>
+                                </Col>
+                              </div>
+                            </OverlayTrigger>
                             <div></div>
                           </Row>
                         </Col>
@@ -223,7 +243,7 @@ const Dashboard = () => {
                           md={3}
                           className="d-flex justify-content-end align-items-center"
                         >
-                          <TbHeartPlus
+                          <RiHeartAddLine
                             role="button"
                             size={25}
                             color="#FF5A5F"
@@ -267,9 +287,7 @@ const Dashboard = () => {
                             color="#767676"
                             onClick={() => {
                               selectedCom === poem.id ? (
-                                <>
-                                  {setShowComment(false)};{setSelectedCom("")};
-                                </>
+                                <>{setShowComment(false)};</>
                               ) : (
                                 <>
                                   {setShowComment(true)};
