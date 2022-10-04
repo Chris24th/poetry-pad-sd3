@@ -25,6 +25,10 @@ const Comment = ({ selectedCom }) => {
   const [likesC, setLikesC] = useState();
   let ctr = 0;
 
+  const [edit, setEdit] = useState();
+  const [clickedCom, setClickedCom] = useState();
+  const [comTextContent, setComTextContent] = useState();
+
   const displayComment = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaycomment")
@@ -45,6 +49,27 @@ const Comment = ({ selectedCom }) => {
       .then((res) => {
         console.log(res.data);
         setTextContent("");
+        setLoading(false);
+      });
+  };
+
+  const onEdit = async (com) => {
+    setEdit(true);
+    setClickedCom(com);
+    setComTextContent(com.textContent);
+  };
+
+  const onSaveEdit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/editcomment", {
+        idComment: clickedCom.id,
+        textContent: comTextContent,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setClickedCom();
         setLoading(false);
       });
   };
@@ -153,7 +178,11 @@ const Comment = ({ selectedCom }) => {
                             <BsThreeDots color="#767676" size={18} />
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => {}}>
+                            <Dropdown.Item
+                              onClick={() => {
+                                onEdit(comm[0]);
+                              }}
+                            >
                               Edit
                             </Dropdown.Item>
                             <Dropdown.Item onClick={() => {}}>
@@ -166,7 +195,30 @@ const Comment = ({ selectedCom }) => {
                   </Col>
 
                   <div className="border-bottom p-2 mt-1">
-                    <span className="comment-text">{comm[0].textContent}</span>
+                    {clickedCom && clickedCom.id === comm[0].id ? (
+                      <Form className="d-flex" onSubmit={onSaveEdit}>
+                        <Form.Control
+                          type="text"
+                          placeholder="Edit your comment here"
+                          className="me-2"
+                          value={comTextContent}
+                          onChange={(e) => setComTextContent(e.target.value)}
+                          required
+                        />
+                        <Button
+                          type="submit"
+                          variant="dark"
+                          size="sm"
+                          disabled={loading ? true : false}
+                        >
+                          Edit
+                        </Button>
+                      </Form>
+                    ) : (
+                      <span className="comment-text">
+                        {comm[0].textContent}
+                      </span>
+                    )}
                   </div>
                 </Row>
               )
