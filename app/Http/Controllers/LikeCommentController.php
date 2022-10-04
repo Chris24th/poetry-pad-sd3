@@ -14,13 +14,13 @@ class LikeCommentController extends Controller
         $maxID = likeComment::max('id');
         for ($i = $minID; $i <= $maxID; $i++) {
             $checker = likeComment::where('id', $i)->first();
-            if ($checker && $checker->idPoem == $req->idPoem && $checker->penName == $req->penName) {
+            if ($checker && $checker->idComment == $req->idComment && $checker->penName == $req->penName) {
                 $checker->delete();
                 return ['message' => 'Unliked'];
             }
         }
         $likeComment = new likeComment();
-        $likeComment->idPoem = $req->idPoem;
+        $likeComment->idComment = $req->idComment;
         $likeComment->penName = $req->penName;
         $likeComment->name = $req->name;
         $likeComment->save();
