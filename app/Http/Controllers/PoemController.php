@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poem;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PoemController extends Controller
@@ -14,7 +15,6 @@ class PoemController extends Controller
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
         $poem->title = $req->title;
-        $poem->url = $req->url;
         $poem->firstStanza = $req->firstStanza;
         $poem->secondStanza = $req->secondStanza;
         $poem->thirdStanza = $req->thirdStanza;
@@ -26,16 +26,20 @@ class PoemController extends Controller
     function displaypoem()
     {
         $maxID = Poem::max('id');
-        $commentArr = array();
+        $minID = Poem::min('id');
+        $poemArr = array();
 
-        for ($i = $maxID; $i > 0; $i--) {
-            $data = Poem::where('id', $i)->first();
-            if ($data) {
-                array_push($commentArr, $data);
+        for ($i = $maxID; $i > $minID; $i--) {
+            $data = array();
+            $poem = Poem::where('id', $i)->first();
+            if ($poem) {
+                $user = User::where('penName', $poem->penName);
+                array_push($data, $poem, $user);
+                array_push($poemArr, $data);
             }
         }
-        if ($commentArr)
-            return $commentArr;
+        if ($poemArr)
+            return $poemArr;
     }
 
     function editpoem(Request $req)
@@ -56,22 +60,22 @@ class PoemController extends Controller
     {
         $poem = Poem::find($req->id);
         $poem->delete();
-        return ['message'=>'Comment deleted successfully.'];
+        return ['message' => 'Comment deleted successfully.'];
     }
-    function likepoem(Request $req){
+    function likepoem(Request $req)
+    {
         $poem = Poem::where('id', $req->idPoem)->first();
-        if($req->unlike == true){
-            $poem->likes = $poem->likes-1;
-            if($poem->likes <= 0){
-                $poem->likes=null;
+        if ($req->unlike == true) {
+            $poem->likes = $poem->likes - 1;
+            if ($poem->likes <= 0) {
+                $poem->likes = null;
             }
             $poem->save();
-            return ['message'=>'Unliked.'];
-        }
-        else{
-            $poem->likes = $poem->likes+1;
+            return ['message' => 'Unliked.'];
+        } else {
+            $poem->likes = $poem->likes + 1;
             $poem->save();
-            return ['message'=>'Liked.'];
+            return ['message' => 'Liked.'];
         }
     }
 }

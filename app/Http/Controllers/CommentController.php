@@ -45,6 +45,7 @@ class CommentController extends Controller
                 array_push($result, $data);
             }
         }
-        return $result;
+        if ($result)
+            return $result;
     }
 }
