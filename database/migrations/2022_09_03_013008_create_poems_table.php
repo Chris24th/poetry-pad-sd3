@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('comments')->nullable();
             $table->integer('likes')->nullable();
             $table->string('title');
-            $table->string('url')->nullable();
             $table->string('firstStanza');
             $table->string('secondStanza')->nullable();
             $table->string('thirdStanza')->nullable();
