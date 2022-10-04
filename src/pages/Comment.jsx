@@ -53,6 +53,19 @@ const Comment = ({ selectedCom }) => {
       });
   };
 
+  const onDelete = async (idComment) => {
+    setLoading(true);
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/deletecomment", {
+        idComment: idComment,
+      })
+      .then((res) => {
+        console.log(res.data);
+        displayComment();
+        setLoading(false);
+      });
+  };
+
   const onEdit = async (com) => {
     setEdit(true);
     setClickedCom(com);
@@ -185,7 +198,11 @@ const Comment = ({ selectedCom }) => {
                             >
                               Edit
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={() => {}}>
+                            <Dropdown.Item
+                              onClick={() => {
+                                onDelete(comm[0].id);
+                              }}
+                            >
                               Delete
                             </Dropdown.Item>
                           </Dropdown.Menu>

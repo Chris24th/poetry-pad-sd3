@@ -61,22 +61,24 @@ const Dashboard = () => {
     setShowRM(false);
   };
 
-  const popover = (poem) => (
+  const popover = (poemUser) => (
     <Popover id="popover-basic">
       <Popover.Header as="h3">Profile</Popover.Header>
       <Popover.Body>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
+        Name:{" "}
+        <span style={{ textDecoration: "underline", fontWeight: "bold" }}>
+          {poemUser.name}
+        </span>
+        <br />
+        Published Poem:{" "}
+        <span style={{ textDecoration: "underline", fontWeight: "bold" }}>
+          {poemUser.publishedPoems}{" "}
+        </span>
+        <br />
+        Bio: <span style={{ fontStyle: "italic" }}>{poemUser.bio} </span>
+        <br />
       </Popover.Body>
     </Popover>
-  );
-
-  const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      {likesP.map((likeP) => {
-        <>Simple tooltip</>;
-      })}
-    </Tooltip>
   );
 
   const onDelete = async () => {
@@ -135,16 +137,16 @@ const Dashboard = () => {
             <>
               {poemData.map(
                 (poem) =>
-                  poem.isDraft === 0 &&
-                  poem.privacy === "public" && (
+                  poem[0].isDraft === 0 &&
+                  poem[0].privacy === "public" && (
                     <Container
-                      key={poem.id}
+                      key={poem[0].id}
                       className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5"
                     >
                       <Row>
                         <div className="d-flex justify-content-between mb-3">
-                          <span className="in-title fs-4">{poem.title}</span>
-                          {poem.penName === user.penName && (
+                          <span className="in-title fs-4">{poem[0].title}</span>
+                          {poem[1].penName === user.penName && (
                             <span>
                               <Dropdown align="end">
                                 <Dropdown.Toggle
@@ -161,7 +163,7 @@ const Dashboard = () => {
                                     onClick={() => {
                                       localStorage.setItem(
                                         "edit-poem",
-                                        JSON.stringify(poem)
+                                        JSON.stringify(poem[0])
                                       );
                                     }}
                                     href="/editpoem"
@@ -171,7 +173,7 @@ const Dashboard = () => {
                                   <Dropdown.Item
                                     onClick={() => {
                                       setShowDel(true);
-                                      setDeleteId(poem.id);
+                                      setDeleteId(poem[0].id);
                                     }}
                                   >
                                     Delete
@@ -186,11 +188,11 @@ const Dashboard = () => {
                         className="mb-3 poem-p"
                         style={{ textAlign: "left" }}
                       >
-                        <span>{poem.firstStanza}</span>
+                        <span>{poem[0].firstStanza}</span>
                       </Row>
                       <span
                         className="text-muted read-btn"
-                        onClick={() => handleShowRM(poem)}
+                        onClick={() => handleShowRM(poem[0])}
                       >
                         Read More
                       </span>
@@ -200,19 +202,19 @@ const Dashboard = () => {
                             <OverlayTrigger
                               trigger="click"
                               placement="right"
-                              overlay={popover(poem)}
+                              overlay={popover(poem[1])}
                             >
                               <div
                                 className="d-flex align-items-center"
                                 style={{ cursor: "pointer" }}
                               >
-                                {poem.url ? (
+                                {poem[1].url ? (
                                   <Image
                                     width={40}
                                     height={40}
                                     alt="profile picture"
                                     cloudName="dabc77dwa"
-                                    publicID={poem.url}
+                                    publicID={poem[1].url}
                                     className="border border-2 border-gray rounded-3 shadow-sm text-align-right"
                                   />
                                 ) : (
@@ -222,14 +224,14 @@ const Dashboard = () => {
                                   />
                                 )}
                                 <Col className="ms-4">
-                                  <Row>{poem.penName}</Row>
+                                  <Row>{poem[1].penName}</Row>
                                   <Row
                                     className="text-muted"
                                     style={{
                                       fontSize: "12px",
                                     }}
                                   >
-                                    {poem.created_at
+                                    {poem[0].created_at
                                       .slice(0, 10)
                                       .replace(/-/g, "/")}
                                   </Row>
@@ -247,7 +249,7 @@ const Dashboard = () => {
                             role="button"
                             size={25}
                             color="#FF5A5F"
-                            onClick={() => onLike(poem.id)}
+                            onClick={() => onLike(poem[0].id)}
                           />
                           <OverlayTrigger
                             placement="right"
@@ -257,7 +259,7 @@ const Dashboard = () => {
                                 {/* Check out this avatar */}
                                 {likesP.map(
                                   (likeP) =>
-                                    likeP.idPoem === poem.id && (
+                                    likeP.idPoem === poem[0].id && (
                                       <span
                                         key={likeP.id}
                                         style={{ background: "none" }}
@@ -274,7 +276,7 @@ const Dashboard = () => {
                               {likesP &&
                                 likesP.map(
                                   (likeP) =>
-                                    likeP.idPoem == poem.id && (
+                                    likeP.idPoem == poem[0].id && (
                                       <script key={likeP.id}>{ctr++}</script>
                                     )
                                 )}
@@ -286,19 +288,19 @@ const Dashboard = () => {
                             size={25}
                             color="#767676"
                             onClick={() => {
-                              selectedCom === poem.id ? (
+                              selectedCom === poem[0].id ? (
                                 <>{setShowComment(false)};</>
                               ) : (
                                 <>
                                   {setShowComment(true)};
-                                  {setSelectedCom(poem.id)};
+                                  {setSelectedCom(poem[0].id)};
                                 </>
                               );
                             }}
                           />
                         </Col>
                       </Row>
-                      {selectedCom === poem.id && showComment && (
+                      {selectedCom === poem[0].id && showComment && (
                         <Row>
                           <Comment selectedCom={selectedCom} />
                         </Row>
