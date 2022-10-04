@@ -10,8 +10,6 @@ class LikePoemController extends Controller
 {
     function createlikePoem(Request $req)
     {
-        //finding the likePoem with the same idPoem
-
         $minID = likePoem::min('id');
         $maxID = likePoem::max('id');
         for ($i = $minID; $i <= $maxID; $i++) {
