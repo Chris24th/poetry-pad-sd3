@@ -39,9 +39,11 @@ class CommentController extends Controller
         for ($i = $minID; $i <= $maxID; $i++) {
             $data = array();
             $comment = Comment::where('id', $i)->first();
-            $user = User::where('id', $comment->idUser)->first();
-            array_push($data, $comment, $user);
-            array_push($result, $data);
+            if ($comment) {
+                $user = User::where('id', $comment->idUser)->first();
+                array_push($data, $comment, $user);
+                array_push($result, $data);
+            }
         }
         return $result;
     }
