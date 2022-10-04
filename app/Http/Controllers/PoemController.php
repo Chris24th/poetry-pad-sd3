@@ -34,7 +34,7 @@ class PoemController extends Controller
             $poem = Poem::where('id', $i)->first();
             if ($poem) {
                 $user = User::where('penName', $poem->penName);
-                array_push($data, $poem, $user);
+                array_push($data, $user);
                 array_push($poemArr, $data);
             }
         }
