@@ -22,8 +22,9 @@ const Comment = ({ selectedCom }) => {
   const [comments, setComments] = useState();
   const [textContent, setTextContent] = useState("");
   const [loading, setLoading] = useState(false);
+
   const [likesC, setLikesC] = useState();
-  let ctr = 0;
+  let ctrC = 0;
 
   const [edit, setEdit] = useState();
   const [clickedCom, setClickedCom] = useState();
@@ -34,6 +35,14 @@ const Comment = ({ selectedCom }) => {
       .get("https://poetry-pad.herokuapp.com/api/displaycomment")
       .then((res) => {
         res.data && setComments(res.data);
+      });
+  };
+
+  const displaylikeC = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaylikeComment")
+      .then((res) => {
+        res.data && setLikesC(res.data);
       });
   };
 
@@ -87,17 +96,17 @@ const Comment = ({ selectedCom }) => {
       });
   };
 
-  const onLike = async (idComment) => {};
-
-  const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      {/* {likesC.map((likeC) => { */}
-      <>Simple tooltip</>;{/* })} */}
-    </Tooltip>
-  );
+  const onLike = async (idComment) => {
+    await axios.post("https://poetry-pad.herokuapp.com/api/createlikeComment", {
+      idComment: idComment,
+      penName: user.penName,
+      name: user.name,
+    });
+  };
 
   useEffect(() => {
     displayComment();
+    displaylikeC();
   });
 
   return (
@@ -152,9 +161,9 @@ const Comment = ({ selectedCom }) => {
                       delay={{ show: 150, hide: 300 }}
                       overlay={
                         <Tooltip id="button-tooltip-2">
-                          {/* {likesC.map(
+                          {likesC.map(
                             (likeC) =>
-                              likeC.idPoem === comm[0].id && (
+                              likeC.idComment === comm[0].id && (
                                 <span
                                   key={likeC.id}
                                   style={{ background: "none" }}
@@ -162,20 +171,20 @@ const Comment = ({ selectedCom }) => {
                                   {likeC.name} - {likeC.penName} <br />
                                 </span>
                               )
-                          )} */}
+                          )}
                         </Tooltip>
                       }
                     >
                       <label className="likAndComLabel">
-                        <script>{(ctr = 0)}</script>
-                        {/* {likesC &&
+                        <script>{(ctrC = 0)}</script>
+                        {likesC &&
                           likesC.map(
                             (likeC) =>
-                              likeC.idPoem == comm[0].id && (
-                                <script key={likeC.id}>{ctr++}</script>
+                              likeC.idComment == comm[0].id && (
+                                <script key={likeC.id}>{ctrC++}</script>
                               )
                           )}
-                        {ctr !== 0 && ctr} */}
+                        {ctrC !== 0 && ctrC}
                       </label>
                     </OverlayTrigger>
                     {comm[1].penName === user.penName && (

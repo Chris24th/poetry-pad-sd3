@@ -80,7 +80,6 @@ const NewPoem = () => {
         privacy: privacy,
         isDraft: 0,
         title: title,
-        url: user.url ? user.url : "",
         firstStanza: firstStanza,
         secondStanza: secondStanza,
         thirdStanza: thirdStanza,

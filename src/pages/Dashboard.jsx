@@ -97,9 +97,6 @@ const Dashboard = () => {
       penName: user.penName,
       name: user.name,
     });
-    // .then((res) => {
-    //   console.log(res.data);
-    // });
   };
 
   const displayPoem = async () => {
