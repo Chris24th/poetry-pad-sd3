@@ -278,3 +278,32 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+/* ---------------------first col------------------------ */
+.fc-words {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: rgb(100, 100, 100);
+  border: none;
+  border-radius: 10px;
+  width: 98%;
+}
+
+.fc-words-col {
+  background: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.fc-words-span {
+  background-color: rgb(200, 200, 200);
+  margin: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  height: 25px;
+  border: none;
+  border-radius: 20%;
+}

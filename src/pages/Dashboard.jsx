@@ -38,6 +38,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [selectedCom, setSelectedCom] = useState(false);
+  const [comments, setComments] = useState();
   //----------------------------------------
   const [title, setTitle] = useState();
   const [firstStanza, setFirstStanza] = useState();
@@ -115,12 +116,21 @@ const Dashboard = () => {
       });
   };
 
+  const displayComment = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
+      .then((res) => {
+        res.data && setComments(res.data);
+      });
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/signin");
     }
     displayPoem();
     displayLikeP();
+    displayComment();
   });
 
   return (
@@ -286,7 +296,9 @@ const Dashboard = () => {
                             color="#767676"
                             onClick={() => {
                               selectedCom === poem[0].id ? (
-                                <>{setShowComment(false)};</>
+                                <>
+                                  {setShowComment(false)};{setSelectedCom("")};
+                                </>
                               ) : (
                                 <>
                                   {setShowComment(true)};
@@ -297,9 +309,12 @@ const Dashboard = () => {
                           />
                         </Col>
                       </Row>
-                      {selectedCom === poem[0].id && showComment && (
+                      {selectedCom === poem[0].id && comments && showComment && (
                         <Row>
-                          <Comment selectedCom={selectedCom} />
+                          <Comment
+                            selectedCom={selectedCom}
+                            comments={comments}
+                          />
                         </Row>
                       )}
                     </Container>

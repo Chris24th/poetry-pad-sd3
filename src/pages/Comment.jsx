@@ -17,11 +17,11 @@ import { MdAccountCircle } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { Image } from "cloudinary-react";
 
-const Comment = ({ selectedCom }) => {
+const Comment = ({ selectedCom, comments }) => {
   const user = JSON.parse(localStorage.getItem("user-data"));
-  const [comments, setComments] = useState();
   const [textContent, setTextContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [commentsu, setCommentsu] = useState();
 
   const [likesC, setLikesC] = useState();
   let ctrC = 0;
@@ -30,19 +30,20 @@ const Comment = ({ selectedCom }) => {
   const [clickedCom, setClickedCom] = useState();
   const [comTextContent, setComTextContent] = useState();
 
-  const displayComment = async () => {
-    await axios
-      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
-      .then((res) => {
-        res.data && setComments(res.data);
-      });
-  };
-
   const displaylikeC = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikeComment")
       .then((res) => {
         res.data && setLikesC(res.data);
+      });
+  };
+
+  const displayComment = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
+      .then((res) => {
+        res.data && setCommentsu(res.data);
+        console.log(res.data);
       });
   };
 
@@ -70,7 +71,6 @@ const Comment = ({ selectedCom }) => {
       })
       .then((res) => {
         console.log(res.data);
-        displayComment();
         setLoading(false);
       });
   };
@@ -105,15 +105,15 @@ const Comment = ({ selectedCom }) => {
   };
 
   useEffect(() => {
-    displayComment();
     displaylikeC();
+    commentsu && console.log(commentsu);
   });
 
   return (
     <Container className="mt-4 border-top">
       <Container>
-        {comments ? (
-          comments.map(
+        {commentsu ? (
+          commentsu.map(
             (comm) =>
               comm[0].idPoem === selectedCom && (
                 <Row className="my-3">

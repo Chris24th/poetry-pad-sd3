@@ -10,11 +10,13 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import FirstCol from "./FirstCol";
 import { MdAccountCircle } from "react-icons/md";
 import axios from "axios";
 import { Image } from "cloudinary-react";
 
 const NewPoem = () => {
+  const user = JSON.parse(localStorage.getItem("user-data"));
   const [title, setTitle] = useState();
   const [firstStanza, setFirstStanza] = useState("");
   const [secondStanza, setSecondStanza] = useState("");
@@ -33,7 +35,6 @@ const NewPoem = () => {
   const [ready, setReady] = useState(false);
   const [check, setCheck] = useState(false);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user-data"));
 
   const handleCloseC = () => setShowC(false);
   const handleShowC = () => setShowC(true);
@@ -162,15 +163,9 @@ const NewPoem = () => {
       });
   };
 
-  const synch = async (plag) => {
-    await plag;
-    console.log(plag);
-    plag && checker();
-  };
-
   const checker = () => {
     if (check) {
-      if (stanza === 0 && firstPlag && firstPlag.plagPercent < 10) {
+      if (firstPlag && firstPlag.plagPercent < 10) {
         setReady(true);
       } else if (
         firstPlag &&
@@ -248,7 +243,6 @@ const NewPoem = () => {
           penName: user.penName,
           privacy: "private",
           isDraft: 1,
-          url: user.url ? user.url : "",
           title: title,
           firstStanza: firstStanza,
           secondStanza: secondStanza,
@@ -277,7 +271,9 @@ const NewPoem = () => {
   return (
     <div>
       <Row>
-        <Col lg={3}></Col>
+        <Col lg={3}>
+          <FirstCol />
+        </Col>
         <Col lg={6}>
           <Row className="justify-content-center p-3">
             <Form>

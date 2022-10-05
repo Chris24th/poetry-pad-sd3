@@ -23,12 +23,18 @@ const EditPoem = () => {
   const [secondStanza, setSecondStanza] = useState(poem?.secondStanza);
   const [thirdStanza, setThirdStanza] = useState(poem?.thridStanza);
   const [fourthStanza, setFourthStanza] = useState(poem?.fourthStanza);
+  const [firstPlag, setFirstPlag] = useState("");
+  const [secondPlag, setSecondPlag] = useState("");
+  const [thirdPlag, setThirdPlag] = useState("");
+  const [fourthPlag, setFourthPlag] = useState("");
   const [showP, setShowP] = useState(false);
   const [showC, setShowC] = useState(false);
   const [error, setError] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [check, setCheck] = useState(false);
   const navigate = useNavigate();
 
   const handleCloseC = () => setShowC(false);
@@ -37,6 +43,12 @@ const EditPoem = () => {
   const handleCloseP = () => {
     setShowP(false);
     setPrivacy("");
+    setFirstPlag("");
+    setSecondPlag("");
+    setThirdPlag("");
+    setFourthPlag("");
+    setReady(false);
+    setCheck(false);
   };
   const handleShowP = () => {
     if (!title && !firstStanza) {
@@ -74,6 +86,126 @@ const EditPoem = () => {
       setError("");
     }
   };
+
+  const onCheck = async () => {
+    let formData = new FormData();
+    formData.append("key", "350854a0fc0a44b3524bf4e3e610a67e");
+    formData.append("data", firstStanza);
+    await axios
+      .post("https://www.prepostseo.com/apis/checkPlag", formData)
+      .then((res) => {
+        console.log(res.data);
+        setFirstPlag(res.data);
+        {
+          if (secondStanza) {
+            formData.append("data", secondStanza);
+            axios
+              .post("https://www.prepostseo.com/apis/checkPlag", formData)
+              .then((res) => {
+                console.log(res.data);
+                setSecondPlag(res.data);
+                {
+                  if (thirdStanza) {
+                    formData.append("data", thirdStanza);
+                    axios
+                      .post(
+                        "https://www.prepostseo.com/apis/checkPlag",
+                        formData
+                      )
+                      .then((res) => {
+                        console.log(res.data);
+                        setThirdPlag(res.data);
+                        {
+                          if (fourthStanza) {
+                            formData.append("data", fourthStanza);
+                            axios
+                              .post(
+                                "https://www.prepostseo.com/apis/checkPlag",
+                                formData
+                              )
+                              .then((res) => {
+                                console.log(res.data);
+                                setFourthPlag(res.data);
+                                setCheck(true);
+                              });
+                          } else {
+                            setCheck(true);
+                          }
+                        }
+                      });
+                  } else {
+                    setCheck(true);
+                  }
+                }
+              });
+          } else {
+            setCheck(true);
+          }
+        }
+      });
+  };
+
+  const checker = () => {
+    if (check) {
+      if (firstPlag && firstPlag.plagPercent < 10) {
+        setReady(true);
+      } else if (
+        firstPlag &&
+        firstPlag.plagPercent < 10 &&
+        secondPlag &&
+        secondPlag.plagPercent < 10
+      ) {
+        setReady(true);
+      } else if (
+        firstPlag &&
+        firstPlag.plagPercent < 10 &&
+        secondPlag &&
+        secondPlag.plagPercent < 10 &&
+        thirdPlag &&
+        thirdPlag.plagPercent < 10
+      )
+        setReady(true);
+      else if (
+        firstPlag &&
+        firstPlag.plagPercent < 10 &&
+        secondPlag &&
+        secondPlag.plagPercent < 10 &&
+        thirdPlag &&
+        thirdPlag.plagPercent < 10 &&
+        fourthPlag &&
+        fourthPlag.plagPercent < 10
+      )
+        setReady(true);
+    }
+  };
+
+  const plagSpinner = (stanzaPlag) => {
+    return (
+      <>
+        <br />
+        {stanzaPlag ? (
+          <span
+            style={{
+              color: stanzaPlag.plagPercent > 10 ? "red" : "green",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            {stanzaPlag.plagPercent}% Plagiarized
+          </span>
+        ) : (
+          <Spinner
+            className="ms-4"
+            animation="border"
+            variant="dark"
+            size="sm"
+          />
+        )}
+      </>
+    );
+  };
+
   const onSave = async () => {
     setLoading(true);
     if (!title && !firstStanza) {
@@ -146,6 +278,9 @@ const EditPoem = () => {
       }
     }
   }, []);
+  useEffect(() => {
+    return checker();
+  });
   // ---------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------
   return (
@@ -234,7 +369,10 @@ const EditPoem = () => {
                 <Button
                   variant="dark"
                   className="np-col3"
-                  onClick={handleShowP}
+                  onClick={() => {
+                    handleShowP();
+                    onCheck();
+                  }}
                   disabled={loading ? true : false}
                 >
                   {loading && (
@@ -322,8 +460,8 @@ const EditPoem = () => {
             </Row>
             <Row>
               <Col md={3}>
-                {" "}
-                <p>1st Stanza: </p>
+                <span>1st Stanza: </span>
+                {plagSpinner(firstPlag)}
               </Col>
               <Col>
                 <p
@@ -338,7 +476,8 @@ const EditPoem = () => {
             {secondStanza && (
               <Row>
                 <Col md={3}>
-                  <p>2nd Stanza: </p>
+                  <span>2nd Stanza: </span>
+                  {plagSpinner(secondPlag)}
                 </Col>
                 <Col>
                   <p
@@ -354,7 +493,8 @@ const EditPoem = () => {
             {thirdStanza && (
               <Row>
                 <Col md={3}>
-                  <p>3rd Stanza: </p>
+                  <span>3rd Stanza: </span>
+                  {plagSpinner(thirdPlag)}
                 </Col>
                 <Col>
                   <p
@@ -370,7 +510,8 @@ const EditPoem = () => {
             {fourthStanza && (
               <Row>
                 <Col md={3}>
-                  <p>4th Stanza: </p>
+                  <span>4th Stanza: </span>
+                  {plagSpinner(fourthPlag)}
                 </Col>
                 <Col>
                   <p
@@ -432,18 +573,21 @@ const EditPoem = () => {
             <Button
               variant="dark"
               onClick={onRepub}
-              disabled={loading ? true : false}
+              disabled={
+                loading ? true : !ready ? true : !privacy ? true : false
+              }
             >
-              {loading && (
-                <Spinner
-                  className="me-1"
-                  animation="border"
-                  variant="light"
-                  size="sm"
-                  style={{ background: "none" }}
-                />
-              )}
-              {loading ? "Republishing" : "Republish"}
+              {loading ||
+                (!check && (
+                  <Spinner
+                    className="me-1"
+                    animation="border"
+                    variant="light"
+                    size="sm"
+                    style={{ background: "none" }}
+                  />
+                ))}
+              {loading ? "Publishing" : check ? "Publish" : "Checking"}
             </Button>
           </Modal.Footer>
         </Modal>
