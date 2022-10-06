@@ -274,7 +274,7 @@ const NewPoem = () => {
         <Col lg={3}>
           <FirstCol />
         </Col>
-        <Col lg={6}>
+        <Col lg={7}>
           <Row className="justify-content-center p-3">
             <Form>
               <Form.Group className="mb-3">
@@ -355,7 +355,7 @@ const NewPoem = () => {
             )}
           </Row>
         </Col>
-        <Col lg={3} className="d-flex justify-content-center">
+        <Col lg={2} className="d-flex justify-content-center">
           <Row className="flex-column ">
             <Col style={{ textAlign: "end" }}>
               <Button

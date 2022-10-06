@@ -8,11 +8,20 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
+import axios from "axios";
 
 const FirstCol = () => {
   const [searchWord, setSearchWord] = useState("");
   const [choice, setChoice] = useState(0);
 
+  const onSearch = async (e) => {
+    e.preventDefault();
+    axios
+      .get("https://rhymebrain.com/talk?function=getRhymes&word=" + searchWord)
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
   return (
     <Container className="mb-3">
       <Row className="mb-3">
@@ -34,7 +43,13 @@ const FirstCol = () => {
           onChange={(e) => setSearchWord(e.target.value)}
           required
         />
-        <Button type="submit" variant="dark" size="sm" className="mt-2 w-100">
+        <Button
+          type="submit"
+          variant="dark"
+          size="sm"
+          className="mt-2 w-100"
+          onClick={onSearch}
+        >
           Search
         </Button>
       </Form>

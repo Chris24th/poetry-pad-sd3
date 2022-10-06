@@ -121,6 +121,7 @@ const Dashboard = () => {
       .get("https://poetry-pad.herokuapp.com/api/displaycomment")
       .then((res) => {
         res.data && setComments(res.data);
+        // console.log(res.data);
       });
   };
 
@@ -128,9 +129,9 @@ const Dashboard = () => {
     if (!user) {
       navigate("/signin");
     }
+    displayComment();
     displayPoem();
     displayLikeP();
-    displayComment();
   });
 
   return (
@@ -296,9 +297,7 @@ const Dashboard = () => {
                             color="#767676"
                             onClick={() => {
                               selectedCom === poem[0].id ? (
-                                <>
-                                  {setShowComment(false)};{setSelectedCom("")};
-                                </>
+                                <>{setShowComment(false)};</>
                               ) : (
                                 <>
                                   {setShowComment(true)};
@@ -309,7 +308,7 @@ const Dashboard = () => {
                           />
                         </Col>
                       </Row>
-                      {selectedCom === poem[0].id && comments && showComment && (
+                      {selectedCom === poem[0].id && showComment && (
                         <Row>
                           <Comment
                             selectedCom={selectedCom}
