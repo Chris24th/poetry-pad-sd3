@@ -305,5 +305,28 @@ body {
   padding-right: 7px;
   height: 25px;
   border: none;
-  border-radius: 20%;
+  border-radius: 8px;
+}
+
+.thes-div {
+  background: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.thes-p {
+  background-color: rgb(51, 51, 51);
+  background: none;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  justify-content: center;
+  color: #dedddd;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+  height: 25px;
+  border: none;
+  border-radius: 8px;
 }
