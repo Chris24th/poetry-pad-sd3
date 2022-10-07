@@ -34,7 +34,7 @@ const FirstCol = () => {
             "?key=d8da13e5-4ab1-4ec3-9c7c-ce41ec6184a1"
         )
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data.slice(0, 8));
           setThesau(res.data);
         });
     }
@@ -76,17 +76,27 @@ const FirstCol = () => {
             {choice === 0 && thesau && (
               <>
                 <div className="thes-div">
+                  <Row style={{ background: "none" }}>
+                    <div className="thes-word">{searchWord}</div>
+                  </Row>
+                  <Row style={{ background: "none" }}>
+                    <span className="thes-fl">{thesau[0].fl}</span>
+                    <span className="thes-def">- {thesau[0].shortdef[0]}</span>
+                  </Row>
                   <span className="thes-p">Synonyms:</span>
-
-                  {thesau.map((thes) => (
-                    <span className="fc-words-span">{thes.meta.id}</span>
-                  ))}
+                  {thesau.map((thes) =>
+                    thes.meta.syns.map((syn) => (
+                      <span className="fc-words-span">{syn[0]}</span>
+                    ))
+                  )}
                 </div>
                 <div className="thes-div">
                   <span className="thes-p">Antonyms:</span>
-                  {thesau.map((thes) => (
-                    <span className="fc-words-span">{thes.meta.id}</span>
-                  ))}
+                  {thesau.map((thes) =>
+                    thes.meta.ants.map((ant) => (
+                      <span className="fc-words-span">{ant[0]}</span>
+                    ))
+                  )}
                 </div>
               </>
             )}

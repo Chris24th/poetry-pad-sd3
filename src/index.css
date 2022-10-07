@@ -303,9 +303,10 @@ body {
   margin: 5px;
   padding-left: 7px;
   padding-right: 7px;
-  height: 25px;
+  height: 21px;
   border: none;
   border-radius: 8px;
+  font-size: 14px;
 }
 
 .thes-div {
@@ -329,4 +330,28 @@ body {
   height: 25px;
   border: none;
   border-radius: 8px;
+}
+
+.thes-word {
+  background: none;
+  text-align: start;
+  font-family: "Berkshire Swash";
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.thes-fl {
+  display: flex;
+  background: none;
+  justify-content: center;
+  color: #ffffff;
+  font-style: italic;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.thes-def {
+  background: none;
+  color: #dedddd;
+  font-size: 15px;
 }
