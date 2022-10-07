@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poem;
 use App\Models\likePoem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,18 +31,19 @@ class LikePoemController extends Controller
     {
         $likePoem = DB::table('like_poems')->get();
         return $likePoem;
-
-        // $minID = User::min('id');
-        // $userArr = array();
-
-        // for ($i = $minID; $i > 0; $i--) {
-        //     $user = User::where('id', $i)->first();
-        //     if ($user && likePoem::where('idUser', $user->id)->first()) {
-        //         array_push($userArr, $user->penName);
-        //     }
-        // }
-        // if ($userArr)
-        //     return $userArr;
-        // else return ['error' => 'empty data'];
+    }
+    function displaylikedPoem(Request $req)
+    {
+        $minID = likePoem::min('id');
+        $maxID = likePoem::max('id');
+        $likedArr = array();
+        for ($i = $minID; $i <= $maxID; $i++) {
+            $poem = Poem::where('id', $i)->first();
+            $likePoem = likePoem::where('idPoem', $poem->id)->first();
+            if ($likePoem && $likePoem->penName == $req->penName) {
+                array_push($likedArr, $poem);
+            }
+        }
+        if ($likedArr) return $likedArr;
     }
 }
