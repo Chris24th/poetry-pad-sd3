@@ -11,7 +11,7 @@ class PoemController extends Controller
     function createpoem(Request $req)
     {
         $poem = new Poem();
-        $poem->idUser = $req->idUser;
+        $poem->penName = $req->penName;
         $poem->privacy = $req->privacy;
         $poem->isDraft = $req->isDraft;
         $poem->title = $req->title;
