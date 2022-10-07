@@ -39,7 +39,8 @@ class LikePoemController extends Controller
         $likedArr = array();
         for ($i = $minID; $i <= $maxID; $i++) {
             $poem = Poem::where('id', $i)->first();
-            $likePoem = likePoem::where('idPoem', $poem->id)->first();
+            if ($poem)
+                $likePoem = likePoem::where('idPoem', $poem->id)->first();
             if ($likePoem && $likePoem->penName == $req->penName) {
                 array_push($likedArr, $poem);
             }
