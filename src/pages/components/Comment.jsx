@@ -26,9 +26,10 @@ const Comment = ({ selectedCom, comments }) => {
 
   const [clickedCom, setClickedCom] = useState();
   const [comTextContent, setComTextContent] = useState();
+  let redCom = false;
 
-  const displaylikeC = async () => {
-    await axios
+  const displaylikeC = () => {
+    axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikeComment")
       .then((res) => {
         res.data && setLikesC(res.data);
@@ -83,17 +84,19 @@ const Comment = ({ selectedCom, comments }) => {
       });
   };
 
-  const onLike = async (idComment) => {
-    await axios.post("https://poetry-pad.herokuapp.com/api/createlikeComment", {
-      idComment: idComment,
-      penName: user.penName,
-      name: user.name,
-    });
+  const onLike = (idComment) => {
+    axios
+      .post("https://poetry-pad.herokuapp.com/api/createlikeComment", {
+        idComment: idComment,
+        penName: user.penName,
+        name: user.name,
+      })
+      .then(() => displaylikeC());
   };
 
   useEffect(() => {
     displaylikeC();
-  });
+  }, []);
 
   return (
     <>
@@ -139,12 +142,31 @@ const Comment = ({ selectedCom, comments }) => {
                       </Row>
                     </Col>
                     <Col className="d-flex justify-content-end align-items-center">
-                      <RiHeartLine
-                        role="button"
-                        size={20}
-                        color="#FF5A5F"
-                        onClick={() => onLike(comm[0].id)}
-                      />
+                      {likesC &&
+                        likesC.map((likeC) => {
+                          if (
+                            likeC.idComment === comm[0].id &&
+                            likeC.penName === user.penName
+                          ) {
+                            return (redCom = true);
+                          } else return null;
+                        })}
+                      {redCom && redCom === true ? (
+                        <RiHeartFill
+                          role="button"
+                          size={25}
+                          color="#FF5A5F"
+                          onClick={() => onLike(comm[0].id)}
+                        />
+                      ) : (
+                        <RiHeartLine
+                          role="button"
+                          size={25}
+                          color="#FF5A5F"
+                          onClick={() => onLike(comm[0].id)}
+                        />
+                      )}
+                      <script>{(redCom = false)}</script>
                       <OverlayTrigger
                         placement="right"
                         delay={{ show: 150, hide: 300 }}

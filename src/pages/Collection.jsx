@@ -78,8 +78,8 @@ const Collection = () => {
       });
   };
 
-  const onLike = async (idPoem) => {
-    await axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+  const onLike = (idPoem) => {
+    axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
       idPoem: idPoem,
       penName: user.penName,
       name: user.name,
@@ -102,8 +102,8 @@ const Collection = () => {
       });
   };
 
-  const displayLikeP = async () => {
-    await axios
+  const displayLikeP = () => {
+    axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikePoem")
       .then((res) => {
         res.data && setLikesP(res.data);

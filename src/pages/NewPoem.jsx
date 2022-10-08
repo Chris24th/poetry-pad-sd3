@@ -266,7 +266,8 @@ const NewPoem = () => {
                   placeholder="Poem Title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                ></Form.Control>
+                  style={{ fontFamily: "Berkshire Swash" }}
+                />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Control

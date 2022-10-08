@@ -38,7 +38,6 @@ const Dashboard = () => {
   const [likesP, setLikesP] = useState();
   let ctr = 0;
   let red = false;
-
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
@@ -78,14 +77,12 @@ const Dashboard = () => {
       });
   };
 
-  const onLike = async (idPoem) => {
-    await axios
-      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
-        idPoem: idPoem,
-        penName: user.penName,
-        name: user.name,
-      })
-      .then(() => displayLikeP());
+  const onLike = (idPoem) => {
+    axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+      idPoem: idPoem,
+      penName: user.penName,
+      name: user.name,
+    });
   };
 
   const displayPoem = async () => {
@@ -96,8 +93,8 @@ const Dashboard = () => {
       });
   };
 
-  const displayLikeP = async () => {
-    await axios
+  const displayLikeP = () => {
+    axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikePoem")
       .then((res) => {
         res.data && setLikesP(res.data);
