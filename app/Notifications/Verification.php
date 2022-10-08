@@ -42,7 +42,7 @@ class Verification extends Notification
     {
         return (new MailMessage)
             ->greeting('Greetings!')
-            ->line("Your verification code is <script>localStorage.getItem('verify-token')</script>. Click the button/link below to verify your email address.")
+            ->line('Click the button/link below to verify your email address.')
             ->action('Verify Email', url('https://poetrypad.vercel.app/verification'))
             ->line('Thank you for using our application!');
     }
