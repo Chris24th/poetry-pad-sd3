@@ -63,8 +63,9 @@ class PoemController extends Controller
     function deletepoem(Request $req)
     {
         $poem = Poem::find($req->id);
-        $user = User::where('penName', $req->penName)->first();
+        $user = User::where('penName', $poem->penName)->first();
         $user->publishedPoems--;
+        $user->save();
         $poem->delete();
         return ['message' => 'Comment deleted successfully.'];
     }
