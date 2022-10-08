@@ -559,16 +559,15 @@ const NewPoem = () => {
             onClick={onPublish}
             disabled={loading ? true : !ready ? true : !privacy ? true : false}
           >
-            {loading ||
-              (!check && (
-                <Spinner
-                  className="me-1"
-                  animation="border"
-                  variant="light"
-                  size="sm"
-                  style={{ background: "none" }}
-                />
-              ))}
+            {(!check || loading) && (
+              <Spinner
+                className="me-1"
+                animation="border"
+                variant="light"
+                size="sm"
+                style={{ background: "none" }}
+              />
+            )}
             {loading ? "Publishing" : check ? "Publish" : "Checking"}
           </Button>
         </Modal.Footer>

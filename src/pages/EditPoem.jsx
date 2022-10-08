@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
+import FirstCol from "./FirstCol";
 import axios from "axios";
 
 const EditPoem = () => {
@@ -287,8 +288,10 @@ const EditPoem = () => {
     <>
       <div>
         <Row>
-          <Col lg={3}></Col>
-          <Col lg={6}>
+          <Col lg={3}>
+            <FirstCol />
+          </Col>
+          <Col lg={7}>
             {/* {clickedPoem && ( */}
             <Row className="justify-content-center p-3">
               <Form>
@@ -363,7 +366,7 @@ const EditPoem = () => {
             </Row>
             {/* )} */}
           </Col>
-          <Col lg={3} className="d-flex justify-content-center">
+          <Col lg={2} className="d-flex justify-content-center">
             <Row className="flex-column ">
               <Col style={{ textAlign: "end" }}>
                 <Button
@@ -577,16 +580,15 @@ const EditPoem = () => {
                 loading ? true : !ready ? true : !privacy ? true : false
               }
             >
-              {loading ||
-                (!check && (
-                  <Spinner
-                    className="me-1"
-                    animation="border"
-                    variant="light"
-                    size="sm"
-                    style={{ background: "none" }}
-                  />
-                ))}
+              {(!check || loading) && (
+                <Spinner
+                  className="me-1"
+                  animation="border"
+                  variant="light"
+                  size="sm"
+                  style={{ background: "none" }}
+                />
+              )}
               {loading ? "Publishing" : check ? "Publish" : "Checking"}
             </Button>
           </Modal.Footer>

@@ -53,6 +53,8 @@ const Dashboard = () => {
 
   const [likesP, setLikesP] = useState();
   let ctr = 0;
+  let red = false;
+
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
@@ -253,29 +255,48 @@ const Dashboard = () => {
                           md={3}
                           className="d-flex justify-content-end align-items-center"
                         >
-                          <RiHeartAddLine
-                            role="button"
-                            size={25}
-                            color="#FF5A5F"
-                            onClick={() => onLike(poem[0].id)}
-                          />
+                          {likesP &&
+                            likesP.map((likeP) => {
+                              if (
+                                likeP.idPoem === poem[0].id &&
+                                likeP.penName === user.penName
+                              ) {
+                                red = true;
+                              }
+                            })}
+                          {red && red === true ? (
+                            <RiHeartAddFill
+                              role="button"
+                              size={25}
+                              color="#FF5A5F"
+                              onClick={() => onLike(poem[0].id)}
+                            />
+                          ) : (
+                            <RiHeartAddLine
+                              role="button"
+                              size={25}
+                              color="#FF5A5F"
+                              onClick={() => onLike(poem[0].id)}
+                            />
+                          )}
+                          <script>{(red = false)}</script>
                           <OverlayTrigger
                             placement="right"
                             delay={{ show: 150, hide: 300 }}
                             overlay={
                               <Tooltip id="button-tooltip-2">
-                                {/* Check out this avatar */}
-                                {likesP.map(
-                                  (likeP) =>
-                                    likeP.idPoem === poem[0].id && (
-                                      <span
-                                        key={likeP.id}
-                                        style={{ background: "none" }}
-                                      >
-                                        {likeP.name} - {likeP.penName} <br />
-                                      </span>
-                                    )
-                                )}
+                                {likesP &&
+                                  likesP.map(
+                                    (likeP) =>
+                                      likeP.idPoem === poem[0].id && (
+                                        <span
+                                          key={likeP.id}
+                                          style={{ background: "none" }}
+                                        >
+                                          {likeP.name} - {likeP.penName} <br />
+                                        </span>
+                                      )
+                                  )}
                               </Tooltip>
                             }
                           >

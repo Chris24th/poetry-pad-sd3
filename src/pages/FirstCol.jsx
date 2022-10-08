@@ -34,7 +34,7 @@ const FirstCol = () => {
             "?key=d8da13e5-4ab1-4ec3-9c7c-ce41ec6184a1"
         )
         .then((res) => {
-          console.log(res.data.slice(0, 8));
+          console.log(res.data);
           setThesau(res.data);
         });
     }
@@ -71,13 +71,15 @@ const FirstCol = () => {
             {choice === 1 &&
               rhymeF &&
               rhymeF.map((rhyme) => (
-                <span className="fc-words-span">{rhyme.word}</span>
+                <span className="fc-words-span" key={rhyme.word}>
+                  {rhyme.word}
+                </span>
               ))}
             {choice === 0 && thesau && (
               <>
                 <div className="thes-div">
                   <Row style={{ background: "none" }}>
-                    <div className="thes-word">{searchWord}</div>
+                    <div className="thes-word">{thesau[0].hwi.hw}</div>
                   </Row>
                   <Row style={{ background: "none" }}>
                     <span className="thes-fl">{thesau[0].fl}</span>
@@ -86,7 +88,9 @@ const FirstCol = () => {
                   <span className="thes-p">Synonyms:</span>
                   {thesau.map((thes) =>
                     thes.meta.syns.map((syn) => (
-                      <span className="fc-words-span">{syn[0]}</span>
+                      <span className="fc-words-span" key={syn[0][0]}>
+                        {syn[0]}
+                      </span>
                     ))
                   )}
                 </div>

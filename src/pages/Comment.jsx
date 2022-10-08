@@ -116,7 +116,7 @@ const Comment = ({ selectedCom, comments }) => {
             comments.map(
               (comm) =>
                 comm[0].idPoem === selectedCom && (
-                  <Row className="my-3">
+                  <Row className="my-3" key={comm[0].id}>
                     <Col sm={9}>
                       <Row>
                         <div className="d-flex align-items-center">
