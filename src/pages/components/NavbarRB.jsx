@@ -239,6 +239,7 @@ const NavbarRB = () => {
                           setShowMod(true);
                         } else navigate("/profile");
                       }}
+                      className="d-flex justify-content-center"
                     >
                       Account
                     </Dropdown.Item>
@@ -252,6 +253,7 @@ const NavbarRB = () => {
                           setShowMod(true);
                         } else navigate("/collection");
                       }}
+                      className="d-flex justify-content-center"
                     >
                       Drafts
                     </Dropdown.Item>
@@ -265,6 +267,7 @@ const NavbarRB = () => {
                           setShowMod(true);
                         } else onLogout();
                       }}
+                      className="d-flex justify-content-center"
                     >
                       Logout
                     </Dropdown.Item>

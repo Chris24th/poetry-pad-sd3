@@ -42,6 +42,7 @@ const Comment = ({ selectedCom, comments }) => {
         console.log(res.data);
         setTextContent("");
         setLoading(false);
+        setCommentss();
         displayComment();
       });
   };
@@ -53,6 +54,7 @@ const Comment = ({ selectedCom, comments }) => {
         idComment: idComment,
       })
       .then((res) => {
+        setCommentss();
         displayComment();
         setLoading(false);
       });
@@ -88,6 +90,7 @@ const Comment = ({ selectedCom, comments }) => {
         textContent: comTextContent,
       })
       .then((res) => {
+        setCommentss();
         displayComment();
         setClickedCom();
         setLoading(false);

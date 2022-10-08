@@ -72,8 +72,10 @@ const Dashboard = () => {
     await axios
       .post("https://poetry-pad.herokuapp.com/api/deletepoem", { id: deleteId })
       .then(() => {
+        setPoemData();
+        displayPoem();
+        setShowDel(false);
         setLoading(false);
-        window.location.reload();
       });
   };
 
