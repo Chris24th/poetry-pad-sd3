@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
 import { FiKey } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
@@ -33,6 +33,12 @@ const ResetPassword = () => {
       setError("Passwords do not match.");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("user-data")) {
+      navigate("/dashboard");
+    }
+  });
 
   return (
     <Container className=" d-flex align-items-center justify-content-center">

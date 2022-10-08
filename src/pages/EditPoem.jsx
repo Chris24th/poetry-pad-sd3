@@ -1,24 +1,14 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Modal,
-  Alert,
-  Spinner,
-} from "react-bootstrap";
+import { Row, Col, Form, Button, Modal, Alert, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
-import FirstCol from "./FirstCol";
+import FirstCol from "./components/FirstCol";
 import axios from "axios";
 
 const EditPoem = () => {
   const user = JSON.parse(localStorage.getItem("user-data"));
   const poem = JSON.parse(localStorage.getItem("edit-poem"));
-  let url = user.url;
   const [title, setTitle] = useState(poem?.title);
   const [firstStanza, setFirstStanza] = useState(poem?.firstStanza);
   const [secondStanza, setSecondStanza] = useState(poem?.secondStanza);
@@ -97,51 +87,42 @@ const EditPoem = () => {
       .then((res) => {
         console.log(res.data);
         setFirstPlag(res.data);
-        {
-          if (secondStanza) {
-            formData.append("data", secondStanza);
-            axios
-              .post("https://www.prepostseo.com/apis/checkPlag", formData)
-              .then((res) => {
-                console.log(res.data);
-                setSecondPlag(res.data);
-                {
-                  if (thirdStanza) {
-                    formData.append("data", thirdStanza);
-                    axios
-                      .post(
-                        "https://www.prepostseo.com/apis/checkPlag",
-                        formData
-                      )
-                      .then((res) => {
-                        console.log(res.data);
-                        setThirdPlag(res.data);
-                        {
-                          if (fourthStanza) {
-                            formData.append("data", fourthStanza);
-                            axios
-                              .post(
-                                "https://www.prepostseo.com/apis/checkPlag",
-                                formData
-                              )
-                              .then((res) => {
-                                console.log(res.data);
-                                setFourthPlag(res.data);
-                                setCheck(true);
-                              });
-                          } else {
-                            setCheck(true);
-                          }
-                        }
-                      });
-                  } else {
-                    setCheck(true);
-                  }
-                }
-              });
-          } else {
-            setCheck(true);
-          }
+        if (secondStanza) {
+          formData.append("data", secondStanza);
+          axios
+            .post("https://www.prepostseo.com/apis/checkPlag", formData)
+            .then((res) => {
+              console.log(res.data);
+              setSecondPlag(res.data);
+              if (thirdStanza) {
+                formData.append("data", thirdStanza);
+                axios
+                  .post("https://www.prepostseo.com/apis/checkPlag", formData)
+                  .then((res) => {
+                    console.log(res.data);
+                    setThirdPlag(res.data);
+                    if (fourthStanza) {
+                      formData.append("data", fourthStanza);
+                      axios
+                        .post(
+                          "https://www.prepostseo.com/apis/checkPlag",
+                          formData
+                        )
+                        .then((res) => {
+                          console.log(res.data);
+                          setFourthPlag(res.data);
+                          setCheck(true);
+                        });
+                    } else {
+                      setCheck(true);
+                    }
+                  });
+              } else {
+                setCheck(true);
+              }
+            });
+        } else {
+          setCheck(true);
         }
       });
   };
@@ -278,9 +259,9 @@ const EditPoem = () => {
         }
       }
     }
-  }, []);
+  }, [user, poem, navigate]);
   useEffect(() => {
-    return checker();
+    checker();
   });
   // ---------------------------------------------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------

@@ -7,25 +7,20 @@ import {
   Modal,
   Button,
   Dropdown,
-  DropdownButton,
-  Form,
-  Alert,
   Tooltip,
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../Sidebar";
-import { IconContext } from "react-icons";
+import Sidebar from "./components/Sidebar";
 import { BsThreeDots } from "react-icons/bs";
 import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
 import axios from "axios";
-import Comment from "./Comment";
-import MyPlaceHolder from "./MyPlaceHolder";
-import EditPoem from "./EditPoem";
+import Comment from "./components/Comment";
+import MyPlaceHolder from "./components/MyPlaceHolder";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -39,17 +34,6 @@ const Dashboard = () => {
   const [showComment, setShowComment] = useState(false);
   const [selectedCom, setSelectedCom] = useState(false);
   const [comments, setComments] = useState();
-  //----------------------------------------
-  const [title, setTitle] = useState();
-  const [firstStanza, setFirstStanza] = useState();
-  const [secondStanza, setSecondStanza] = useState();
-  const [thirdStanza, setThirdStanza] = useState();
-  const [fourthStanza, setFourthStanza] = useState();
-
-  const [error, setError] = useState("");
-  const [privacy, setPrivacy] = useState();
-  const [isDraft, setIsDraft] = useState();
-  const [stanza, setStanza] = useState(0);
 
   const [likesP, setLikesP] = useState();
   let ctr = 0;
@@ -95,11 +79,13 @@ const Dashboard = () => {
   };
 
   const onLike = async (idPoem) => {
-    await axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
-      idPoem: idPoem,
-      penName: user.penName,
-      name: user.name,
-    });
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+        idPoem: idPoem,
+        penName: user.penName,
+        name: user.name,
+      })
+      .then(() => displayLikeP());
   };
 
   const displayPoem = async () => {
@@ -123,7 +109,6 @@ const Dashboard = () => {
       .get("https://poetry-pad.herokuapp.com/api/displaycomment")
       .then((res) => {
         res.data && setComments(res.data);
-        // console.log(res.data);
       });
   };
 
@@ -134,7 +119,7 @@ const Dashboard = () => {
     displayComment();
     displayPoem();
     displayLikeP();
-  });
+  }, [user, navigate]);
 
   return (
     <div>
@@ -261,8 +246,8 @@ const Dashboard = () => {
                                 likeP.idPoem === poem[0].id &&
                                 likeP.penName === user.penName
                               ) {
-                                red = true;
-                              }
+                                return (red = true);
+                              } else return null;
                             })}
                           {red && red === true ? (
                             <RiHeartAddFill
@@ -305,7 +290,7 @@ const Dashboard = () => {
                               {likesP &&
                                 likesP.map(
                                   (likeP) =>
-                                    likeP.idPoem == poem[0].id && (
+                                    likeP.idPoem === poem[0].id && (
                                       <script key={likeP.id}>{ctr++}</script>
                                     )
                                 )}
@@ -342,9 +327,7 @@ const Dashboard = () => {
               )}
             </>
           ) : (
-            <>
-              <MyPlaceHolder />
-            </>
+            <MyPlaceHolder />
           )}
         </Col>
         <Col lg={3}></Col>

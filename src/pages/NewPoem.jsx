@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Modal,
-  Alert,
-  Spinner,
-} from "react-bootstrap";
+import { Row, Col, Form, Button, Modal, Alert, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import FirstCol from "./FirstCol";
+import FirstCol from "./components/FirstCol";
 import { MdAccountCircle } from "react-icons/md";
 import axios from "axios";
 import { Image } from "cloudinary-react";
@@ -114,51 +105,42 @@ const NewPoem = () => {
       .then((res) => {
         console.log(res.data);
         setFirstPlag(res.data);
-        {
-          if (secondStanza) {
-            formData.append("data", secondStanza);
-            axios
-              .post("https://www.prepostseo.com/apis/checkPlag", formData)
-              .then((res) => {
-                console.log(res.data);
-                setSecondPlag(res.data);
-                {
-                  if (thirdStanza) {
-                    formData.append("data", thirdStanza);
-                    axios
-                      .post(
-                        "https://www.prepostseo.com/apis/checkPlag",
-                        formData
-                      )
-                      .then((res) => {
-                        console.log(res.data);
-                        setThirdPlag(res.data);
-                        {
-                          if (fourthStanza) {
-                            formData.append("data", fourthStanza);
-                            axios
-                              .post(
-                                "https://www.prepostseo.com/apis/checkPlag",
-                                formData
-                              )
-                              .then((res) => {
-                                console.log(res.data);
-                                setFourthPlag(res.data);
-                                setCheck(true);
-                              });
-                          } else {
-                            setCheck(true);
-                          }
-                        }
-                      });
-                  } else {
-                    setCheck(true);
-                  }
-                }
-              });
-          } else {
-            setCheck(true);
-          }
+        if (secondStanza) {
+          formData.append("data", secondStanza);
+          axios
+            .post("https://www.prepostseo.com/apis/checkPlag", formData)
+            .then((res) => {
+              console.log(res.data);
+              setSecondPlag(res.data);
+              if (thirdStanza) {
+                formData.append("data", thirdStanza);
+                axios
+                  .post("https://www.prepostseo.com/apis/checkPlag", formData)
+                  .then((res) => {
+                    console.log(res.data);
+                    setThirdPlag(res.data);
+                    if (fourthStanza) {
+                      formData.append("data", fourthStanza);
+                      axios
+                        .post(
+                          "https://www.prepostseo.com/apis/checkPlag",
+                          formData
+                        )
+                        .then((res) => {
+                          console.log(res.data);
+                          setFourthPlag(res.data);
+                          setCheck(true);
+                        });
+                    } else {
+                      setCheck(true);
+                    }
+                  });
+              } else {
+                setCheck(true);
+              }
+            });
+        } else {
+          setCheck(true);
         }
       });
   };

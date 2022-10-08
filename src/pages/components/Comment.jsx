@@ -7,7 +7,6 @@ import {
   Form,
   Button,
   Placeholder,
-  Spinner,
   OverlayTrigger,
   Tooltip,
   Dropdown,
@@ -21,12 +20,10 @@ const Comment = ({ selectedCom, comments }) => {
   const user = JSON.parse(localStorage.getItem("user-data"));
   const [textContent, setTextContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [commento, setCommento] = useState();
 
   const [likesC, setLikesC] = useState();
   let ctrC = 0;
 
-  const [edit, setEdit] = useState();
   const [clickedCom, setClickedCom] = useState();
   const [comTextContent, setComTextContent] = useState();
 
@@ -38,19 +35,10 @@ const Comment = ({ selectedCom, comments }) => {
       });
   };
 
-  const displayComment = async () => {
-    await axios
-      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
-      .then((res) => {
-        res.data && setCommento(res.data);
-        console.log(res.data);
-      });
-  };
-
-  const onSend = async (e) => {
+  const onSend = (e) => {
     e.preventDefault();
     setLoading(true);
-    await axios
+    axios
       .post("https://poetry-pad.herokuapp.com/api/createcomment", {
         idPoem: selectedCom,
         idUser: user.id,
@@ -76,7 +64,6 @@ const Comment = ({ selectedCom, comments }) => {
   };
 
   const onEdit = async (com) => {
-    setEdit(true);
     setClickedCom(com);
     setComTextContent(com.textContent);
   };
@@ -183,7 +170,7 @@ const Comment = ({ selectedCom, comments }) => {
                           {likesC &&
                             likesC.map(
                               (likeC) =>
-                                likeC.idComment == comm[0].id && (
+                                likeC.idComment === comm[0].id && (
                                   <script key={likeC.id}>{ctrC++}</script>
                                 )
                             )}

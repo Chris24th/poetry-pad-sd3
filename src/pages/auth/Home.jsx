@@ -1,6 +1,5 @@
 // import {}
 import { Row, Figure } from "react-bootstrap";
-import NavbarRB from "../../NavbarRB";
 import LandingFrame from "../../images/landingframe.svg";
 import { BsArrowRight } from "react-icons/bs";
 

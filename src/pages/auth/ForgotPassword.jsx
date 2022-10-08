@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -16,7 +16,6 @@ const ForgotPassword = () => {
   const [error, setError] = useState();
   const [email, setEmail] = useState();
   const [success, setSuccess] = useState();
-  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
@@ -30,13 +29,19 @@ const ForgotPassword = () => {
         if (res.data.error) {
           setError(res.data.error);
         } else {
-          setShow(true);
           setSuccess("Password reset link successfully sent to your email. ");
           setError("");
           // navigate("/signin");
         }
       });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("user-data")) {
+      navigate("/dashboard");
+    }
+  });
+
   return (
     <Container className=" d-flex align-items-center justify-content-center">
       <div className="container-auth">

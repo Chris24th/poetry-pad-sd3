@@ -1,7 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebook } from "react-icons/fa";
 import { AiFillTwitterCircle, AiFillInstagram } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { GiFeather } from "react-icons/gi";
 
 const About = () => {
@@ -65,7 +64,7 @@ const About = () => {
           </p>
           <p className="about-p">
             <GiFeather size={30} style={{ marginRight: "10px" }} />
-            search for synonyms & antonyms
+            thesaurus
           </p>
           <p className="about-p">
             <GiFeather size={30} style={{ marginRight: "10px" }} />

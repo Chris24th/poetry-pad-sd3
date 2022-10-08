@@ -61,7 +61,7 @@ const SignUp = () => {
     if (localStorage.getItem("user-data")) {
       navigate("/");
     }
-  }, []);
+  });
 
   return (
     <Container className=" d-flex align-items-center justify-content-center ">

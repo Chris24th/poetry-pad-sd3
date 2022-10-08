@@ -7,25 +7,20 @@ import {
   Modal,
   Button,
   Dropdown,
-  DropdownButton,
-  Form,
-  Alert,
   Tooltip,
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../Sidebar";
-import { IconContext } from "react-icons";
+import Sidebar from "./components/Sidebar";
 import { BsThreeDots } from "react-icons/bs";
 import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { Image } from "cloudinary-react";
 import axios from "axios";
-import Comment from "./Comment";
-import MyPlaceHolder from "./MyPlaceHolder";
-import EditPoem from "./EditPoem";
+import Comment from "./components/Comment";
+import MyPlaceHolder from "./components/MyPlaceHolder";
 
 const Collection = () => {
   const user = JSON.parse(localStorage.getItem("user-data"));
@@ -39,27 +34,18 @@ const Collection = () => {
   const [loading, setLoading] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [selectedCom, setSelectedCom] = useState(false);
-  //----------------------------------------
-  const [title, setTitle] = useState();
-  const [firstStanza, setFirstStanza] = useState();
-  const [secondStanza, setSecondStanza] = useState();
-  const [thirdStanza, setThirdStanza] = useState();
-  const [fourthStanza, setFourthStanza] = useState();
+  const [comments, setComments] = useState();
 
-  const [error, setError] = useState("");
   const [privacy, setPrivacy] = useState();
   const [isDraft, setIsDraft] = useState();
-  const [stanza, setStanza] = useState(0);
 
   const [likesP, setLikesP] = useState();
   let ctr = 0;
+  let red = false;
+
   const handleShowRM = (poem) => {
     setShowRM(true);
     setClickedPoem(poem);
-  };
-  const handleCloseRM = () => {
-    setClickedPoem("");
-    setShowRM(false);
   };
 
   const popover = (poemUser) => (
@@ -108,6 +94,14 @@ const Collection = () => {
       });
   };
 
+  const displayComment = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
+      .then((res) => {
+        res.data && setComments(res.data);
+      });
+  };
+
   const displayLikeP = async () => {
     await axios
       .get("https://poetry-pad.herokuapp.com/api/displaylikePoem")
@@ -122,7 +116,8 @@ const Collection = () => {
     }
     displayPoem();
     displayLikeP();
-  });
+    displayComment();
+  }, [user, navigate]);
 
   return (
     <div>
@@ -134,8 +129,8 @@ const Collection = () => {
           <Button
             variant="dark"
             style={{
-              background: active != "public" && "none",
-              color: active != "public" && "black",
+              background: active !== "public" && "none",
+              color: active !== "public" && "black",
               border: "none",
             }}
             onClick={() => {
@@ -150,8 +145,8 @@ const Collection = () => {
           <Button
             variant="dark"
             style={{
-              background: active != "private" && "none",
-              color: active != "private" && "black",
+              background: active !== "private" && "none",
+              color: active !== "private" && "black",
               border: "none",
             }}
             onClick={() => {
@@ -166,8 +161,8 @@ const Collection = () => {
           <Button
             variant="dark"
             style={{
-              background: active != "drafts" && "none",
-              color: active != "drafts" && "black",
+              background: active !== "drafts" && "none",
+              color: active !== "drafts" && "black",
               border: "none",
             }}
             onClick={() => {
@@ -184,9 +179,9 @@ const Collection = () => {
             <>
               {poemData.map(
                 (poem) =>
-                  poem[0].penName == user.penName &&
-                  poem[0].privacy == privacy &&
-                  poem[0].isDraft == isDraft && (
+                  poem[0].penName === user.penName &&
+                  poem[0].privacy === privacy &&
+                  poem[0].isDraft === isDraft && (
                     <Container
                       key={poem[0].id}
                       className="shadow-sm border border-1 rounded-3 mb-4 p-4 px-5"
@@ -293,12 +288,31 @@ const Collection = () => {
                           md={3}
                           className="d-flex justify-content-end align-items-center"
                         >
-                          <RiHeartAddLine
-                            role="button"
-                            size={25}
-                            color="#FF5A5F"
-                            onClick={() => onLike(poem[0].id)}
-                          />
+                          {likesP &&
+                            likesP.map((likeP) => {
+                              if (
+                                likeP.idPoem === poem[0].id &&
+                                likeP.penName === user.penName
+                              ) {
+                                return (red = true);
+                              } else return null;
+                            })}
+                          {red && red === true ? (
+                            <RiHeartAddFill
+                              role="button"
+                              size={25}
+                              color="#FF5A5F"
+                              onClick={() => onLike(poem[0].id)}
+                            />
+                          ) : (
+                            <RiHeartAddLine
+                              role="button"
+                              size={25}
+                              color="#FF5A5F"
+                              onClick={() => onLike(poem[0].id)}
+                            />
+                          )}
+                          <script>{(red = false)}</script>
                           <OverlayTrigger
                             placement="right"
                             delay={{ show: 150, hide: 300 }}
@@ -324,7 +338,7 @@ const Collection = () => {
                               {likesP &&
                                 likesP.map(
                                   (likeP) =>
-                                    likeP.idPoem == poem[0].id && (
+                                    likeP.idPoem === poem[0].id && (
                                       <script key={likeP.id}>{ctr++}</script>
                                     )
                                 )}
@@ -350,7 +364,10 @@ const Collection = () => {
                       </Row>
                       {selectedCom === poem[0].id && showComment && (
                         <Row>
-                          <Comment selectedCom={selectedCom} />
+                          <Comment
+                            selectedCom={selectedCom}
+                            comments={comments}
+                          />
                         </Row>
                       )}
                     </Container>
@@ -365,10 +382,6 @@ const Collection = () => {
       </Row>
 
       {/* --------------------------------modal------------------------------- */}
-      {/* {clickedPoem && (
-        <ViewPoem clickedPoem={clickedPoem} showRM={showRM} showRM />
-      )}
-       */}
       {clickedPoem && (
         <Modal
           key={clickedPoem.id}
@@ -378,7 +391,6 @@ const Collection = () => {
           }}
           style={{
             background: "none",
-            // background: "rgba(0,0,0,0.3)",
           }}
         >
           <Modal.Header closeButton></Modal.Header>

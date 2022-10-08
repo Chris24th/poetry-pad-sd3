@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../Sidebar";
+import Sidebar from "./components/Sidebar";
 import {
   Row,
   Col,
@@ -47,9 +47,7 @@ const Profile = () => {
 
   const onSave = async (e) => {
     e.preventDefault();
-    {
-      url && api();
-    }
+    url && api();
     setShow(false);
     window.location.reload();
   };
@@ -72,7 +70,8 @@ const Profile = () => {
     if (!user) {
       navigate("/signin");
     }
-  }, [api()]);
+    api();
+  });
 
   return (
     <>

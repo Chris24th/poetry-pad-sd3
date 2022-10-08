@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Button,
   Form,
-  Card,
   Container,
   InputGroup,
   Row,
@@ -48,7 +47,7 @@ const SignIn = () => {
     if (localStorage.getItem("user-data")) {
       navigate("/");
     }
-  }, []);
+  });
 
   return (
     <Container className=" d-flex align-items-center justify-content-center">

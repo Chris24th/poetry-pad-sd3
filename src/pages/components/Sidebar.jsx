@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import Logo from "./images/logo.svg";
-import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
 import { AiFillHome, AiOutlinePlusSquare } from "react-icons/ai";
 import { GoThreeBars } from "react-icons/go";
 import { ImBooks } from "react-icons/im";
@@ -14,7 +12,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     setActive(window.location.pathname);
-  });
+  }, []);
 
   const allMenu = [
     {

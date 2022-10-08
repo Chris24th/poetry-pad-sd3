@@ -10,9 +10,8 @@ import {
   Button,
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import Logo from "./images/logo.svg";
+import Logo from "../../images/logo.svg";
 import { MdAccountCircle } from "react-icons/md";
-import { BsThreeDots } from "react-icons/bs";
 import { Image } from "cloudinary-react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +19,6 @@ const NavbarRB = () => {
   const [show, setShow] = useState(false);
   const [active, setActive] = useState("");
   const [showSB, setShowSB] = useState(false);
-  const [show3D, setShow3D] = useState(false);
-  const [showDD, setShowDD] = useState(false);
   const [showMod, setShowMod] = useState(false);
   const [navUrl, setNavUrl] = useState("");
   const [logout, setLogout] = useState(false);
@@ -41,9 +38,6 @@ const NavbarRB = () => {
     ) {
       setShowSB(true);
     } else setShowSB(false);
-    if (window.location.pathname === "/createpoem") {
-      setShow3D(true);
-    } else setShow3D(false);
   }, []);
 
   const onLogout = () => {
