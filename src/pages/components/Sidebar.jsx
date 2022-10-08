@@ -61,15 +61,31 @@ const Sidebar = () => {
                       <a
                         href={menu.url}
                         className={
-                          active === menu.url ? "sb-link-active" : "sb-link"
+                          active === menu.url
+                            ? "sb-link-active mt-1"
+                            : "sb-link mt-1"
                         }
+                        style={{
+                          transition: "all 0.4s ease ",
+                        }}
                       >
                         <div
-                          style={{ background: "none", marginRight: "10px" }}
+                          style={{
+                            background: "none",
+                            marginRight: "10px",
+                            transition: "all 0.2s ease ",
+                          }}
                         >
                           {menu.icon}
                         </div>
-                        {menu.name}
+                        <span
+                          style={{
+                            background: "none",
+                            transition: "all 0.1s ease ",
+                          }}
+                        >
+                          {menu.name}
+                        </span>
                       </a>
                     </>
                   );
@@ -103,11 +119,21 @@ const Sidebar = () => {
                         href={menu.url}
                         className={
                           active === menu.url
-                            ? "sb-link-active p-2"
-                            : "sb-link p-2"
+                            ? "sb-link-active p-2 mt-1"
+                            : "sb-link p-2 mt-1"
                         }
+                        style={{
+                          transition: "all 0.4s ease ",
+                        }}
                       >
-                        {menu.icon}
+                        <div
+                          style={{
+                            background: "none",
+                            transition: "all 0.2s ease ",
+                          }}
+                        >
+                          {menu.icon}
+                        </div>
                       </a>
                     </div>
                   );

@@ -101,7 +101,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 220px;
-  height: 400px;
+  height: 300px;
   margin-left: 30px;
   padding: 5px;
   background: rgb(0, 0, 0);
@@ -113,13 +113,13 @@ body {
   border: none;
   border-radius: 10px;
   box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
+  transition: width 0.4s;
 }
 .sidebar-container-h {
   display: flex;
   flex-direction: column;
   width: 77px;
-  height: 400px;
+  height: 300px;
   margin-left: 30px;
   padding: 5px;
   background: rgb(0, 0, 0);
@@ -138,12 +138,14 @@ body {
   flex-direction: column;
   background: none;
   align-items: left;
+  transition: all 0.4s ease;
 }
 .sb-cont-h {
   display: flex;
   flex-direction: column;
   background: none;
   align-items: center;
+  transition: all 0.4s ease;
 }
 .sb-btn-cont {
   display: flex;
@@ -165,7 +167,6 @@ body {
   display: inherit;
   flex-direction: column;
   background: none;
-  transition: all 0.4s ease;
 }
 .sb-link {
   display: inherit;

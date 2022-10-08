@@ -45,15 +45,14 @@ const Profile = () => {
       });
   };
 
-  const onSave = async (e) => {
+  const onSave = (e) => {
     e.preventDefault();
-    url && api();
+    api();
     setShow(false);
-    window.location.reload();
   };
 
   const api = async () => {
-    axios
+    await axios
       .post("https://poetry-pad.herokuapp.com/api/editprofile", {
         id: user.id,
         url: url,
