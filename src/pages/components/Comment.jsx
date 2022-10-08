@@ -20,6 +20,7 @@ const Comment = ({ selectedCom, comments }) => {
   const user = JSON.parse(localStorage.getItem("user-data"));
   const [textContent, setTextContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [commentss, setCommentss] = useState(comments);
 
   const [likesC, setLikesC] = useState();
   let ctrC = 0;
@@ -27,14 +28,6 @@ const Comment = ({ selectedCom, comments }) => {
   const [clickedCom, setClickedCom] = useState();
   const [comTextContent, setComTextContent] = useState();
   let redCom = false;
-
-  const displaylikeC = () => {
-    axios
-      .get("https://poetry-pad.herokuapp.com/api/displaylikeComment")
-      .then((res) => {
-        res.data && setLikesC(res.data);
-      });
-  };
 
   const onSend = (e) => {
     e.preventDefault();
@@ -49,6 +42,7 @@ const Comment = ({ selectedCom, comments }) => {
         console.log(res.data);
         setTextContent("");
         setLoading(false);
+        displayComment();
       });
   };
 
@@ -59,8 +53,24 @@ const Comment = ({ selectedCom, comments }) => {
         idComment: idComment,
       })
       .then((res) => {
-        console.log(res.data);
+        displayComment();
         setLoading(false);
+      });
+  };
+
+  const displayComment = async () => {
+    await axios
+      .get("https://poetry-pad.herokuapp.com/api/displaycomment")
+      .then((res) => {
+        res.data && setCommentss(res.data);
+      });
+  };
+
+  const displaylikeC = () => {
+    axios
+      .get("https://poetry-pad.herokuapp.com/api/displaylikeComment")
+      .then((res) => {
+        res.data && setLikesC(res.data);
       });
   };
 
@@ -78,7 +88,7 @@ const Comment = ({ selectedCom, comments }) => {
         textContent: comTextContent,
       })
       .then((res) => {
-        console.log(res.data);
+        displayComment();
         setClickedCom();
         setLoading(false);
       });
@@ -102,8 +112,8 @@ const Comment = ({ selectedCom, comments }) => {
     <>
       <Container className="mt-4 border-top">
         <Container>
-          {comments ? (
-            comments.map(
+          {commentss ? (
+            commentss.map(
               (comm) =>
                 comm[0].idPoem === selectedCom && (
                   <Row className="my-3" key={comm[0].id}>

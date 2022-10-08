@@ -36,8 +36,8 @@ const Collection = () => {
   const [selectedCom, setSelectedCom] = useState(false);
   const [comments, setComments] = useState();
 
-  const [privacy, setPrivacy] = useState();
-  const [isDraft, setIsDraft] = useState();
+  const [privacy, setPrivacy] = useState("public");
+  const [isDraft, setIsDraft] = useState(0);
 
   const [likesP, setLikesP] = useState();
   let ctr = 0;
@@ -79,11 +79,13 @@ const Collection = () => {
   };
 
   const onLike = (idPoem) => {
-    axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
-      idPoem: idPoem,
-      penName: user.penName,
-      name: user.name,
-    });
+    axios
+      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+        idPoem: idPoem,
+        penName: user.penName,
+        name: user.name,
+      })
+      .then(() => displayLikeP());
   };
 
   const displayPoem = async () => {
@@ -114,18 +116,27 @@ const Collection = () => {
     if (!user) {
       navigate("/signin");
     }
-    displayPoem();
-    displayLikeP();
-    displayComment();
   }, [user, navigate]);
+
+  useEffect(() => {
+    displayLikeP();
+  }, []);
+
+  useEffect(() => {
+    displayComment();
+  }, []);
+
+  useEffect(() => {
+    displayPoem();
+  }, []);
 
   return (
     <div>
       <Row>
-        <Col lg={3} className="mb-4">
+        <Col md={3} className="mb-4">
           <Sidebar />
         </Col>
-        <Col lg={6}>
+        <Col md={7}>
           <Button
             variant="dark"
             style={{
@@ -378,7 +389,7 @@ const Collection = () => {
             <MyPlaceHolder />
           )}
         </Col>
-        <Col lg={3}></Col>
+        <Col md={2}></Col>
       </Row>
 
       {/* --------------------------------modal------------------------------- */}

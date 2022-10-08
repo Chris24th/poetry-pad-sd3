@@ -78,10 +78,10 @@ const Profile = () => {
       {user && (
         <div>
           <Row>
-            <Col lg={3} className="mb-4">
+            <Col md={3} className="mb-4">
               <Sidebar />
             </Col>
-            <Col lg={7}>
+            <Col md={7}>
               <Row className="justify-content-between m-3">
                 <Col
                   xs={3}

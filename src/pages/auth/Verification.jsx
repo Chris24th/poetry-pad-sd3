@@ -6,6 +6,7 @@ import { Button, Row, Col, Container, Alert } from "react-bootstrap";
 const Verification = () => {
   const [token, setToken] = useState();
   const navigate = useNavigate();
+
   const api = async () => {
     console.log(token);
     token &&
@@ -17,12 +18,17 @@ const Verification = () => {
           localStorage.clear();
         }));
   };
+
   useEffect(() => {
     if (localStorage.getItem("user-data")) {
       navigate("/");
     }
     setToken(localStorage.getItem("verify-token"));
-  }, [api()]);
+  }, [navigate]);
+
+  useEffect(() => {
+    api();
+  });
 
   const onLogin = () => {
     navigate("/signin");

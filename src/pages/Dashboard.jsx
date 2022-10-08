@@ -78,11 +78,13 @@ const Dashboard = () => {
   };
 
   const onLike = (idPoem) => {
-    axios.post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
-      idPoem: idPoem,
-      penName: user.penName,
-      name: user.name,
-    });
+    axios
+      .post("https://poetry-pad.herokuapp.com/api/createlikePoem", {
+        idPoem: idPoem,
+        penName: user.penName,
+        name: user.name,
+      })
+      .then(() => displayLikeP());
   };
 
   const displayPoem = async () => {
@@ -113,18 +115,27 @@ const Dashboard = () => {
     if (!user) {
       navigate("/signin");
     }
-    displayComment();
-    displayPoem();
-    displayLikeP();
   }, [user, navigate]);
+
+  useEffect(() => {
+    displayLikeP();
+  }, []);
+
+  useEffect(() => {
+    displayComment();
+  }, []);
+
+  useEffect(() => {
+    displayPoem();
+  }, []);
 
   return (
     <div>
       <Row>
-        <Col lg={3} className="mb-4">
+        <Col md={3} className="mb-4">
           <Sidebar />
         </Col>
-        <Col lg={6}>
+        <Col md={7}>
           {poemData ? (
             <>
               {poemData.map(
@@ -327,7 +338,7 @@ const Dashboard = () => {
             <MyPlaceHolder />
           )}
         </Col>
-        <Col lg={3}></Col>
+        <Col md={2}></Col>
       </Row>
       {/* -----------------------------modal----------------------------- */}
       {clickedPoem && (

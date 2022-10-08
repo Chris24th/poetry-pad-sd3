@@ -3,8 +3,7 @@ import { Container } from "react-bootstrap";
 import { AiFillHome, AiOutlinePlusSquare } from "react-icons/ai";
 import { GoThreeBars } from "react-icons/go";
 import { ImBooks } from "react-icons/im";
-import { MdOutlineManageSearch, MdAccountBox } from "react-icons/md";
-import { GiArchiveResearch } from "react-icons/gi";
+import { MdAccountBox } from "react-icons/md";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
@@ -24,16 +23,6 @@ const Sidebar = () => {
       icon: <ImBooks size={20} style={{ background: "none" }} />,
       url: "/collection",
       name: "COLLECTION",
-    },
-    {
-      icon: <GiArchiveResearch size={20} style={{ background: "none" }} />,
-      url: "/thesaurus",
-      name: "THESAURUS",
-    },
-    {
-      icon: <MdOutlineManageSearch size={20} style={{ background: "none" }} />,
-      url: "/rhymefinder",
-      name: "RHYME FINDER",
     },
     {
       icon: <MdAccountBox size={20} style={{ background: "none" }} />,
