@@ -46,5 +46,3 @@ Route::post('createlikePoem', [LikePoemController::class, 'createlikePoem']);
 Route::get('displaylikePoem', [LikePoemController::class, 'displaylikePoem']);
 Route::post('createlikeComment', [LikeCommentController::class, 'createlikeComment']);
 Route::get('displaylikeComment', [LikeCommentController::class, 'displaylikeComment']);
-
-Route::post('displaylikedPoem', [LikePoemController::class, 'displaylikedPoem']);

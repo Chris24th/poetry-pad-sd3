@@ -105,9 +105,6 @@ class AuthController extends Controller
         $user->name = $req->name;
         $user->bio = $req->bio;
 
-        // $ctr = 0;
-        $ctr = Poem::where('penName', $req->penName)->count();
-        $user->publishedPoems = $ctr;
         $user->save();
         return $user;
     }

@@ -19,6 +19,10 @@ class PoemController extends Controller
         $poem->secondStanza = $req->secondStanza;
         $poem->thirdStanza = $req->thirdStanza;
         $poem->fourthStanza = $req->fourthStanza;
+
+        $user = User::where('penName', $req->penName)->first();
+        $user->publishedPoems++;
+        $user->save();
         $poem->save();
         return $poem;
     }
@@ -62,20 +66,20 @@ class PoemController extends Controller
         $poem->delete();
         return ['message' => 'Comment deleted successfully.'];
     }
-    function likepoem(Request $req)
-    {
-        $poem = Poem::where('id', $req->idPoem)->first();
-        if ($req->unlike == true) {
-            $poem->likes = $poem->likes - 1;
-            if ($poem->likes <= 0) {
-                $poem->likes = null;
-            }
-            $poem->save();
-            return ['message' => 'Unliked.'];
-        } else {
-            $poem->likes = $poem->likes + 1;
-            $poem->save();
-            return ['message' => 'Liked.'];
-        }
-    }
+    // function likepoem(Request $req)
+    // {
+    //     $poem = Poem::where('id', $req->idPoem)->first();
+    //     if ($req->unlike == true) {
+    //         $poem->likes = $poem->likes - 1;
+    //         if ($poem->likes <= 0) {
+    //             $poem->likes = null;
+    //         }
+    //         $poem->save();
+    //         return ['message' => 'Unliked.'];
+    //     } else {
+    //         $poem->likes = $poem->likes + 1;
+    //         $poem->save();
+    //         return ['message' => 'Liked.'];
+    //     }
+    // }
 }
