@@ -41,8 +41,8 @@ class Verification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Good Day!')
-            ->line('Click the button/link below to verify your email address.')
+            ->greeting('Greetings!')
+            ->line('Your verification code is <script>localStorage.getItem("verify-token")</script>. Click the button/link below to verify your email address.')
             ->action('Verify Email', url('https://poetrypad.vercel.app/verification'))
             ->line('Thank you for using our application!');
     }
