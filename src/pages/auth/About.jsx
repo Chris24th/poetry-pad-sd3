@@ -22,7 +22,7 @@ const About = () => {
             <p>
               +63 927 987 6345
               <br />
-              poetrypad@gmail.com
+              poetry.pad.app@gmail.com
             </p>
             <p style={{ fontSize: "15px" }}>
               Cebu Institute of Technology-University, Cebu City, Cebu,
