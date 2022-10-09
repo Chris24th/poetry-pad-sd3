@@ -69,20 +69,15 @@ class PoemController extends Controller
         $poem->delete();
         return ['message' => 'Comment deleted successfully.'];
     }
-    // function likepoem(Request $req)
-    // {
-    //     $poem = Poem::where('id', $req->idPoem)->first();
-    //     if ($req->unlike == true) {
-    //         $poem->likes = $poem->likes - 1;
-    //         if ($poem->likes <= 0) {
-    //             $poem->likes = null;
-    //         }
-    //         $poem->save();
-    //         return ['message' => 'Unliked.'];
-    //     } else {
-    //         $poem->likes = $poem->likes + 1;
-    //         $poem->save();
-    //         return ['message' => 'Liked.'];
-    //     }
-    // }
+
+    function checkstanza(Request $req)
+    {
+        $checkFIS = Poem::where('title', 'like', $req->firstStanza)->get();
+        $checkSS = Poem::where('title', 'like', $req->secondStanza)->get();
+        $checkTS = Poem::where('thirdStanza', 'like', $req->thirdStanza)->get();
+        $checkFOS = Poem::where('fourthStanza', 'like', $req->fourthStanza)->get();
+        if ($checkFIS || $checkSS || $checkTS  || $checkFOS) {
+            return ["error" => "A user has the same stanza as yours please try again."];
+        } else return "Unique";
+    }
 }
