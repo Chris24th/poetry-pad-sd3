@@ -200,7 +200,7 @@ const NavbarRB = () => {
               <Col xs={4} className="in-acc">
                 <Dropdown>
                   <Dropdown.Toggle variant="none" className="in-right">
-                    {user.url ? (
+                    {user && user.url ? (
                       <Image
                         width={35}
                         height={35}
