@@ -233,7 +233,10 @@ const NavbarRB = () => {
                         ) {
                           setNavUrl("/profile");
                           setShowMod(true);
-                        } else navigate("/profile");
+                        } else {
+                          navigate("/profile");
+                          window.location.reload();
+                        }
                       }}
                       className="d-flex justify-content-center"
                     >
