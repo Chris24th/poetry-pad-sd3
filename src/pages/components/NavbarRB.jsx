@@ -250,7 +250,10 @@ const NavbarRB = () => {
                         ) {
                           setNavUrl("/collection");
                           setShowMod(true);
-                        } else navigate("/collection");
+                        } else {
+                          navigate("/collection");
+                          window.location.reload();
+                        }
                       }}
                       className="d-flex justify-content-center"
                     >
