@@ -76,7 +76,7 @@ class PoemController extends Controller
         $req->secondStanza && $checkSS = Poem::where('secondStanza', $req->secondStanza)->first();
         $req->secondStanza && $checkTS = Poem::where('thirdStanza', $req->secondStanza)->first();
         $req->fourthStanza && $checkFOS = Poem::where('fourthStanza', $req->fourthStanza)->first();
-        if ($checkFIS || $checkSS || $checkTS  || $checkFOS) {
+        if ($checkFIS || ($checkSS && $checkSS) || ($checkTS && $checkTS)  || ($checkFOS && $checkFOS)) {
             return ["error" => "A user has the exact same stanza as yours please try again.", $checkFIS, $checkSS];
         } else return "Unique";
     }
