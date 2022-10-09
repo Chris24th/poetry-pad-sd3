@@ -216,14 +216,14 @@ const NavbarRB = () => {
                   <Dropdown.Menu>
                     <Dropdown.Item disabled>
                       <span style={{ fontWeight: "bold", fontSize: "18px" }}>
-                        {user.name}
+                        {user?.name}
                       </span>
                     </Dropdown.Item>
                     <Dropdown.Item
                       disabled
                       style={{ borderBottom: "solid 1px" }}
                     >
-                      <span>{user.penName}</span>
+                      <span>{user?.penName}</span>
                     </Dropdown.Item>
                     <Dropdown.Item
                       onClick={() => {
