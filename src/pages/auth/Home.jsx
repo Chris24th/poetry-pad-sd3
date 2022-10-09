@@ -19,7 +19,7 @@ const Home = () => {
         </Figure>
       </Row>
       <Row style={{ marginRight: "150px", marginBottom: "100px" }}>
-        <a
+        <span
           onClick={() => {
             navigate("/dashboard");
             window.location.reload();
@@ -28,7 +28,7 @@ const Home = () => {
         >
           Start Writing
           <BsArrowRight className="auth-arrow" />
-        </a>
+        </span>
       </Row>
     </div>
   );
