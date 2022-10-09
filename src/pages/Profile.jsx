@@ -84,7 +84,8 @@ const Profile = () => {
               <Row className="justify-content-between m-3">
                 <Col
                   xs={3}
-                  className=" bg-black bg-gradient prof-cont-1 d-flex justify-content-center"
+                  className="bg-gradient prof-cont-1 d-flex justify-content-center"
+                  style={{ background: "rgb(16,16,16)" }}
                 >
                   <Figure
                     className="d-flex justify-content-center"

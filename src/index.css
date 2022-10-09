@@ -113,7 +113,7 @@ body {
   border: none;
   border-radius: 10px;
   box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.3);
-  transition: width 0.4s;
+  transition: all 0.3s ease-in-out;
 }
 .sidebar-container-h {
   display: flex;
@@ -125,27 +125,27 @@ body {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     105deg,
-    rgb(14, 14, 14) 50%,
+    rgb(20, 20, 20) 50%,
     rgba(150, 150, 150, 1) 100%
   );
   border: none;
   border-radius: 10px;
   box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
+  transition: all 0.3s ease-in-out;
 }
 .sb-cont-s {
   display: flex;
   flex-direction: column;
   background: none;
   align-items: left;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease-in-out;
 }
 .sb-cont-h {
   display: flex;
   flex-direction: column;
   background: none;
   align-items: center;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease-in-out;
 }
 .sb-btn-cont {
   display: flex;
@@ -237,16 +237,16 @@ body {
 
 .prof-cont-1 {
   height: 350px;
+  border: none;
+  border-radius: 10px;
   clip-path: polygon(100% 0, 100% 75%, 75% 100%, 50% 75%, 25% 100%, 0 75%, 0 0);
-}
-.prof-cont-2 {
 }
 .prof-settings {
   text-align: right;
   cursor: pointer;
 }
 .prof-pp {
-  width: 90%;
+  width: 98%;
   height: 45%;
 }
 
