@@ -20,6 +20,7 @@ const NewPoem = () => {
   const [showP, setShowP] = useState(false);
   const [showC, setShowC] = useState(false);
   const [error, setError] = useState("");
+  const [errorPl, setErrorPl] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ const NewPoem = () => {
     setFourthPlag("");
     setReady(false);
     setCheck(false);
+    setErrorPl("");
   };
   const handleShowP = () => {
     if (!title && !firstStanza) {
@@ -100,6 +102,18 @@ const NewPoem = () => {
     let formData = new FormData();
     formData.append("key", "350854a0fc0a44b3524bf4e3e610a67e");
     formData.append("data", firstStanza);
+    await axios
+      .post("https://poetry-pad.herokuapp.com/api/checkstanza", {
+        firstStanza: firstStanza,
+        secondStanza: secondStanza,
+        thirdStanza: thirdStanza,
+        fourthStanza: fourthStanza,
+      })
+      .then((res) => {
+        if (res.data.error) {
+          setErrorPl(res.data.error);
+        } else setErrorPl("");
+      });
     await axios
       .post("https://www.prepostseo.com/apis/checkPlag", formData)
       .then((res) => {
@@ -531,6 +545,13 @@ const NewPoem = () => {
               name="radios"
               onClick={() => setPrivacy("public")}
             />
+            <Form.Text className="text-danger">
+              {errorPl && (
+                <Alert variant="danger" style={{ textAlign: "center" }}>
+                  {errorPl}
+                </Alert>
+              )}
+            </Form.Text>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -540,7 +561,17 @@ const NewPoem = () => {
           <Button
             variant="dark"
             onClick={onPublish}
-            disabled={loading ? true : !ready ? true : !privacy ? true : false}
+            disabled={
+              loading
+                ? true
+                : !ready
+                ? true
+                : !privacy
+                ? true
+                : !errorPl
+                ? false
+                : true
+            }
           >
             {(!check || loading) && (
               <Spinner
