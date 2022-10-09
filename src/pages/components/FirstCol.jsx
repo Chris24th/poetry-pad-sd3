@@ -15,6 +15,7 @@ const FirstCol = () => {
   const [choice, setChoice] = useState(0);
   const [thesau, setThesau] = useState();
   const [rhymeF, setRhymeF] = useState();
+  const [error, setError] = useState();
 
   const onSearch = async (e) => {
     e.preventDefault();
@@ -36,6 +37,9 @@ const FirstCol = () => {
         .then((res) => {
           console.log(res.data);
           setThesau(res.data);
+        })
+        .catch(() => {
+          setError("Sorry, word not found in the Thesaurus.");
         });
     }
   };
@@ -86,6 +90,7 @@ const FirstCol = () => {
                     <span className="thes-def">- {thesau[0].shortdef[0]}</span>
                   </Row>
                   <span className="thes-p">Synonyms:</span>
+                  {error && <span className="thes-p">{error}</span>}
                   {thesau.map((thes) =>
                     thes.meta.syns.map((syn) => (
                       <span className="fc-words-span" key={syn[0][0]}>

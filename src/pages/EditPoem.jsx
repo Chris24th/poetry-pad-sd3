@@ -21,6 +21,7 @@ const EditPoem = () => {
   const [showP, setShowP] = useState(false);
   const [showC, setShowC] = useState(false);
   const [error, setError] = useState("");
+  const [errorPl, setErrorPl] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [stanza, setStanza] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ const EditPoem = () => {
     setFourthPlag("");
     setReady(false);
     setCheck(false);
+    setErrorPl("");
   };
   const handleShowP = () => {
     if (!title && !firstStanza) {
@@ -561,7 +563,15 @@ const EditPoem = () => {
               variant="dark"
               onClick={onRepub}
               disabled={
-                loading ? true : !ready ? true : !privacy ? true : false
+                loading
+                  ? true
+                  : !ready
+                  ? true
+                  : !privacy
+                  ? true
+                  : !errorPl
+                  ? false
+                  : true
               }
             >
               {(!check || loading) && (
