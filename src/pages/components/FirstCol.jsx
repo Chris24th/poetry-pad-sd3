@@ -35,11 +35,14 @@ const FirstCol = () => {
             "?key=d8da13e5-4ab1-4ec3-9c7c-ce41ec6184a1"
         )
         .then((res) => {
-          console.log(res.data);
-          setThesau(res.data);
-        })
-        .catch(() => {
-          setError("Sorry, word not found in the Thesaurus.");
+          if (res.data[0].meta) {
+            console.log(res.data);
+            setThesau(res.data);
+            setError("");
+          } else {
+            setThesau();
+            setError("Sorry, word not found in the Thesaurus.");
+          }
         });
     }
   };
@@ -72,6 +75,11 @@ const FirstCol = () => {
       <div className="d-flex justify-content-center">
         <Row className="mt-2 fc-words">
           <Col className="fc-words-col">
+            {error && (
+              <span className="thes-p mb-4" style={{ fontStyle: "italic" }}>
+                {error}
+              </span>
+            )}
             {choice === 1 &&
               rhymeF &&
               rhymeF.map((rhyme) => (
@@ -90,7 +98,6 @@ const FirstCol = () => {
                     <span className="thes-def">- {thesau[0].shortdef[0]}</span>
                   </Row>
                   <span className="thes-p">Synonyms:</span>
-                  {error && <span className="thes-p">{error}</span>}
                   {thesau.map((thes) =>
                     thes.meta.syns.map((syn) => (
                       <span className="fc-words-span" key={syn[0][0]}>
