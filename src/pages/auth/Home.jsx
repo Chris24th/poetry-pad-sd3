@@ -2,8 +2,10 @@
 import { Row, Figure } from "react-bootstrap";
 import LandingFrame from "../../images/landingframe.svg";
 import { BsArrowRight } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Row>
@@ -17,7 +19,13 @@ const Home = () => {
         </Figure>
       </Row>
       <Row style={{ marginRight: "150px", marginBottom: "100px" }}>
-        <a href="/dashboard" className="landing-btn">
+        <a
+          onClick={() => {
+            navigate("/dashboard");
+            window.location.reload();
+          }}
+          className="landing-btn"
+        >
           Start Writing
           <BsArrowRight className="auth-arrow" />
         </a>
