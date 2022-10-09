@@ -63,12 +63,8 @@ const NavbarRB = () => {
       name: "Collection",
     },
     {
-      url: "/thesaurus",
-      name: "Thesaurus",
-    },
-    {
-      url: "/rhymefinder",
-      name: "Rhyme Finder",
+      url: "/editpoem",
+      name: "Edit Poem",
     },
   ];
 
