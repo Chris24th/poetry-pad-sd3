@@ -38,7 +38,7 @@ const NavbarRB = () => {
     ) {
       setShowSB(true);
     } else setShowSB(false);
-  }, []);
+  }, [active]);
 
   const onLogout = () => {
     localStorage.clear();
