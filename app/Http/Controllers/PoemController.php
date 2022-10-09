@@ -72,8 +72,8 @@ class PoemController extends Controller
 
     function checkstanza(Request $req)
     {
-        $checkFIS = Poem::where('title', 'like', $req->firstStanza)->get();
-        $checkSS = Poem::where('title', 'like', $req->secondStanza)->get();
+        $checkFIS = Poem::where('firstStanza', 'like', $req->firstStanza)->get();
+        $checkSS = Poem::where('secondStanza', 'like', $req->secondStanza)->get();
         $checkTS = Poem::where('thirdStanza', 'like', $req->thirdStanza)->get();
         $checkFOS = Poem::where('fourthStanza', 'like', $req->fourthStanza)->get();
         if ($checkFIS || $checkSS || $checkTS  || $checkFOS) {
