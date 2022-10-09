@@ -19,6 +19,7 @@ const FirstCol = () => {
 
   const onSearch = async (e) => {
     e.preventDefault();
+    setError("");
     if (choice === 1) {
       axios
         .get(
