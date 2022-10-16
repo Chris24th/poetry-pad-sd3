@@ -29,7 +29,7 @@ class AuthController extends Controller
             $randomString .= $characters[$index];
         }
         $user->token = $randomString;
-        //
+
         $checkEmail = User::where('email', $req->email)->first();
         $checkPN = User::where('penName', $req->penName)->first();
 
